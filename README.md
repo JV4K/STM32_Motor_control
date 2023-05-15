@@ -1,7 +1,7 @@
 # STM32_Motor_control
 PID controller and encoder processing project.
 
-This project is a result of my University project. My friend and I are developing a mecanum-wheels laboratory platform.
+This project is a result of my University project. My friend and I are developing a mecanum-wheels laboratory robot which is intended to be an educational platform for those who study robotics.
 
 Content:
 1. reg.h/.c files, which contain PID-controller structure and functions
