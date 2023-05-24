@@ -100,20 +100,17 @@ int main(void)
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	deltt = 0.00033333;
-	threshold = (360 / 44) * 2 + 1;
+	threshold = (360 / 44) * 3 + 1;
 
-	RegParamsUpd(&ang_reg, 0.9, 0, 0, deltt, 12000, -12200, 1, threshold);
+	RegParamsUpd(&ang_reg, 0.8, 0.25, 0.15, deltt, 12000, -12000, 1, threshold);
 	RegParamsUpd(&vel_reg, 0.19, 0.23, 0, deltt, 998, -998, 0, 100);
-
-	EncoderSettings(&enc1, &htim2, 44, 100);
+	EncoderSettings(&enc1, &htim1, 44, 100);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
-//	HAL_TIM_Base_Start_IT(&htim1);
 
 	__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-//	HAL_TIM_Base_Start_IT(&htim2);
 
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
@@ -133,16 +130,15 @@ int main(void)
 			if (vel_reg.Out > 0) {
 				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
 				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
-				TIM3->CCR2 = vel_reg.Out;
+				TIM3->CCR1 = vel_reg.Out;
 			} else {
 				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-				TIM3->CCR2 = -(vel_reg.Out);
+				TIM3->CCR1 = -(vel_reg.Out);
 			}
 		}
 
 		ang_reg.Fdb = enc1.Angle;
-
 		vel_reg.Ref = ang_reg.Out;
 		vel_reg.Fdb = enc1.AngVel;
     /* USER CODE END WHILE */

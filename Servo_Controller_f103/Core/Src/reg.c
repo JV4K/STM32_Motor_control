@@ -22,7 +22,6 @@ void pid_reg_reset(volatile PIDREG *v) {
 ////	v->SatErr = 0;
 //	v->OutPreSat = 0;
 }
-
 /*
  * This function calculates output signal.
  */
@@ -34,7 +33,7 @@ void pid_reg_calc(volatile PIDREG *v) {
 //	v->PrevRef = v->Ref;
 	v->Err = v->Ref - v->Fdb;
 
-	if (v->ShrinkFlag) {
+	if (v->ShrinkFlag) { // If user enabled this feature
 		if ((v->Err <= v->ErrThreshold) && (v->Err >= -(v->ErrThreshold))) {
 			v->Err = 0;
 		}
@@ -59,7 +58,7 @@ void pid_reg_calc(volatile PIDREG *v) {
 	}
 
 	// Compute the pre-saturated output
-	v->OutPreSat = v->Up + v->Ui + v->Ud;
+	v->OutPreSat = v->Up + v->Ui * v->Ki + v->Ud * v->Kd;
 
 	// Saturation
 	if (v->OutPreSat >= v->OutMax) {
@@ -83,7 +82,7 @@ void pid_reg_calc(volatile PIDREG *v) {
 }
 
 void RegParamsUpd(volatile PIDREG *v, float kp, float ki, float kd, float dt,
-		int32_t MaxOut, int32_t MinOut, int8_t flag ,float Threshold) {
+		int32_t MaxOut, int32_t MinOut, int8_t flag, float Threshold) {
 	v->Kp = kp;
 	v->Ki = ki;
 	v->Kd = kd;

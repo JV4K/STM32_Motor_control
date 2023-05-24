@@ -60,8 +60,8 @@ all: main-build
 main-build: Servo_Controller_f103.elf secondary-outputs
 
 # Tool invocations
-Servo_Controller_f103.elf Servo_Controller_f103.map: $(OBJS) $(USER_OBJS) C:\Users\JV4K\Desktop\Botik\Servo_Controller_f103\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Servo_Controller_f103.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\JV4K\Desktop\Botik\Servo_Controller_f103\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Servo_Controller_f103.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Servo_Controller_f103.elf Servo_Controller_f103.map: $(OBJS) $(USER_OBJS) C:\Users\JV4K\Documents\GitHub\STM32_Motor_control\Servo_Controller_f103\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Servo_Controller_f103.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\JV4K\Documents\GitHub\STM32_Motor_control\Servo_Controller_f103\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Servo_Controller_f103.map" -Wl,--gc-sections -static -L"C:\Users\JV4K\Documents\GitHub\STM32_Motor_control" --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
