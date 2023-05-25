@@ -21,9 +21,9 @@ typedef struct{
 	int32_t CurTicks;
 	float Angle; // Current angle in degrees
 	float AngVel; // Angular velocity in RPM
-	float SamplingFreq; // Sampling period in seconds;
-	int32_t PrevTicks; // Previous ticks (needed to calculate velocity)
-	int32_t DeltTicks; // Delta ticks
+	float SamplingPeriod; // Sampling period in seconds;
+	float PrevAngle; // Previous angle (needed to calculate velocity)
+	float DeltAngle; // Delta angle
 
 }ENCODER;
 

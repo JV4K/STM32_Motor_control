@@ -1,5 +1,5 @@
 ../Core/Src/encoder_assert.c:10:6:EncoderReset	16	static
 ../Core/Src/encoder_assert.c:17:6:EncoderInterrupt	16	static
 ../Core/Src/encoder_assert.c:24:6:EncoderPosition	24	static
-../Core/Src/encoder_assert.c:44:6:EncoderVelocity	24	static
-../Core/Src/encoder_assert.c:54:6:EncoderSettings	24	static
+../Core/Src/encoder_assert.c:44:6:EncoderVelocity	16	static
+../Core/Src/encoder_assert.c:53:6:EncoderSettings	24	static

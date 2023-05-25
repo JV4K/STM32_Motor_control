@@ -53,6 +53,7 @@ float deltt;
 float threshold;
 
 volatile ENCODER enc1;
+volatile float FilteredVel;
 
 /* USER CODE END PV */
 
@@ -104,7 +105,7 @@ int main(void)
 
 	RegParamsUpd(&ang_reg, 0.8, 0.25, 0.15, deltt, 12000, -12000, 1, threshold);
 	RegParamsUpd(&vel_reg, 0.19, 0.23, 0, deltt, 998, -998, 0, 100);
-	EncoderSettings(&enc1, &htim1, 44, 100);
+	EncoderSettings(&enc1, &htim1, 44, 0.01);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
@@ -117,6 +118,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim3);
 
 	ang_reg.Ref = 360 * 1 * 20;
+	vel_reg.Ref = 1200;
 
   /* USER CODE END 2 */
 
@@ -138,9 +140,14 @@ int main(void)
 			}
 		}
 
+//		HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
+//		TIM3->CCR1 = 500;
+
 		ang_reg.Fdb = enc1.Angle;
-		vel_reg.Ref = ang_reg.Out;
-		vel_reg.Fdb = enc1.AngVel;
+//		vel_reg.Ref = ang_reg.Out;
+		vel_reg.Fdb = FilteredVel;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

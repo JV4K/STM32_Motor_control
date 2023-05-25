@@ -2,4 +2,4 @@ encoder_assert.c:10:6:EncoderReset	1
 encoder_assert.c:17:6:EncoderInterrupt	2
 encoder_assert.c:24:6:EncoderPosition	3
 encoder_assert.c:44:6:EncoderVelocity	1
-encoder_assert.c:54:6:EncoderSettings	1
+encoder_assert.c:53:6:EncoderSettings	1

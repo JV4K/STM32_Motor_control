@@ -38,21 +38,20 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+#define NUM_READ 20
 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-extern volatile PIDREG ang_reg;
-extern volatile PIDREG vel_reg;
-
-extern volatile ENCODER enc1;
 int8_t timed;
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
+int Median_Enc1(int);
+float SMA(float);
 
 /* USER CODE END PFP */
 
@@ -64,7 +63,11 @@ int8_t timed;
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
-
+extern volatile PIDREG ang_reg;
+extern volatile PIDREG vel_reg;
+extern volatile ENCODER enc1;
+float MedianVel;
+extern volatile float FilteredVel;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -218,6 +221,8 @@ void TIM3_IRQHandler(void)
 
 	if (timed >= 30) {
 		EncoderVelocity(&enc1);
+		MedianVel = Median_Enc1(enc1.AngVel);
+		FilteredVel = SMA(MedianVel);
 		timed = 0;
 	}
 
@@ -229,5 +234,43 @@ void TIM3_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+int Median_Enc1(int newVal) {
+	static float buffer[NUM_READ];
+	static uint32_t count = 0;
+	buffer[count] = newVal;
+	if ((count < NUM_READ - 1) && (buffer[count] > buffer[count + 1])) {
+		for (int i = count; i < NUM_READ - 1; i++) {
+			if (buffer[i] > buffer[i + 1]) {
+				float buff = buffer[i];
+				buffer[i] = buffer[i + 1];
+				buffer[i + 1] = buff;
+			}
+		}
+	} else {
+		if ((count > 0) && (buffer[count - 1] > buffer[count])) {
+			for (int i = count; i > 0; i--) {
+				if (buffer[i] < buffer[i - 1]) {
+					float buff = buffer[i];
+					buffer[i] = buffer[i - 1];
+					buffer[i - 1] = buff;
+				}
+			}
+		}
+	}
+	if (++count >= NUM_READ)
+		count = 0;
+	return buffer[(int) NUM_READ / 2];
+}
+
+float SMA(float newVal) {
+  static int t = 0;
+  static float vals[NUM_READ];
+  static float average = 0;
+  if (++t >= NUM_READ) t = 0; // перемотка t
+  average -= vals[t];         // вычитаем старое
+  average += newVal;          // прибавляем новое
+  vals[t] = newVal;           // запоминаем в массив
+  return ((float)average / NUM_READ);
+}
 
 /* USER CODE END 1 */

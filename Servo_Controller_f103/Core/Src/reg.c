@@ -46,10 +46,7 @@ void pid_reg_calc(volatile PIDREG *v) {
 
 	// Compute the integral component
 	if (v->Ki) {
-		if (!(v->InSaturationFlag)) {
-			v->Ui = v->Ui + v->Err * v->DeltaT;
-			//v->Ui = v->Ui + v->Err * v->DeltaT - v->KIntegralAntiWindUp*v->SatErr;
-		}
+		v->Ui = (v->Ui + v->Err * v->DeltaT) + v->Out-v->OutPreSat;
 	}
 
 	// Compute the differential component
@@ -69,11 +66,9 @@ void pid_reg_calc(volatile PIDREG *v) {
 		if (v->OutPreSat <= v->OutMin) {
 			//v->SatErr = v->OutPreSat - v->OutMin;
 			v->Out = v->OutMin;
-			v->InSaturationFlag = 1;
 		} else {
 			//v->SatErr = 0;
 			v->Out = v->OutPreSat;
-			v->InSaturationFlag = 0;
 		}
 	}
 
