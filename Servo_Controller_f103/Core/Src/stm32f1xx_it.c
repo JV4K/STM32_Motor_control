@@ -38,7 +38,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define NUM_READ 20
+#define NUM_READ 30
 
 /* USER CODE END PM */
 

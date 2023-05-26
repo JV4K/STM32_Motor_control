@@ -46,7 +46,10 @@ void pid_reg_calc(volatile PIDREG *v) {
 
 	// Compute the integral component
 	if (v->Ki) {
-		v->Ui = (v->Ui + v->Err * v->DeltaT) + v->Out-v->OutPreSat;
+		v->Ui = v->Ui + ((float)(v->Out-v->OutPreSat)*v->Kt + v->Err * v->DeltaT);
+//		if (!v->InSaturationFlag) {
+//			v->Ui = v->Ui + v->Err * v->DeltaT;
+//		}
 	}
 
 	// Compute the differential component
@@ -66,9 +69,10 @@ void pid_reg_calc(volatile PIDREG *v) {
 		if (v->OutPreSat <= v->OutMin) {
 			//v->SatErr = v->OutPreSat - v->OutMin;
 			v->Out = v->OutMin;
+			v->InSaturationFlag = 1;
 		} else {
-			//v->SatErr = 0;
 			v->Out = v->OutPreSat;
+			v->InSaturationFlag = 0;
 		}
 	}
 
@@ -77,7 +81,7 @@ void pid_reg_calc(volatile PIDREG *v) {
 }
 
 void RegParamsUpd(volatile PIDREG *v, float kp, float ki, float kd, float dt,
-		int32_t MaxOut, int32_t MinOut, int8_t flag, float Threshold) {
+		int32_t MaxOut, int32_t MinOut, int8_t flag, float Threshold, float antiwindup) {
 	v->Kp = kp;
 	v->Ki = ki;
 	v->Kd = kd;
@@ -86,4 +90,5 @@ void RegParamsUpd(volatile PIDREG *v, float kp, float ki, float kd, float dt,
 	v->OutMin = MinOut;
 	v->ErrThreshold = Threshold;
 	v->ShrinkFlag = flag;
+	v->Kt = antiwindup;
 }

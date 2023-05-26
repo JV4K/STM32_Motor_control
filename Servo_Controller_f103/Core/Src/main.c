@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "tim.h"
 #include "gpio.h"
 
@@ -99,12 +100,13 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 	deltt = 0.00033333;
 	threshold = (360 / 44) * 3 + 1;
 
-	RegParamsUpd(&ang_reg, 0.8, 0.25, 0.15, deltt, 12000, -12000, 1, threshold);
-	RegParamsUpd(&vel_reg, 0.19, 0.23, 0, deltt, 998, -998, 0, 100);
+	RegParamsUpd(&ang_reg, 0.8, 0.25, 0.15, deltt, 12000, -12000, 1, threshold, 0.1);
+	RegParamsUpd(&vel_reg, 0.035, 0.09, 0.00005, deltt, 998, -998, 0, 0, 0.3);
 	EncoderSettings(&enc1, &htim1, 44, 0.01);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
@@ -118,7 +120,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim3);
 
 	ang_reg.Ref = 360 * 1 * 20;
-	vel_reg.Ref = 1200;
+//	vel_reg.Ref = 1200;
 
   /* USER CODE END 2 */
 
@@ -146,7 +148,7 @@ int main(void)
 //		TIM3->CCR1 = 500;
 
 		ang_reg.Fdb = enc1.Angle;
-//		vel_reg.Ref = ang_reg.Out;
+		vel_reg.Ref = ang_reg.Out;
 		vel_reg.Fdb = FilteredVel;
     /* USER CODE END WHILE */
 
@@ -163,6 +165,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -189,6 +192,12 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }

@@ -27,6 +27,7 @@ typedef struct {
 	float Ui;	// Integral component
 	float Ud;	// Differential component
 	float DeltaT;	// Sampling period
+	float Kt; //Anti-windup coeff
 	int32_t OutPreSat;	// Output signal before saturation
 	int32_t OutMax;	// Maximum limit for output signal
 	int32_t OutMin;	// Minimum limit for output signal
@@ -42,5 +43,5 @@ typedef struct {
 
 void pid_reg_reset(volatile PIDREG*);
 void pid_reg_calc(volatile PIDREG*);
-void RegParamsUpd(volatile PIDREG*, float, float, float, float, int32_t, int32_t, int8_t, float);
+void RegParamsUpd(volatile PIDREG*, float, float, float, float, int32_t, int32_t, int8_t, float, float);
 
