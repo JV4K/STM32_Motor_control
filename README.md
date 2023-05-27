@@ -13,3 +13,8 @@ Content:
 Features:
 1. Rotary encoder position and speed assertion based on it's CPR
 2. PID-controller (P,PI,PD, etc.)
+
+Outlook for project development:
+1. Finish all the loops of controller
+2. Optimize everything
+3. Make version using fixed-point arithmetics (TI IQMathLibrary)
