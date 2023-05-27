@@ -50,8 +50,8 @@ int8_t timed;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-int Median_Enc1(int);
-float SMA(float);
+int Median_velocity_1(int);
+float SMA_velocity_1(float);
 
 /* USER CODE END PFP */
 
@@ -221,8 +221,8 @@ void TIM3_IRQHandler(void)
 
 	if (timed >= 30) {
 		EncoderVelocity(&enc1);
-		MedianVel = Median_Enc1(enc1.AngVel);
-		FilteredVel = SMA(MedianVel);
+		MedianVel = Median_velocity_1(enc1.AngVel);
+		FilteredVel = SMA_velocity_1(MedianVel);
 		timed = 0;
 	}
 
@@ -234,7 +234,7 @@ void TIM3_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-int Median_Enc1(int newVal) {
+int Median_velocity_1(int newVal) {
 	static float buffer[NUM_READ];
 	static uint32_t count = 0;
 	buffer[count] = newVal;
@@ -262,7 +262,7 @@ int Median_Enc1(int newVal) {
 	return buffer[(int) NUM_READ / 2];
 }
 
-float SMA(float newVal) {
+float SMA_velocity_1(float newVal) {
   static int t = 0;
   static float vals[NUM_READ];
   static float average = 0;

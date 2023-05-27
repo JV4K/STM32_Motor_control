@@ -8,5 +8,5 @@ stm32f1xx_it.c:166:6:DebugMon_Handler	1
 stm32f1xx_it.c:179:6:PendSV_Handler	1
 stm32f1xx_it.c:192:6:SysTick_Handler	1
 stm32f1xx_it.c:213:6:TIM3_IRQHandler	2
-stm32f1xx_it.c:237:5:Median_Enc1	10
-stm32f1xx_it.c:265:7:SMA	2
+stm32f1xx_it.c:237:5:Median_velocity_1	10
+stm32f1xx_it.c:265:7:SMA_velocity_1	2
