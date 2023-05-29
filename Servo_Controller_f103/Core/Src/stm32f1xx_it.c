@@ -215,14 +215,13 @@ void TIM3_IRQHandler(void)
   /* USER CODE BEGIN TIM3_IRQn 0 */
 	EncoderPosition(&enc1);
 	pid_reg_calc(&ang_reg);
-	pid_reg_calc(&vel_reg);
-
 	timed += 1;
 
 	if (timed >= 30) {
 		EncoderVelocity(&enc1);
 		MedianVel = Median_velocity_1(enc1.AngVel);
 		FilteredVel = SMA_velocity_1(MedianVel);
+		pid_reg_calc(&vel_reg);
 		timed = 0;
 	}
 

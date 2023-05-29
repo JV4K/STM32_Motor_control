@@ -11,7 +11,8 @@ void EncoderReset(volatile ENCODER *enc) {
 	enc->CurRots = 0;
 //	enc->PrevTicks = 0;
 	enc->Angle = 0;
-	enc->htim->Instance->CNT = 0;
+	enc->htim->Instance->CNT;
+
 }
 
 void EncoderInterrupt(volatile ENCODER *enc, int8_t Dir) {
@@ -37,8 +38,8 @@ void EncoderPosition(volatile ENCODER *enc) {
 	// Get how many ticks happened from a starting point
 	enc->CurTicks = (enc->CurRots * enc->CPR) + (enc->CntValInt);
 
-	// Transform ticks to angle
-	enc->Angle = ((float) (enc->CurTicks) / enc->CPR) * 360;
+	// Transform ticks to angle in radian
+	enc->Angle = ((float) (enc->CurTicks) / enc->CPR) * 2 * PI;
 }
 
 void EncoderVelocity(volatile ENCODER *enc) {
@@ -46,8 +47,8 @@ void EncoderVelocity(volatile ENCODER *enc) {
 	enc->DeltAngle = enc->Angle - enc->PrevAngle;
 	enc->PrevAngle = enc->Angle;
 
-	// Compute angular velocity in RPM
-	enc->AngVel = (enc->DeltAngle/360)/enc->SamplingPeriod * 60;
+	// Compute angular velocity in radian/sec
+	enc->AngVel = enc->DeltAngle/enc->SamplingPeriod;
 }
 
 void EncoderSettings(volatile ENCODER *enc, TIM_HandleTypeDef *htim_new,

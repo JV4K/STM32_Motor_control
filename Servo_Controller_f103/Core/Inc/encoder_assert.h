@@ -12,6 +12,8 @@
 
 #include "main.h"
 
+#define PI 3.14159265
+
 typedef struct{
 	TIM_HandleTypeDef* htim;
 	int16_t CPR; // Counts per rotation
