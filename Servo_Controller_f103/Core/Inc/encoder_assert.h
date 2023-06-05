@@ -21,16 +21,15 @@ typedef struct{
 	int16_t CntValInt; // Signed ticks
 	int32_t CurRots; // Full rotations
 	int32_t CurTicks;
-	float Angle; // Current angle in degrees
-	float AngVel; // Angular velocity in RPM
+	float Angle; // Current angle in rads
+	float AngVel; // Angular velocity in rad/s
 	float SamplingPeriod; // Sampling period in seconds;
-	float PrevAngle; // Previous angle (needed to calculate velocity)
-	float DeltAngle; // Delta angle
+	float PrevTicks; // Previous angle (needed to calculate velocity)
+	float DeltTicks; // Delta angle
 
 }ENCODER;
 
 void EncoderReset(volatile ENCODER*);
-void EncoderInterrupt(volatile ENCODER*, int8_t);
 void EncoderPosition(volatile ENCODER*);
 void EncoderVelocity(volatile ENCODER*);
-void EncoderSettings(volatile ENCODER*, TIM_HandleTypeDef*, int16_t, float);
+void EncoderInit(volatile ENCODER*, TIM_HandleTypeDef*, int16_t, float);

@@ -9,17 +9,9 @@
 
 void EncoderReset(volatile ENCODER *enc) {
 	enc->CurRots = 0;
-//	enc->PrevTicks = 0;
 	enc->Angle = 0;
-	enc->htim->Instance->CNT;
+	enc->htim->Instance->CNT = 0;
 
-}
-
-void EncoderInterrupt(volatile ENCODER *enc, int8_t Dir) {
-	if (Dir)
-		enc->CurRots--;
-	else
-		enc->CurRots++;
 }
 
 void EncoderPosition(volatile ENCODER *enc) {
@@ -44,14 +36,14 @@ void EncoderPosition(volatile ENCODER *enc) {
 
 void EncoderVelocity(volatile ENCODER *enc) {
 	// Get ticks delta
-	enc->DeltAngle = enc->Angle - enc->PrevAngle;
-	enc->PrevAngle = enc->Angle;
+	enc->DeltTicks = enc->CurTicks - enc->PrevTicks;
+	enc->PrevTicks = enc->CurTicks;
 
 	// Compute angular velocity in radian/sec
-	enc->AngVel = enc->DeltAngle/enc->SamplingPeriod;
+	enc->AngVel = ((enc->DeltTicks/enc->CPR)*2*PI) / enc->SamplingPeriod;
 }
 
-void EncoderSettings(volatile ENCODER *enc, TIM_HandleTypeDef *htim_new,
+void EncoderInit(volatile ENCODER *enc, TIM_HandleTypeDef *htim_new,
 		int16_t CPR_new, float period) {
 	enc->htim = htim_new;
 	enc->CPR = CPR_new;

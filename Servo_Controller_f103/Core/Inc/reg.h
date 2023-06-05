@@ -14,34 +14,32 @@
 
 typedef struct {
 	float Ref;	// Reference AKA Task
-//	float PrevRef;
 	float Fdb;	// Feedback
 	float Err;	// Error
 	float Kp;	// Proportional gain
 	float Ki;	// Integral gain
 	float Kd;	// Differential gain
-	int8_t ShrinkFlag; // Decides whether error needs to be cut if in a threshold
-	float ErrThreshold;	// Threshold of angle accuracy (if error = 0 +-threshold, error = 0)
+
+	// Threshold of angle accuracy (if error = 0 +-threshold, error = 0)
+	float ZeroDrift;
+
+	float OutDeadZone; // Minimal output which is not zero
 
 	float Up;	// Proportional component
 	float Ui;	// Integral component
 	float Ud;	// Differential component
 	float DeltaT;	// Sampling period
-	float Kt; //Anti-windup coeff
+	float Kt; // Anti-windup gain
 	int32_t OutPreSat;	// Output signal before saturation
 	int32_t OutMax;	// Maximum limit for output signal
 	int32_t OutMin;	// Minimum limit for output signal
 	int32_t Out;	// Final Output signal
 
-	//float KIntegralAntiWindUp; // Gain which is used to make integral component anti-windup jacket
-	//int32_t SatErr;	// Part of output signal which was removed after saturation
-
 	int32_t PrevErr;	// Storing previous error here
-	// Flag which states whether previous output signal is in saturation zone or not
-	int8_t InSaturationFlag;
 } PIDREG;
 
 void pid_reg_reset(volatile PIDREG*);
 void pid_reg_calc(volatile PIDREG*);
-void RegParamsUpd(volatile PIDREG*, float, float, float, float, int32_t, int32_t, int8_t, float, float);
-
+void RegParamsUpd(volatile PIDREG *v, float kp, float ki, float kd, float dt,
+		int32_t MaxOut, int32_t MinOut, float ZeroDrift, float DeadZone,
+		float Antiwindup);

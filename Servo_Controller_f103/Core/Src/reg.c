@@ -33,8 +33,8 @@ void pid_reg_calc(volatile PIDREG *v) {
 //	v->PrevRef = v->Ref;
 	v->Err = v->Ref - v->Fdb;
 
-	if (v->ShrinkFlag) { // If user enabled this feature
-		if ((v->Err <= v->ErrThreshold) && (v->Err >= -(v->ErrThreshold))) {
+	if (v->ZeroDrift) { // If user enabled this feature
+		if ((v->Err <= v->ZeroDrift) && (v->Err >= -(v->ZeroDrift))) {
 			v->Err = 0;
 		}
 	}
@@ -46,10 +46,10 @@ void pid_reg_calc(volatile PIDREG *v) {
 
 	// Compute the integral component
 	if (v->Ki) {
-		v->Ui = v->Ui + ((float)(v->Out-v->OutPreSat)*v->Kt + v->Err * v->DeltaT);
-//		if (!v->InSaturationFlag) {
-//			v->Ui = v->Ui + v->Err * v->DeltaT;
-//		}
+		v->Ui =
+				v->Ui
+						+ ((float) (v->Out - v->OutPreSat) * v->Kt
+								+ v->Err * v->DeltaT);
 	}
 
 	// Compute the differential component
@@ -62,33 +62,39 @@ void pid_reg_calc(volatile PIDREG *v) {
 
 	// Saturation
 	if (v->OutPreSat >= v->OutMax) {
-		//v->SatErr = v->OutPreSat - v->OutMax;
 		v->Out = v->OutMax;
-		v->InSaturationFlag = 1;
 	} else {
 		if (v->OutPreSat <= v->OutMin) {
-			//v->SatErr = v->OutPreSat - v->OutMin;
 			v->Out = v->OutMin;
-			v->InSaturationFlag = 1;
 		} else {
 			v->Out = v->OutPreSat;
-			v->InSaturationFlag = 0;
 		}
 	}
 
-	// Set currently used error value as previous
+	if (v->OutDeadZone) {
+		if ((v->Out > 0) && (v->Out < v->OutDeadZone)) {
+			v->Out = v->OutDeadZone;
+		} else {
+			if ((v->Out < 0) && (v->Out > -v->OutDeadZone)) {
+				v->Out = -v->OutDeadZone;
+			}
+		}
+	}
+
+// Set currently used error value as previous
 	v->PrevErr = v->Err;
 }
 
 void RegParamsUpd(volatile PIDREG *v, float kp, float ki, float kd, float dt,
-		int32_t MaxOut, int32_t MinOut, int8_t flag, float Threshold, float antiwindup) {
+		int32_t MaxOut, int32_t MinOut, float ZeroDrift, float DeadZone,
+		float Antiwindup) {
 	v->Kp = kp;
 	v->Ki = ki;
 	v->Kd = kd;
 	v->DeltaT = dt;
 	v->OutMax = MaxOut;
 	v->OutMin = MinOut;
-	v->ErrThreshold = Threshold;
-	v->ShrinkFlag = flag;
-	v->Kt = antiwindup;
+	v->ZeroDrift = ZeroDrift;
+	v->OutDeadZone = DeadZone;
+	v->Kt = Antiwindup;
 }

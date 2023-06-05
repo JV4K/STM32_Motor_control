@@ -47,6 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+//int16_t duty;
 int16_t rpm_ref = 2000;
 int16_t revolution_ref = 5; //Outer shaft revolutions
 
@@ -107,11 +108,11 @@ int main(void) {
 	deltt = 0.00033333;
 	threshold = (360 / 44) * 3 + 1;
 
-	RegParamsUpd(&ang_reg, 0.56, 0, 0, deltt, 800, -800, 0, threshold,
-			0.1);
-	RegParamsUpd(&vel_reg, 0.000547865, 0.45, 0, 0.01, 998, -998, 0,
-			100, 1);
-	EncoderSettings(&enc1, &htim1, 44, 0.01);
+	RegParamsUpd(&ang_reg, 1, 0, 0, deltt, 800, -800, 0, 0, 0);
+//	RegParamsUpd(&ang_reg, 1, 0, 0, deltt, 800, -800, 0, threshold, 0.1);
+	RegParamsUpd(&vel_reg, 0.25, 1.3, 0, 0.01, 998, -998, 0, 125, 1);
+//	RegParamsUpd(&vel_reg, 0.25, 1.3, 0, 0.01, 998, -998, 0, 100, 1);
+	EncoderInit(&enc1, &htim1, 44, 0.01);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
@@ -129,7 +130,7 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		ang_reg.Ref = revolution_ref * 2 * PI;
-//		vel_reg.Ref = (float)rpm_ref * 2 * PI / 60;
+//		vel_reg.Ref = (float) rpm_ref * 2 * PI / 60;
 
 		if (vel_reg.Out == 0) {
 			HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_RESET);
@@ -149,7 +150,7 @@ int main(void) {
 //		HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 //		HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
 //		HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
-//		TIM3->CCR1 = timer;
+//		TIM3->CCR1 = 100;
 
 		ang_reg.Fdb = enc1.Angle;
 		vel_reg.Ref = ang_reg.Out;
@@ -197,7 +198,7 @@ void SystemClock_Config(void) {
 		Error_Handler();
 	}
 	PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-	PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+	PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
 	if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
 		Error_Handler();
 	}
