@@ -108,10 +108,8 @@ int main(void) {
 	deltt = 0.00033333;
 	threshold = (360 / 44) * 3 + 1;
 
-	RegParamsUpd(&ang_reg, 1, 0, 0, deltt, 800, -800, 0, 0, 0);
-//	RegParamsUpd(&ang_reg, 1, 0, 0, deltt, 800, -800, 0, threshold, 0.1);
-	RegParamsUpd(&vel_reg, 0.25, 1.3, 0, 0.01, 998, -998, 0, 125, 1);
-//	RegParamsUpd(&vel_reg, 0.25, 1.3, 0, 0.01, 998, -998, 0, 100, 1);
+	RegParamsUpd(&ang_reg, 0.8, 0, 0.5, deltt, 800, -800, 3, 0, 1);
+	RegParamsUpd(&vel_reg, 0.25, 1.3, 0, 0.01, 998, -998, 0, 0, 0);
 	EncoderInit(&enc1, &htim1, 44, 0.01);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
