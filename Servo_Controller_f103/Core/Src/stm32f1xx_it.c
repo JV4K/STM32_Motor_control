@@ -46,6 +46,7 @@
 /* USER CODE BEGIN PV */
 uint16_t freq3khz;
 uint16_t freq100hz;
+extern volatile uint16_t ModeCounter;
 
 /* USER CODE END PV */
 
@@ -203,6 +204,7 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
+	ModeCounter++;
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
