@@ -1,4 +1,4 @@
 encoder_assert.c:10:6:EncoderReset	1
-encoder_assert.c:17:6:EncoderPosition	3
-encoder_assert.c:37:6:EncoderVelocity	1
-encoder_assert.c:46:6:EncoderInit	1
+encoder_assert.c:16:6:EncoderPosition	3
+encoder_assert.c:36:6:EncoderVelocity	1
+encoder_assert.c:45:6:EncoderInit	1

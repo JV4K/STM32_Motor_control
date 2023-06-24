@@ -11,7 +11,6 @@ void EncoderReset(volatile ENCODER *enc) {
 	enc->CurRots = 0;
 	enc->Angle = 0;
 	enc->htim->Instance->CNT = 0;
-
 }
 
 void EncoderPosition(volatile ENCODER *enc) {

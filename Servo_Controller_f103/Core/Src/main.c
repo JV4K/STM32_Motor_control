@@ -40,6 +40,8 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+//#define STMNO 1
+#define STMNO 2
 
 /* USER CODE END PM */
 
@@ -62,6 +64,8 @@ volatile float FilteredVel1;
 volatile float FilteredVel2;
 
 volatile uint16_t ModeCounter;
+volatile uint16_t Mode;
+uint16_t Diag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,46 +132,108 @@ int main(void) {
 
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
+	ModeCounter = 0;
 
-	ang_reg1.Ref = 710;
-	ang_reg2.Ref = -710;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		// Direction and actuation
-		if (vel_reg1.Out == 0) {
-			HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-//			HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_RESET);
+		if (ModeCounter <= 3000) {
+			ang_reg1.Ref = 710;
+			ang_reg2.Ref = -710;
 		} else {
-//			HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
-			if (vel_reg1.Out > 0) {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
-				TIM3->CCR1 = vel_reg1.Out;
+			if ((ModeCounter > 3000) && (ModeCounter <= 6000)) {
+				if (STMNO == 1) {
+					ang_reg1.Ref = 0;
+					ang_reg2.Ref = -1420;
+				} else {
+					ang_reg1.Ref = 1420;
+					ang_reg2.Ref = 0;
+				}
+
 			} else {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-				TIM3->CCR1 = -(vel_reg1.Out);
+				if ((ModeCounter > 6000) && (ModeCounter <= 9000)) {
+					if (STMNO == 1) {
+						ang_reg1.Ref = 401.5;
+						ang_reg2.Ref = -1018.5;
+					} else {
+						ang_reg1.Ref = 1821.5;
+						ang_reg2.Ref = 401.5;
+					}
+				} else {
+					if ((ModeCounter > 9000) && (ModeCounter <= 13000)) {
+						Diag = 1;
+						if (STMNO == 1) {
+							ang_reg2.Ref = -2438.5;
+						} else {
+
+							ang_reg1.Ref = 3241.5;
+						}
+					} else {
+						if ((ModeCounter > 13000) && (ModeCounter <= 16000)) {
+							Diag = 0;
+							if (STMNO == 1) {
+								ang_reg1.Ref = 0;
+								ang_reg2.Ref = -2840;
+							} else {
+								ang_reg1.Ref = 2840;
+								ang_reg2.Ref = 0;
+							}
+						} else {
+							if (ModeCounter > 16000) {
+								EncoderReset(&enc1);
+								EncoderReset(&enc2);
+								ang_reg1.Ref = 0;
+								ang_reg2.Ref = 0;
+								ModeCounter = 0;
+							}
+						}
+					}
+				}
 			}
 		}
 
-		if (vel_reg2.Out == 0) {
+// Direction and actuation
+		if (Diag && (STMNO == 1)) {
+			HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
+		} else {
+			if (vel_reg1.Out == 0) {
+				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
+			} else {
+				if (vel_reg1.Out > 0) {
+					HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
+					HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
+					TIM3->CCR1 = vel_reg1.Out;
+				} else {
+					HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_RESET);
+					HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
+					TIM3->CCR1 = -(vel_reg1.Out);
+				}
+			}
+		}
+
+		if (Diag && (STMNO == 2)) {
 			HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
 			HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_RESET);
 		} else {
-//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
-			if (vel_reg2.Out > 0) {
+			if (vel_reg2.Out == 0) {
 				HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_RESET);
-				TIM3->CCR2 = vel_reg2.Out;
-			} else {
-				HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-				TIM3->CCR2 = -(vel_reg2.Out);
+				//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_RESET);
+			} else {
+				//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
+				if (vel_reg2.Out > 0) {
+					HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
+					HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_RESET);
+					TIM3->CCR2 = vel_reg2.Out;
+				} else {
+					HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_RESET);
+					HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
+					TIM3->CCR2 = -(vel_reg2.Out);
+				}
 			}
 		}
 
@@ -179,6 +245,7 @@ int main(void) {
 		ang_reg2.Fdb = enc2.Angle;
 		vel_reg2.Ref = ang_reg2.Out;
 		vel_reg2.Fdb = FilteredVel2;
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
