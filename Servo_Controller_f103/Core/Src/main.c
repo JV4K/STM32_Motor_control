@@ -49,11 +49,11 @@
 
 /* USER CODE BEGIN PV */
 
-volatile PIDREG ang_reg1;
-volatile PIDREG vel_reg1;
+volatile PidController_t ang_reg1;
+volatile PidController_t vel_reg1;
 
-volatile PIDREG ang_reg2;
-volatile PIDREG vel_reg2;
+volatile PidController_t ang_reg2;
+volatile PidController_t vel_reg2;
 
 float deltt;
 float threshold;
@@ -139,61 +139,6 @@ int main(void) {
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		if (ModeCounter <= 3000) {
-			ang_reg1.Ref = 710;
-			ang_reg2.Ref = -710;
-		} else {
-			if ((ModeCounter > 3000) && (ModeCounter <= 6000)) {
-				if (STMNO == 1) {
-					ang_reg1.Ref = 0;
-					ang_reg2.Ref = -1420;
-				} else {
-					ang_reg1.Ref = 1420;
-					ang_reg2.Ref = 0;
-				}
-
-			} else {
-				if ((ModeCounter > 6000) && (ModeCounter <= 9000)) {
-					if (STMNO == 1) {
-						ang_reg1.Ref = 401.5;
-						ang_reg2.Ref = -1018.5;
-					} else {
-						ang_reg1.Ref = 1821.5;
-						ang_reg2.Ref = 401.5;
-					}
-				} else {
-					if ((ModeCounter > 9000) && (ModeCounter <= 13000)) {
-						Diag = 1;
-						if (STMNO == 1) {
-							ang_reg2.Ref = -2438.5;
-						} else {
-
-							ang_reg1.Ref = 3241.5;
-						}
-					} else {
-						if ((ModeCounter > 13000) && (ModeCounter <= 16000)) {
-							Diag = 0;
-							if (STMNO == 1) {
-								ang_reg1.Ref = 0;
-								ang_reg2.Ref = -2840;
-							} else {
-								ang_reg1.Ref = 2840;
-								ang_reg2.Ref = 0;
-							}
-						} else {
-							if (ModeCounter > 16000) {
-								EncoderReset(&enc1);
-								EncoderReset(&enc2);
-								ang_reg1.Ref = 0;
-								ang_reg2.Ref = 0;
-								ModeCounter = 0;
-							}
-						}
-					}
-				}
-			}
-		}
-
 // Direction and actuation
 		if (Diag && (STMNO == 1)) {
 			HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
@@ -238,13 +183,13 @@ int main(void) {
 		}
 
 		// Update feedback and reference
-		ang_reg1.Fdb = enc1.Angle;
-		vel_reg1.Ref = ang_reg1.Out;
-		vel_reg1.Fdb = FilteredVel1;
+		ang_reg1.feedback = enc1.Angle;
+		vel_reg1.setpoint = ang_reg1.Out;
+		vel_reg1.feedback = FilteredVel1;
 
-		ang_reg2.Fdb = enc2.Angle;
-		vel_reg2.Ref = ang_reg2.Out;
-		vel_reg2.Fdb = FilteredVel2;
+		ang_reg2.feedback = enc2.Angle;
+		vel_reg2.setpoint = ang_reg2.Out;
+		vel_reg2.feedback = FilteredVel2;
 
 		/* USER CODE END WHILE */
 

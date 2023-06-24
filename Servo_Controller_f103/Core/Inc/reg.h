@@ -13,33 +13,63 @@
 #include "main.h"
 
 typedef struct {
-	float Ref;	// Reference AKA Task
-	float Fdb;	// Feedback
-	float Err;	// Error
-	float Kp;	// Proportional gain
-	float Ki;	// Integral gain
-	float Kd;	// Differential gain
+	float setpoint;
+	float feedback;
+	float error;
+	float kp;
+	float ki;
+	float kd;
 
-	// Threshold of angle accuracy (if error = 0 +-threshold, error = 0)
-	float ZeroDrift;
+	// If set, represents a gain of integral component anti-windup algorithm
+	float Kt;
 
-	float OutDeadZone; // Minimal output which is not zero
+	// If set, controller neglects error in range of [-toleranceBand; +toleranceBand]
+	float toleranceBand;
 
-	float Up;	// Proportional component
-	float Ui;	// Integral component
-	float Ud;	// Differential component
-	float DeltaT;	// Sampling period
-	float Kt; // Anti-windup gain
-	int32_t OutPreSat;	// Output signal before saturation
-	int32_t OutMax;	// Maximum limit for output signal
-	int32_t OutMin;	// Minimum limit for output signal
-	int32_t Out;	// Final Output signal
+	// If set, output can be either can be 0, >deadZone or <-deadZone
+	float deadZone;
 
-	int32_t PrevErr;	// Storing previous error here
-} PIDREG;
+	// PID components
+	float P;
+	float I;
+	float D;
 
-void pid_reg_reset(volatile PIDREG*);
-void pid_reg_calc(volatile PIDREG*);
-void RegParamsUpd(volatile PIDREG *v, float kp, float ki, float kd, float dt,
-		int32_t MaxOut, int32_t MinOut, float ZeroDrift, float DeadZone,
-		float Antiwindup);
+	// Sampling period in seconds
+	float dt;
+
+	// Limits
+	float outputUpperLimit;
+	float outputLowerLimit;
+
+	float rawOutput; // No saturation
+	float output; // Final Output signal
+
+	float previousError;
+} PidController_t;
+
+// Initialization with gains and update period
+void pid_init(PidController_t *pid, float newKp, float newKi, float newKd,
+		float newDt);
+
+// Setters for gains and update period (frequency)
+void pid_setGains(PidController_t *pid, float newKp, float newKi, float newKd);
+void pid_setPeriod(PidController_t *pid, float newDt); // Sets update period in seconds
+void pid_setFrequencyHz(PidController_t *pid, float newFrequency);
+
+// Integral component anti-windup gain
+void pid_setAntiWindup(PidController_t *pid, float newKt);
+
+// Setters for output limits
+void pid_setLimits(PidController_t *pid, float newUpperLimit, float newLowerLimit);
+void pid_setUpperLimit(PidController_t *pid, float);
+void pid_setLowerLimit(PidController_t *pid, float);
+
+// Dead zone and tolerance band setters
+void pid_setDeadZone(PidController_t *pid, float);
+void pid_setToleranceBand(PidController_t *pid, float);
+
+// Resets all the components and previous error
+void pid_reset(PidController_t *pid);
+
+// Must be called with specified update period, returns true if still moving to set point
+uint8_t pid_calculate(PidController_t *pid);

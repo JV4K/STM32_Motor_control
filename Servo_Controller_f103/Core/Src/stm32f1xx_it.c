@@ -68,12 +68,12 @@ float SMA_velocity_2(float);
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
-extern volatile PIDREG ang_reg1;
-extern volatile PIDREG vel_reg1;
+extern volatile PidController_t ang_reg1;
+extern volatile PidController_t vel_reg1;
 extern volatile ENCODER enc1;
 
-extern volatile PIDREG ang_reg2;
-extern volatile PIDREG vel_reg2;
+extern volatile PidController_t ang_reg2;
+extern volatile PidController_t vel_reg2;
 extern volatile ENCODER enc2;
 
 float MedianVel1;
