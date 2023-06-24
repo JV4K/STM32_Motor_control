@@ -1,0 +1,2 @@
+../Core/Src/pid.c:12:6:pid_calculate	24	static
+../Core/Src/pid.c:23:6:pid_reset	16	static
