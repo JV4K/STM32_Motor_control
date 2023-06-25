@@ -24,7 +24,7 @@ typedef struct {
 	// If set, controller neglects error in range of [-toleranceBand; +toleranceBand]
 	float toleranceBand;
 
-	// If set, output can be either can be 0, >deadZone or <-deadZone
+	// If set, output can be either 0, >deadZone or <-deadZone
 	float deadZone;
 
 	// PID components
@@ -40,10 +40,19 @@ typedef struct {
 	float lowerLimit;
 
 	float rawOutput; // No saturation
-	float output; // Final Output signal
+	float output; // Final saturated output signal
 
 	float previousError;
 } pid_t;
+
+// Must be called with specified update period
+void pid_calculate(pid_t *pid, float setpoint, float feedback);
+
+// Resets all the components and previous error
+void pid_reset(pid_t *pid);
+
+// Getter for output
+float pid_getOutput(pid_t *pid);
 
 // Initialization with gains and update period
 void pid_init(pid_t *pid, float newKp, float newKi, float newKd, float newDt);
@@ -64,9 +73,3 @@ void pid_setLowerLimit(pid_t *pid, float newLowerLimit);
 // Dead zone and tolerance band setters
 void pid_setDeadZone(pid_t *pid, float newDeadZone);
 void pid_setToleranceBand(pid_t *pid, float newToleranceBand);
-
-// Resets all the components and previous error
-void pid_reset(pid_t *pid);
-
-// Must be called with specified update period, returns true if still moving to set point
-void pid_calculate(pid_t *pid, float setpoint, float feedback);

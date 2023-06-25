@@ -66,6 +66,7 @@ volatile float FilteredVel2;
 volatile uint16_t ModeCounter;
 volatile uint16_t Mode;
 uint16_t Diag = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
