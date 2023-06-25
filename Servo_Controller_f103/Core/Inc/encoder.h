@@ -9,10 +9,9 @@
 #define INC_ENCODER_H_
 
 #endif /* INC_ENCODER_H_ */
-
 #include <main.h>
 
-#define PI 3.14159265
+#define M_PI 3.14159265358979323846
 
 typedef struct {
 	// Handler of timer in encoder mode
@@ -21,23 +20,16 @@ typedef struct {
 	// Value by which counter register increments each revolution of shaft
 	int16_t countsPerRevolution;
 
-	uint16_t registerValue;
-
-	// Currently stored ticks within a full revolution of shaft
-	int16_t currentTicks;
-
-	int32_t fullRevolutions;
-
 	// Current angle in rads
 	float angle;
 
-	// Current angle in rads
-	float velocity; // Angular velocity in rad/s
+	// Current angle in rads per second
+	float velocity;
 
-	// Update period
+	uint16_t registerValue;
+	int16_t currentTicks;
+	int32_t fullRevolutions;
 	float dt;
-
+	float gearRatio;
 	float previousAngle;
-//	float deltaAngle;
-
 } encoder_t;
