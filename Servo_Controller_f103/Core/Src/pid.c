@@ -24,8 +24,7 @@ void pid_calculate(pid_t *pid, float setpoint, float feedback) {
 
 	pid->rawOutput = pid->P + pid->I + pid->D;
 	pid->output = constrain(pid->rawOutput, pid->lowerLimit, pid->upperLimit);
-	if(pid->deadZone)
-
+	// TODO Deadzone
 	pid->previousError = pid->error;
 }
 
