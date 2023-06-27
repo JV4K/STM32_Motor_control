@@ -18,9 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include <pid.h>
-#include "main.h"
-#include "tim.h"
-#include "gpio.h"
+#include <main.h>
+#include <tim.h>
+#include <gpio.h>
+#include <encoder.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -49,23 +50,16 @@
 
 /* USER CODE BEGIN PV */
 
-volatile PidController_t ang_reg1;
-volatile PidController_t vel_reg1;
-
-volatile PidController_t ang_reg2;
-volatile PidController_t vel_reg2;
+extern pid_t angle_controller;
+extern pid_t velocity_controller;
+extern encoder_t encoder;
 
 float deltt;
 float threshold;
 
-volatile ENCODER enc1;
-volatile ENCODER enc2;
-volatile float FilteredVel1;
-volatile float FilteredVel2;
+//volatile ENCODER enc1;
 
-volatile uint16_t ModeCounter;
-volatile uint16_t Mode;
-uint16_t Diag = 0;
+extern volatile float FilteredVel1;
 
 /* USER CODE END PV */
 
@@ -113,13 +107,12 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	deltt = 0.00033333;
 
-	RegParamsUpd(&ang_reg1, 0.6, 0, 0.5, deltt, 800, -800, 3, 0, 0);
-	RegParamsUpd(&vel_reg1, 0.25, 1.3, 0, 0.01, 998, -998, 0, 0, 0);
-	EncoderInit(&enc1, &htim1, 44, 0.01);
+	pid_init(&angle_controller, 0.6, 0, 0, deltt);
+	pid_setLimits(&angle_controller, -900, 900);
+	pid_init(&velocity_controller, 0.25, 1.3, 0, 0.01);
+	pid_setLimits(&velocity_controller, -999, 999);
 
-	RegParamsUpd(&ang_reg2, 0.6, 0, 0.5, deltt, 800, -800, 3, 0, 0);
-	RegParamsUpd(&vel_reg2, 0.25, 1.3, 0, 0.01, 998, -998, 0, 0, 0);
-	EncoderInit(&enc2, &htim2, 44, 0.01);
+	encoder_init(&encoder, &htim1, 44, deltt, 21.3);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
@@ -133,64 +126,12 @@ int main(void) {
 
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
-	ModeCounter = 0;
 
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-// Direction and actuation
-		if (Diag && (STMNO == 1)) {
-			HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-		} else {
-			if (vel_reg1.Out == 0) {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-			} else {
-				if (vel_reg1.Out > 0) {
-					HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-					HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
-					TIM3->CCR1 = vel_reg1.Out;
-				} else {
-					HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_RESET);
-					HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-					TIM3->CCR1 = -(vel_reg1.Out);
-				}
-			}
-		}
-
-		if (Diag && (STMNO == 2)) {
-			HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-		} else {
-			if (vel_reg2.Out == 0) {
-				HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-				//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_RESET);
-			} else {
-				//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
-				if (vel_reg2.Out > 0) {
-					HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
-					HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_RESET);
-					TIM3->CCR2 = vel_reg2.Out;
-				} else {
-					HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_RESET);
-					HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-					TIM3->CCR2 = -(vel_reg2.Out);
-				}
-			}
-		}
-
-		// Update feedback and reference
-		ang_reg1.feedback = enc1.Angle;
-		vel_reg1.setpoint = ang_reg1.Out;
-		vel_reg1.feedback = FilteredVel1;
-
-		ang_reg2.feedback = enc2.Angle;
-		vel_reg2.setpoint = ang_reg2.Out;
-		vel_reg2.feedback = FilteredVel2;
 
 		/* USER CODE END WHILE */
 
@@ -223,8 +164,8 @@ void SystemClock_Config(void) {
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1
+			| RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;

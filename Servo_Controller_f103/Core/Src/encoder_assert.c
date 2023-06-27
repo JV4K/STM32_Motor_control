@@ -39,11 +39,10 @@ void EncoderVelocity(volatile ENCODER *enc) {
 	enc->PrevTicks = enc->CurTicks;
 
 	// Compute angular velocity in radian/sec
-	enc->AngVel = ((enc->DeltTicks/enc->CPR)*2*PI) / enc->SamplingPeriod;
+	enc->AngVel = ((enc->DeltTicks / enc->CPR) * 2 * PI) / enc->SamplingPeriod;
 }
 
-void EncoderInit(volatile ENCODER *enc, TIM_HandleTypeDef *htim_new,
-		int16_t CPR_new, float period) {
+void EncoderInit(volatile ENCODER *enc, TIM_HandleTypeDef *htim_new, int16_t CPR_new, float period) {
 	enc->htim = htim_new;
 	enc->CPR = CPR_new;
 	enc->SamplingPeriod = period;

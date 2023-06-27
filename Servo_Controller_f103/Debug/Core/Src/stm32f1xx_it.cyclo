@@ -1,0 +1,14 @@
+stm32f1xx_it.c:89:6:NMI_Handler	1
+stm32f1xx_it.c:102:6:HardFault_Handler	1
+stm32f1xx_it.c:115:6:MemManage_Handler	1
+stm32f1xx_it.c:128:6:BusFault_Handler	1
+stm32f1xx_it.c:141:6:UsageFault_Handler	1
+stm32f1xx_it.c:154:6:SVC_Handler	1
+stm32f1xx_it.c:166:6:DebugMon_Handler	1
+stm32f1xx_it.c:178:6:PendSV_Handler	1
+stm32f1xx_it.c:190:6:SysTick_Handler	1
+stm32f1xx_it.c:210:6:TIM3_IRQHandler	5
+stm32f1xx_it.c:254:7:Median_velocity_1	10
+stm32f1xx_it.c:282:7:SMA_velocity_1	2
+stm32f1xx_it.c:294:7:Median_velocity_2	10
+stm32f1xx_it.c:322:7:SMA_velocity_2	2

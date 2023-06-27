@@ -24,7 +24,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/pid.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/main.h ../Core/Inc/tim.h ../Core/Inc/gpio.h \
- ../Core/Inc/encoder_assert.h
+ ../Core/Inc/encoder.h ../Core/Inc/encoder_assert.h
 ../Core/Inc/pid.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -54,4 +54,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/pid.h ../Core/Inc/main.h \
 ../Core/Inc/main.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/gpio.h:
+../Core/Inc/encoder.h:
 ../Core/Inc/encoder_assert.h:

@@ -1,3 +1,4 @@
+"./Core/Src/encoder.o"
 "./Core/Src/encoder_assert.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
