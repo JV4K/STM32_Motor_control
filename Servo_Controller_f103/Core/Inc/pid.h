@@ -24,9 +24,6 @@ typedef struct {
 	// If set, controller neglects error in range of [-toleranceBand; +toleranceBand]
 	float toleranceBand;
 
-	// If set, output can be either 0, >deadZone or <-deadZone
-	float deadZone;
-
 	// PID components
 	float P;
 	float I;
@@ -54,22 +51,19 @@ void pid_reset(pid_t *pid);
 // Getter for output
 float pid_getOutput(pid_t *pid);
 
-// Initialization with gains and update period
-void pid_init(pid_t *pid, float newKp, float newKi, float newKd, float newDt);
+// Initialization with gains and function call frequency in herz
+void pid_init(pid_t *pid, float Kp, float Ki, float Kd, float Frequency);
 
-// Setters for gains and update period (frequency)
-void pid_setGains(pid_t *pid, float newKp, float newKi, float newKd);
-void pid_setPeriod(pid_t *pid, float newDt); // Sets update period in seconds
-void pid_setFrequencyHz(pid_t *pid, float newFrequency);
+// Setter for gains
+void pid_setGains(pid_t *pid, float Kp, float Ki, float Kd);
 
 // Integral component anti-windup gain
-void pid_setAntiWindup(pid_t *pid, float newKt);
+void pid_setAntiWindup(pid_t *pid, float Kt);
 
 // Setters for output limits
-void pid_setLimits(pid_t *pid, float newUpperLimit, float newLowerLimit);
-void pid_setUpperLimit(pid_t *pid, float newUpperLimit);
-void pid_setLowerLimit(pid_t *pid, float newLowerLimit);
+void pid_setLimits(pid_t *pid, float UpperLimit, float LowerLimit);
+void pid_setUpperLimit(pid_t *pid, float UpperLimit);
+void pid_setLowerLimit(pid_t *pid, float LowerLimit);
 
-// Dead zone and tolerance band setters
-void pid_setDeadZone(pid_t *pid, float newDeadZone);
-void pid_setToleranceBand(pid_t *pid, float newToleranceBand);
+// Tolerance band setter
+void pid_setToleranceBand(pid_t *pid, float ToleranceBand);

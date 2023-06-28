@@ -24,7 +24,6 @@ void pid_calculate(pid_t *pid, float setpoint, float feedback) {
 
 	pid->rawOutput = pid->P + pid->I + pid->D;
 	pid->output = constrain(pid->rawOutput, pid->lowerLimit, pid->upperLimit);
-	// TODO Deadzone
 	pid->previousError = pid->error;
 }
 
@@ -42,25 +41,17 @@ float pid_getOutput(pid_t *pid) {
 }
 
 // Initialization with gains and update period
-void pid_init(pid_t *pid, float Kp, float Ki, float Kd, float Dt) {
+void pid_init(pid_t *pid, float Kp, float Ki, float Kd, float Frequency) {
 	pid->kp = Kp;
 	pid->ki = Ki;
 	pid->kd = Kd;
-	pid->dt = Dt;
+	pid->dt = (float) 1 / Frequency;
 }
 
 void pid_setGains(pid_t *pid, float Kp, float Ki, float Kd) {
 	pid->kp = Kp;
 	pid->ki = Ki;
 	pid->kd = Kd;
-}
-
-void pid_setPeriod(pid_t *pid, float Dt) {
-	pid->dt = Dt;
-}
-
-void pid_setFrequencyHz(pid_t *pid, float Frequency) {
-	pid->dt = (float) 1 / Frequency;
 }
 
 void pid_setAntiWindup(pid_t *pid, float Kt) {
@@ -78,10 +69,6 @@ void pid_setUpperLimit(pid_t *pid, float UpperLimit) {
 
 void pid_setLowerLimit(pid_t *pid, float LowerLimit) {
 	pid->lowerLimit = LowerLimit;
-}
-
-void pid_setDeadZone(pid_t *pid, float DeadZone) {
-	pid->deadZone = DeadZone;
 }
 
 void pid_setToleranceBand(pid_t *pid, float ToleranceBand) {

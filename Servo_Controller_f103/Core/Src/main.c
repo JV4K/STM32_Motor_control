@@ -17,16 +17,14 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <pid.h>
 #include <main.h>
 #include <tim.h>
 #include <gpio.h>
-#include <encoder.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "encoder_assert.h"
-
+#include <encoder.h>
+#include <pid.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,12 +105,14 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 	deltt = 0.00033333;
 
-	pid_init(&angle_controller, 0.6, 0, 0, deltt);
-	pid_setLimits(&angle_controller, -900, 900);
-	pid_init(&velocity_controller, 0.25, 1.3, 0, 0.01);
-	pid_setLimits(&velocity_controller, -999, 999);
+	pid_init(&angle_controller, 50, 0, 0, 3000);
+	pid_setLimits(&angle_controller, -57, 57);
 
-	encoder_init(&encoder, &htim1, 44, deltt, 21.3);
+	pid_init(&velocity_controller, 10, 5, 0, 100);
+	pid_setLimits(&velocity_controller, -999, 999);
+	pid_setAntiWindup(&velocity_controller, 1);
+
+	encoder_init(&encoder, &htim1, 44, 0.01, 21.3);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);

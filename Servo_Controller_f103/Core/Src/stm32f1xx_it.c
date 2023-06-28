@@ -224,6 +224,7 @@ void TIM3_IRQHandler(void) {
 		encoder_updateVelocity(&encoder);
 		MedianVel = Median_velocity_1(encoder_getVelocity(&encoder));
 		FilteredVel = SMA_velocity_1(MedianVel);
+//		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), FilteredVel);
 		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), encoder_getVelocity(&encoder));
 
 		freq100hz = 0;
