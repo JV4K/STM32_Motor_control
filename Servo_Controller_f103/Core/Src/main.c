@@ -25,6 +25,8 @@
 /* USER CODE BEGIN Includes */
 #include <encoder.h>
 #include <pid.h>
+#include <pwm.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,6 +53,8 @@
 extern pid_t angle_controller;
 extern pid_t velocity_controller;
 extern encoder_t encoder;
+
+extern pwmControl_t motor;
 
 float deltt;
 float threshold;
@@ -107,12 +111,16 @@ int main(void) {
 
 	pid_init(&angle_controller, 50, 0, 0, 3000);
 	pid_setLimits(&angle_controller, -57, 57);
+	pid_setToleranceBand(&angle_controller, 0.026)
 
 	pid_init(&velocity_controller, 10, 5, 0, 100);
-	pid_setLimits(&velocity_controller, -999, 999);
+	pid_setLimits(&velocity_controller, -998, 998);
 	pid_setAntiWindup(&velocity_controller, 1);
 
 	encoder_init(&encoder, &htim1, 44, 0.01, 21.3);
+
+	pwm_initDriver(&motor, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port, INB_Pin);
+	pwm_dutyLimits(&motor, 0, 998);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);

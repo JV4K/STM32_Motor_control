@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include <pid.h>
 #include <encoder.h>
+#include <pwm.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,6 +76,7 @@ extern TIM_HandleTypeDef htim3;
 pid_t angle_controller;
 pid_t velocity_controller;
 encoder_t encoder;
+pwmControl_t motor;
 
 float MedianVel;
 float FilteredVel;
@@ -216,33 +218,16 @@ void TIM3_IRQHandler(void) {
 	if (freq3khz >= 6) {
 		encoder_updatePosition(&encoder);
 		pid_calculate(&angle_controller, setAngle, encoder_getAngle(&encoder));
-
 		freq3khz = 0;
 	}
-
 	if (freq100hz >= 180) {
 		encoder_updateVelocity(&encoder);
 		MedianVel = Median_velocity_1(encoder_getVelocity(&encoder));
 		FilteredVel = SMA_velocity_1(MedianVel);
 //		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), FilteredVel);
 		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), encoder_getVelocity(&encoder));
-
+		pwm_setSpeed(&motor, (int16_t) pid_getOutput(&velocity_controller));
 		freq100hz = 0;
-
-		if (pid_getOutput(&velocity_controller) == 0) {
-			HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-		} else {
-			if (pid_getOutput(&velocity_controller) > 0) {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
-				TIM3->CCR1 = pid_getOutput(&velocity_controller);
-			} else {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-				TIM3->CCR1 = -(pid_getOutput(&velocity_controller));
-			}
-		}
 	}
 	/* USER CODE END TIM3_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim3);

@@ -15,8 +15,7 @@
 typedef struct {
 	// Timer handler
 	TIM_HandleTypeDef *htim;
-	uint8_t timerChannel1;
-	uint8_t timerChannel2;
+	uint8_t timerChannel;
 
 	// Direction pins and ports
 	uint32_t dir1_Pin;
@@ -32,8 +31,8 @@ typedef struct {
 
 } pwmControl_t;
 
-void pwm_initDriver(pwmControl_t *driver, TIM_HandleTypeDef *htim, uint8_t pwmChannel, uint32_t dir1_Pin,
-		GPIO_TypeDef *dir1_Port, uint32_t dir2_Pin, GPIO_TypeDef *dir2_Port);
+void pwm_initDriver(pwmControl_t *driver, TIM_HandleTypeDef *htim, uint8_t pwmChannel,
+		GPIO_TypeDef *dir1_Port, uint32_t dir1_Pin, GPIO_TypeDef *dir2_Port, uint32_t dir2_Pin);
 
 void pwm_dutyLimits(pwmControl_t *driver, uint16_t minDuty, uint16_t maxDuty);
 
