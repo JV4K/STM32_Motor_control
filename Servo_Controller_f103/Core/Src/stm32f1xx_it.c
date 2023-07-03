@@ -57,11 +57,6 @@ volatile float FilteredVel1;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-float Median_velocity_1(float);
-float SMA_velocity_1(float);
-
-float Median_velocity_2(float);
-float SMA_velocity_2(float);
 
 /* USER CODE END PFP */
 
@@ -73,10 +68,10 @@ float SMA_velocity_2(float);
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
-pid_t angle_controller;
-pid_t velocity_controller;
-encoder_t encoder;
-pwmControl_t motor;
+extern pid_t angle_controller;
+extern pid_t velocity_controller;
+extern encoder_t encoder;
+extern pwmControl_t motor;
 
 float MedianVel;
 float FilteredVel;
@@ -222,11 +217,8 @@ void TIM3_IRQHandler(void) {
 	}
 	if (freq100hz >= 180) {
 		encoder_updateVelocity(&encoder);
-		MedianVel = Median_velocity_1(encoder_getVelocity(&encoder));
-		FilteredVel = SMA_velocity_1(MedianVel);
-//		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), FilteredVel);
 		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), encoder_getVelocity(&encoder));
-		pwm_setSpeed(&motor, (int16_t) pid_getOutput(&velocity_controller));
+		pwm_setSpeed(&motor, pid_getOutput(&velocity_controller));
 		freq100hz = 0;
 	}
 	/* USER CODE END TIM3_IRQn 0 */
@@ -237,83 +229,5 @@ void TIM3_IRQHandler(void) {
 }
 
 /* USER CODE BEGIN 1 */
-float Median_velocity_1(float newVal) {
-	static float buffer[NUM_READ];
-	static uint32_t count = 0;
-	buffer[count] = newVal;
-	if ((count < NUM_READ - 1) && (buffer[count] > buffer[count + 1])) {
-		for (int i = count; i < NUM_READ - 1; i++) {
-			if (buffer[i] > buffer[i + 1]) {
-				float buff = buffer[i];
-				buffer[i] = buffer[i + 1];
-				buffer[i + 1] = buff;
-			}
-		}
-	} else {
-		if ((count > 0) && (buffer[count - 1] > buffer[count])) {
-			for (int i = count; i > 0; i--) {
-				if (buffer[i] < buffer[i - 1]) {
-					float buff = buffer[i];
-					buffer[i] = buffer[i - 1];
-					buffer[i - 1] = buff;
-				}
-			}
-		}
-	}
-	if (++count >= NUM_READ)
-		count = 0;
-	return buffer[(int) NUM_READ / 2];
-}
 
-float SMA_velocity_1(float newVal) {
-	static int t = 0;
-	static float vals[NUM_READ];
-	static float average = 0;
-	if (++t >= NUM_READ)
-		t = 0; // перемотка t
-	average -= vals[t];         // вычитаем старое
-	average += newVal;          // прибавляем новое
-	vals[t] = newVal;           // запоминаем в массив
-	return ((float) average / NUM_READ);
-}
-
-float Median_velocity_2(float newVal) {
-	static float buffer[NUM_READ];
-	static uint32_t count = 0;
-	buffer[count] = newVal;
-	if ((count < NUM_READ - 1) && (buffer[count] > buffer[count + 1])) {
-		for (int i = count; i < NUM_READ - 1; i++) {
-			if (buffer[i] > buffer[i + 1]) {
-				float buff = buffer[i];
-				buffer[i] = buffer[i + 1];
-				buffer[i + 1] = buff;
-			}
-		}
-	} else {
-		if ((count > 0) && (buffer[count - 1] > buffer[count])) {
-			for (int i = count; i > 0; i--) {
-				if (buffer[i] < buffer[i - 1]) {
-					float buff = buffer[i];
-					buffer[i] = buffer[i - 1];
-					buffer[i - 1] = buff;
-				}
-			}
-		}
-	}
-	if (++count >= NUM_READ)
-		count = 0;
-	return buffer[(int) NUM_READ / 2];
-}
-
-float SMA_velocity_2(float newVal) {
-	static int t = 0;
-	static float vals[NUM_READ];
-	static float average = 0;
-	if (++t >= NUM_READ)
-		t = 0; // перемотка t
-	average -= vals[t];         // вычитаем старое
-	average += newVal;          // прибавляем новое
-	vals[t] = newVal;           // запоминаем в массив
-	return ((float) average / NUM_READ);
-}
 /* USER CODE END 1 */

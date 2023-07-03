@@ -50,11 +50,10 @@
 
 /* USER CODE BEGIN PV */
 
-extern pid_t angle_controller;
-extern pid_t velocity_controller;
-extern encoder_t encoder;
-
-extern pwmControl_t motor;
+pid_t angle_controller;
+pid_t velocity_controller;
+encoder_t encoder;
+pwmControl_t motor;
 
 float deltt;
 float threshold;
@@ -111,7 +110,7 @@ int main(void) {
 
 	pid_init(&angle_controller, 50, 0, 0, 3000);
 	pid_setLimits(&angle_controller, -57, 57);
-	pid_setToleranceBand(&angle_controller, 0.026)
+	pid_setToleranceBand(&angle_controller, 0.026);
 
 	pid_init(&velocity_controller, 10, 5, 0, 100);
 	pid_setLimits(&velocity_controller, -998, 998);
