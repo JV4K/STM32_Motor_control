@@ -5,16 +5,6 @@ This project is a result of my University project. My friend and I are developin
 
 (Everything is still in progress)
 
-Content:
-1. STM32F103C8T6 project for motor control
-2. reg.h/.c files, which contain PID-controller structure and functions
-3. encoder_assert.h/.c files, which contain a rotary encoder structure and functions
-
-Features:
-1. Rotary encoder position and speed assertion based on it's CPR
-2. PID-controller (P,PI,PD, etc.)
-
-Outlook for project development:
-1. Finish all the loops of controller
-2. Optimize everything
-3. Make version using fixed-point arithmetics (TI IQMathLibrary)
+ - Использование одного/двух/трех контуров управления (по положению, угловой скорости и току)
+ - Регулирование как положения, так и угловой скорости (при наличии контура скорости)
+ - Встроен алгоритм управления каналом таймера в режиме генерации ШИМ, а также выбором направления вращения мотора с помощью двух GPIO
