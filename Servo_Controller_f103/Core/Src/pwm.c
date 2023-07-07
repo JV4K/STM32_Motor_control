@@ -25,7 +25,7 @@ void pwm_dutyLimits(pwmControl_t *driver, uint16_t minDuty, uint16_t maxDuty) {
 	driver->maxDuty = maxDuty;
 }
 
-void pwm_setSpeed(pwmControl_t *driver, int16_t duty) {
+void pwm_setSpeed(pwmControl_t *driver, int32_t duty) {
 	if (!duty) {
 		driver->_duty = 0;
 		HAL_GPIO_WritePin(driver->dir1_Port, driver->dir1_Pin, 0);

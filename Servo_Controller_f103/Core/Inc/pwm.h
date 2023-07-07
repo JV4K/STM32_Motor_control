@@ -36,6 +36,6 @@ void pwm_initDriver(pwmControl_t *driver, TIM_HandleTypeDef *htim, uint8_t pwmCh
 
 void pwm_dutyLimits(pwmControl_t *driver, uint16_t minDuty, uint16_t maxDuty);
 
-void pwm_setSpeed(pwmControl_t *driver, int16_t duty);
+void pwm_setSpeed(pwmControl_t *driver, int32_t duty);
 
 void pwm_break(pwmControl_t *driver);

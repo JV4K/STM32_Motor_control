@@ -23,9 +23,8 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <pid.h>
-#include <encoder.h>
-#include <pwm.h>
+
+#include <servocontroller.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,9 +48,8 @@
 uint16_t freq3khz;
 uint16_t freq100hz;
 float setAngle = 7;
-//extern volatile uint16_t ModeCounter;
-
-volatile float FilteredVel1;
+float setSpeed = 20;
+uint8_t mode = 0;
 
 /* USER CODE END PV */
 
@@ -68,13 +66,8 @@ volatile float FilteredVel1;
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
-extern pid_t angle_controller;
-extern pid_t velocity_controller;
-extern encoder_t encoder;
-extern pwmControl_t motor;
+extern servocontrol_t servo1;
 
-float MedianVel;
-float FilteredVel;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -206,19 +199,21 @@ void SysTick_Handler(void) {
  */
 void TIM3_IRQHandler(void) {
 	/* USER CODE BEGIN TIM3_IRQn 0 */
-
 	freq3khz++;
 	freq100hz++;
+	if (!mode) {
+		servo_controlPosition(&servo1, setAngle);
+	}
+	else{
+		servo_controlVelocity(&servo1, setSpeed);
+	}
 
 	if (freq3khz >= 6) {
-		encoder_updatePosition(&encoder);
-		pid_calculate(&angle_controller, setAngle, encoder_getAngle(&encoder));
+		servo_positionLoop(&servo1);
 		freq3khz = 0;
 	}
 	if (freq100hz >= 180) {
-		encoder_updateVelocity(&encoder);
-		pid_calculate(&velocity_controller, pid_getOutput(&angle_controller), encoder_getVelocity(&encoder));
-		pwm_setSpeed(&motor, pid_getOutput(&velocity_controller));
+		servo_velocityLoop(&servo1);
 		freq100hz = 0;
 	}
 	/* USER CODE END TIM3_IRQn 0 */

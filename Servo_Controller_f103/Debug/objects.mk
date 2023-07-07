@@ -5,5 +5,5 @@
 
 USER_OBJS :=
 
-LIBS := -lIQmathLib-cm3
+LIBS :=
 

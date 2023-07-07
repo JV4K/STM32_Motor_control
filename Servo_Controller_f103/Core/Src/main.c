@@ -23,9 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <encoder.h>
-#include <pid.h>
-#include <pwm.h>
+#include <servocontroller.h>
 
 /* USER CODE END Includes */
 
@@ -49,18 +47,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
-pid_t angle_controller;
-pid_t velocity_controller;
-encoder_t encoder;
-pwmControl_t motor;
-
-float deltt;
-float threshold;
-
-//volatile ENCODER enc1;
-
-extern volatile float FilteredVel1;
+servocontrol_t servo1;
+//servocontrol_t servo2;
 
 /* USER CODE END PV */
 
@@ -106,20 +94,14 @@ int main(void) {
 	MX_TIM2_Init();
 	MX_TIM3_Init();
 	/* USER CODE BEGIN 2 */
-	deltt = 0.00033333;
 
-	pid_init(&angle_controller, 50, 0, 0, 3000);
-	pid_setLimits(&angle_controller, -57, 57);
-	pid_setToleranceBand(&angle_controller, 0.026);
+	servo_baseInit(&servo1, Double, 1200, 21.3, 0);
 
-	pid_init(&velocity_controller, 10, 5, 0, 100);
-	pid_setLimits(&velocity_controller, -998, 998);
-	pid_setAntiWindup(&velocity_controller, 1);
-
-	encoder_init(&encoder, &htim1, 44, 0.01, 21.3);
-
-	pwm_initDriver(&motor, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port, INB_Pin);
-	pwm_dutyLimits(&motor, 0, 998);
+	servo_encoderInit(&servo1, &htim1, 44);
+	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port, INB_Pin, 0, 998);
+	servo_positionInit(&servo1, 50, 0, 0, 0.00033333, 0);
+	servo_velocityInit(&servo1, 20, 10, 0, 0.01, 1);
+	servo_setPositionTolerance(&servo1, 0.026);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
@@ -133,6 +115,7 @@ int main(void) {
 
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
+
 
 	/* USER CODE END 2 */
 
