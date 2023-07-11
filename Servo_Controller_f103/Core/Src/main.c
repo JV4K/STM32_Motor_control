@@ -48,7 +48,7 @@
 
 /* USER CODE BEGIN PV */
 servocontrol_t servo1;
-//servocontrol_t servo2;
+servocontrol_t servo2;
 
 /* USER CODE END PV */
 
@@ -96,12 +96,19 @@ int main(void) {
 	/* USER CODE BEGIN 2 */
 
 	servo_baseInit(&servo1, Double, 1200, 21.3, 0);
-
+	//TODO: check PPR of encoder
 	servo_encoderInit(&servo1, &htim1, 44);
 	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port, INB_Pin, 0, 998);
 	servo_positionInit(&servo1, 50, 0, 0, 0.00033333, 0);
 	servo_velocityInit(&servo1, 20, 10, 0, 0.01, 1);
 	servo_setPositionTolerance(&servo1, 0.026);
+
+	servo_baseInit(&servo2, Double, 1200, 21.3, 1);
+	servo_encoderInit(&servo2, &htim2, 44);
+	servo_driverInit(&servo2, &htim3, 2, INA2_GPIO_Port, INA2_Pin, INB2_GPIO_Port, INB2_Pin, 0, 998);
+	servo_positionInit(&servo2, 50, 0, 0, 0.00033333, 0);
+	servo_velocityInit(&servo2, 20, 10, 0, 0.01, 1);
+	servo_setPositionTolerance(&servo2, 0.026);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
@@ -115,7 +122,6 @@ int main(void) {
 
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
-
 
 	/* USER CODE END 2 */
 

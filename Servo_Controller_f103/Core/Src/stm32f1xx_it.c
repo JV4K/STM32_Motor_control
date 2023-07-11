@@ -67,6 +67,7 @@ uint8_t mode = 0;
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
 extern servocontrol_t servo1;
+extern servocontrol_t servo2;
 
 /* USER CODE END EV */
 
@@ -203,17 +204,21 @@ void TIM3_IRQHandler(void) {
 	freq100hz++;
 	if (!mode) {
 		servo_controlPosition(&servo1, setAngle);
+		servo_controlPosition(&servo2, setAngle);
 	}
 	else{
 		servo_controlVelocity(&servo1, setSpeed);
+		servo_controlVelocity(&servo2, setSpeed);
 	}
 
 	if (freq3khz >= 6) {
 		servo_positionLoop(&servo1);
+		servo_positionLoop(&servo2);
 		freq3khz = 0;
 	}
 	if (freq100hz >= 180) {
 		servo_velocityLoop(&servo1);
+		servo_velocityLoop(&servo2);
 		freq100hz = 0;
 	}
 	/* USER CODE END TIM3_IRQn 0 */
