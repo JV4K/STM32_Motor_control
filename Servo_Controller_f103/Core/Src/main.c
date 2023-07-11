@@ -17,14 +17,13 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "tim.h"
-#include "gpio.h"
+#include <main.h>
+#include <tim.h>
+#include <gpio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "reg.h"
-#include "encoder_assert.h"
+#include <servocontroller.h>
 
 /* USER CODE END Includes */
 
@@ -40,28 +39,17 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+//#define STMNO 1
+#define STMNO 2
 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+servocontrol_t servo1;
+servocontrol_t servo2;
 
-volatile PIDREG ang_reg1;
-volatile PIDREG vel_reg1;
-
-volatile PIDREG ang_reg2;
-volatile PIDREG vel_reg2;
-
-float deltt;
-float threshold;
-
-volatile ENCODER enc1;
-volatile ENCODER enc2;
-volatile float FilteredVel1;
-volatile float FilteredVel2;
-
-volatile uint16_t ModeCounter;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -106,15 +94,21 @@ int main(void) {
 	MX_TIM2_Init();
 	MX_TIM3_Init();
 	/* USER CODE BEGIN 2 */
-	deltt = 0.00033333;
 
-	RegParamsUpd(&ang_reg1, 0.6, 0, 0.5, deltt, 800, -800, 3, 0, 0);
-	RegParamsUpd(&vel_reg1, 0.25, 1.3, 0, 0.01, 998, -998, 0, 0, 0);
-	EncoderInit(&enc1, &htim1, 44, 0.01);
+	servo_baseInit(&servo1, Double, 1200, 21.3, 0);
+	//TODO: check PPR of encoder
+	servo_encoderInit(&servo1, &htim1, 44);
+	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port, INB_Pin, 0, 998);
+	servo_positionInit(&servo1, 50, 0, 0, 0.00033333, 0);
+	servo_velocityInit(&servo1, 20, 10, 0, 0.01, 1);
+	servo_setPositionTolerance(&servo1, 0.026);
 
-	RegParamsUpd(&ang_reg2, 0.6, 0, 0.5, deltt, 800, -800, 3, 0, 0);
-	RegParamsUpd(&vel_reg2, 0.25, 1.3, 0, 0.01, 998, -998, 0, 0, 0);
-	EncoderInit(&enc2, &htim2, 44, 0.01);
+	servo_baseInit(&servo2, Double, 1200, 21.3, 1);
+	servo_encoderInit(&servo2, &htim2, 44);
+	servo_driverInit(&servo2, &htim3, 2, INA2_GPIO_Port, INA2_Pin, INB2_GPIO_Port, INB2_Pin, 0, 998);
+	servo_positionInit(&servo2, 50, 0, 0, 0.00033333, 0);
+	servo_velocityInit(&servo2, 20, 10, 0, 0.01, 1);
+	servo_setPositionTolerance(&servo2, 0.026);
 
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
 	HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
@@ -129,56 +123,12 @@ int main(void) {
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
 
-	ang_reg1.Ref = 710;
-	ang_reg2.Ref = -710;
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1) {
-		// Direction and actuation
-		if (vel_reg1.Out == 0) {
-			HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-//			HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_RESET);
-		} else {
-//			HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
-			if (vel_reg1.Out > 0) {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_RESET);
-				TIM3->CCR1 = vel_reg1.Out;
-			} else {
-				HAL_GPIO_WritePin(INA_GPIO_Port, INA_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(INB_GPIO_Port, INB_Pin, GPIO_PIN_SET);
-				TIM3->CCR1 = -(vel_reg1.Out);
-			}
-		}
 
-		if (vel_reg2.Out == 0) {
-			HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_RESET);
-		} else {
-//			HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
-			if (vel_reg2.Out > 0) {
-				HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_SET);
-				HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_RESET);
-				TIM3->CCR2 = vel_reg2.Out;
-			} else {
-				HAL_GPIO_WritePin(INA2_GPIO_Port, INA2_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(INB2_GPIO_Port, INB2_Pin, GPIO_PIN_SET);
-				TIM3->CCR2 = -(vel_reg2.Out);
-			}
-		}
-
-		// Update feedback and reference
-		ang_reg1.Fdb = enc1.Angle;
-		vel_reg1.Ref = ang_reg1.Out;
-		vel_reg1.Fdb = FilteredVel1;
-
-		ang_reg2.Fdb = enc2.Angle;
-		vel_reg2.Ref = ang_reg2.Out;
-		vel_reg2.Fdb = FilteredVel2;
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -210,8 +160,8 @@ void SystemClock_Config(void) {
 
 	/** Initializes the CPU, AHB and APB buses clocks
 	 */
-	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1
+			| RCC_CLOCKTYPE_PCLK2;
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;

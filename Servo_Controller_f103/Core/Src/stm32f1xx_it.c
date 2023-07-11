@@ -18,12 +18,13 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "reg.h"
-#include "encoder_assert.h"
+
+#include <servocontroller.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -38,7 +39,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define NUM_READ 30
+#define NUM_READ 10
 
 /* USER CODE END PM */
 
@@ -46,17 +47,14 @@
 /* USER CODE BEGIN PV */
 uint16_t freq3khz;
 uint16_t freq100hz;
-extern volatile uint16_t ModeCounter;
+float setAngle = 7;
+float setSpeed = 20;
+uint8_t mode = 0;
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-float Median_velocity_1(float);
-float SMA_velocity_1(float);
-
-float Median_velocity_2(float);
-float SMA_velocity_2(float);
 
 /* USER CODE END PFP */
 
@@ -68,149 +66,126 @@ float SMA_velocity_2(float);
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
-extern volatile PIDREG ang_reg1;
-extern volatile PIDREG vel_reg1;
-extern volatile ENCODER enc1;
+extern servocontrol_t servo1;
+extern servocontrol_t servo2;
 
-extern volatile PIDREG ang_reg2;
-extern volatile PIDREG vel_reg2;
-extern volatile ENCODER enc2;
-
-float MedianVel1;
-float MedianVel2;
-extern volatile float FilteredVel1;
-extern volatile float FilteredVel2;
 /* USER CODE END EV */
 
 /******************************************************************************/
 /*           Cortex-M3 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
-  * @brief This function handles Non maskable interrupt.
-  */
-void NMI_Handler(void)
-{
-  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+ * @brief This function handles Non maskable interrupt.
+ */
+void NMI_Handler(void) {
+	/* USER CODE BEGIN NonMaskableInt_IRQn 0 */
 
-  /* USER CODE END NonMaskableInt_IRQn 0 */
-  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+	/* USER CODE END NonMaskableInt_IRQn 0 */
+	/* USER CODE BEGIN NonMaskableInt_IRQn 1 */
 	while (1) {
 	}
-  /* USER CODE END NonMaskableInt_IRQn 1 */
+	/* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
 /**
-  * @brief This function handles Hard fault interrupt.
-  */
-void HardFault_Handler(void)
-{
-  /* USER CODE BEGIN HardFault_IRQn 0 */
+ * @brief This function handles Hard fault interrupt.
+ */
+void HardFault_Handler(void) {
+	/* USER CODE BEGIN HardFault_IRQn 0 */
 
-  /* USER CODE END HardFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_HardFault_IRQn 0 */
-    /* USER CODE END W1_HardFault_IRQn 0 */
-  }
+	/* USER CODE END HardFault_IRQn 0 */
+	while (1) {
+		/* USER CODE BEGIN W1_HardFault_IRQn 0 */
+		/* USER CODE END W1_HardFault_IRQn 0 */
+	}
 }
 
 /**
-  * @brief This function handles Memory management fault.
-  */
-void MemManage_Handler(void)
-{
-  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+ * @brief This function handles Memory management fault.
+ */
+void MemManage_Handler(void) {
+	/* USER CODE BEGIN MemoryManagement_IRQn 0 */
 
-  /* USER CODE END MemoryManagement_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
-    /* USER CODE END W1_MemoryManagement_IRQn 0 */
-  }
+	/* USER CODE END MemoryManagement_IRQn 0 */
+	while (1) {
+		/* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+		/* USER CODE END W1_MemoryManagement_IRQn 0 */
+	}
 }
 
 /**
-  * @brief This function handles Prefetch fault, memory access fault.
-  */
-void BusFault_Handler(void)
-{
-  /* USER CODE BEGIN BusFault_IRQn 0 */
+ * @brief This function handles Prefetch fault, memory access fault.
+ */
+void BusFault_Handler(void) {
+	/* USER CODE BEGIN BusFault_IRQn 0 */
 
-  /* USER CODE END BusFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_BusFault_IRQn 0 */
-    /* USER CODE END W1_BusFault_IRQn 0 */
-  }
+	/* USER CODE END BusFault_IRQn 0 */
+	while (1) {
+		/* USER CODE BEGIN W1_BusFault_IRQn 0 */
+		/* USER CODE END W1_BusFault_IRQn 0 */
+	}
 }
 
 /**
-  * @brief This function handles Undefined instruction or illegal state.
-  */
-void UsageFault_Handler(void)
-{
-  /* USER CODE BEGIN UsageFault_IRQn 0 */
+ * @brief This function handles Undefined instruction or illegal state.
+ */
+void UsageFault_Handler(void) {
+	/* USER CODE BEGIN UsageFault_IRQn 0 */
 
-  /* USER CODE END UsageFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
-    /* USER CODE END W1_UsageFault_IRQn 0 */
-  }
+	/* USER CODE END UsageFault_IRQn 0 */
+	while (1) {
+		/* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+		/* USER CODE END W1_UsageFault_IRQn 0 */
+	}
 }
 
 /**
-  * @brief This function handles System service call via SWI instruction.
-  */
-void SVC_Handler(void)
-{
-  /* USER CODE BEGIN SVCall_IRQn 0 */
+ * @brief This function handles System service call via SWI instruction.
+ */
+void SVC_Handler(void) {
+	/* USER CODE BEGIN SVCall_IRQn 0 */
 
-  /* USER CODE END SVCall_IRQn 0 */
-  /* USER CODE BEGIN SVCall_IRQn 1 */
+	/* USER CODE END SVCall_IRQn 0 */
+	/* USER CODE BEGIN SVCall_IRQn 1 */
 
-  /* USER CODE END SVCall_IRQn 1 */
+	/* USER CODE END SVCall_IRQn 1 */
 }
 
 /**
-  * @brief This function handles Debug monitor.
-  */
-void DebugMon_Handler(void)
-{
-  /* USER CODE BEGIN DebugMonitor_IRQn 0 */
+ * @brief This function handles Debug monitor.
+ */
+void DebugMon_Handler(void) {
+	/* USER CODE BEGIN DebugMonitor_IRQn 0 */
 
-  /* USER CODE END DebugMonitor_IRQn 0 */
-  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+	/* USER CODE END DebugMonitor_IRQn 0 */
+	/* USER CODE BEGIN DebugMonitor_IRQn 1 */
 
-  /* USER CODE END DebugMonitor_IRQn 1 */
+	/* USER CODE END DebugMonitor_IRQn 1 */
 }
 
 /**
-  * @brief This function handles Pendable request for system service.
-  */
-void PendSV_Handler(void)
-{
-  /* USER CODE BEGIN PendSV_IRQn 0 */
+ * @brief This function handles Pendable request for system service.
+ */
+void PendSV_Handler(void) {
+	/* USER CODE BEGIN PendSV_IRQn 0 */
 
-  /* USER CODE END PendSV_IRQn 0 */
-  /* USER CODE BEGIN PendSV_IRQn 1 */
+	/* USER CODE END PendSV_IRQn 0 */
+	/* USER CODE BEGIN PendSV_IRQn 1 */
 
-  /* USER CODE END PendSV_IRQn 1 */
+	/* USER CODE END PendSV_IRQn 1 */
 }
 
 /**
-  * @brief This function handles System tick timer.
-  */
-void SysTick_Handler(void)
-{
-  /* USER CODE BEGIN SysTick_IRQn 0 */
-	ModeCounter++;
+ * @brief This function handles System tick timer.
+ */
+void SysTick_Handler(void) {
+	/* USER CODE BEGIN SysTick_IRQn 0 */
 
-  /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
-  /* USER CODE BEGIN SysTick_IRQn 1 */
+	/* USER CODE END SysTick_IRQn 0 */
+	HAL_IncTick();
+	/* USER CODE BEGIN SysTick_IRQn 1 */
 
-  /* USER CODE END SysTick_IRQn 1 */
+	/* USER CODE END SysTick_IRQn 1 */
 }
 
 /******************************************************************************/
@@ -221,122 +196,38 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles TIM3 global interrupt.
-  */
-void TIM3_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM3_IRQn 0 */
-
+ * @brief This function handles TIM3 global interrupt.
+ */
+void TIM3_IRQHandler(void) {
+	/* USER CODE BEGIN TIM3_IRQn 0 */
 	freq3khz++;
 	freq100hz++;
+	if (!mode) {
+		servo_controlPosition(&servo1, setAngle);
+		servo_controlPosition(&servo2, setAngle);
+	}
+	else{
+		servo_controlVelocity(&servo1, setSpeed);
+		servo_controlVelocity(&servo2, setSpeed);
+	}
 
 	if (freq3khz >= 6) {
-		EncoderPosition(&enc1);
-		pid_reg_calc(&ang_reg1);
-
-		EncoderPosition(&enc2);
-		pid_reg_calc(&ang_reg2);
+		servo_positionLoop(&servo1);
+		servo_positionLoop(&servo2);
 		freq3khz = 0;
 	}
-
 	if (freq100hz >= 180) {
-		EncoderVelocity(&enc1);
-		MedianVel1 = Median_velocity_1(enc1.AngVel);
-		FilteredVel1 = SMA_velocity_1(MedianVel1);
-		pid_reg_calc(&vel_reg1);
-
-		EncoderVelocity(&enc2);
-		MedianVel2 = Median_velocity_2(enc2.AngVel);
-		FilteredVel2 = SMA_velocity_2(MedianVel2);
-		pid_reg_calc(&vel_reg2);
-
+		servo_velocityLoop(&servo1);
+		servo_velocityLoop(&servo2);
 		freq100hz = 0;
 	}
-  /* USER CODE END TIM3_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim3);
-  /* USER CODE BEGIN TIM3_IRQn 1 */
+	/* USER CODE END TIM3_IRQn 0 */
+	HAL_TIM_IRQHandler(&htim3);
+	/* USER CODE BEGIN TIM3_IRQn 1 */
 
-  /* USER CODE END TIM3_IRQn 1 */
+	/* USER CODE END TIM3_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
-float Median_velocity_1(float newVal) {
-	static float buffer[NUM_READ];
-	static uint32_t count = 0;
-	buffer[count] = newVal;
-	if ((count < NUM_READ - 1) && (buffer[count] > buffer[count + 1])) {
-		for (int i = count; i < NUM_READ - 1; i++) {
-			if (buffer[i] > buffer[i + 1]) {
-				float buff = buffer[i];
-				buffer[i] = buffer[i + 1];
-				buffer[i + 1] = buff;
-			}
-		}
-	} else {
-		if ((count > 0) && (buffer[count - 1] > buffer[count])) {
-			for (int i = count; i > 0; i--) {
-				if (buffer[i] < buffer[i - 1]) {
-					float buff = buffer[i];
-					buffer[i] = buffer[i - 1];
-					buffer[i - 1] = buff;
-				}
-			}
-		}
-	}
-	if (++count >= NUM_READ)
-		count = 0;
-	return buffer[(int) NUM_READ / 2];
-}
 
-float SMA_velocity_1(float newVal) {
-	static int t = 0;
-	static float vals[NUM_READ];
-	static float average = 0;
-	if (++t >= NUM_READ)
-		t = 0; // перемотка t
-	average -= vals[t];         // вычитаем старое
-	average += newVal;          // прибавляем новое
-	vals[t] = newVal;           // запоминаем в массив
-	return ((float) average / NUM_READ);
-}
-
-float Median_velocity_2(float newVal) {
-	static float buffer[NUM_READ];
-	static uint32_t count = 0;
-	buffer[count] = newVal;
-	if ((count < NUM_READ - 1) && (buffer[count] > buffer[count + 1])) {
-		for (int i = count; i < NUM_READ - 1; i++) {
-			if (buffer[i] > buffer[i + 1]) {
-				float buff = buffer[i];
-				buffer[i] = buffer[i + 1];
-				buffer[i + 1] = buff;
-			}
-		}
-	} else {
-		if ((count > 0) && (buffer[count - 1] > buffer[count])) {
-			for (int i = count; i > 0; i--) {
-				if (buffer[i] < buffer[i - 1]) {
-					float buff = buffer[i];
-					buffer[i] = buffer[i - 1];
-					buffer[i - 1] = buff;
-				}
-			}
-		}
-	}
-	if (++count >= NUM_READ)
-		count = 0;
-	return buffer[(int) NUM_READ / 2];
-}
-
-float SMA_velocity_2(float newVal) {
-	static int t = 0;
-	static float vals[NUM_READ];
-	static float average = 0;
-	if (++t >= NUM_READ)
-		t = 0; // перемотка t
-	average -= vals[t];         // вычитаем старое
-	average += newVal;          // прибавляем новое
-	vals[t] = newVal;           // запоминаем в массив
-	return ((float) average / NUM_READ);
-}
 /* USER CODE END 1 */

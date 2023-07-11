@@ -1,3 +1,0 @@
-reg.c:14:6:pid_reg_reset	1
-reg.c:28:6:pid_reg_calc	14
-reg.c:88:6:RegParamsUpd	1
