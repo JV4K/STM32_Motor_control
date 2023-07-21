@@ -46,7 +46,7 @@ extern servocontrol_t servo1;
 /* USER CODE END EV */
 ```
 ### Инициализация
-Далее необходимо проинициализировать отдельные компоненты модуля необходимыми настройками.
+Теперь необходимо проинициализировать отдельные компоненты модуля необходимыми настройками.
 
 **Внимание:** `servocontrol_t *servo` во всех функциях - указатель на экземпляр структуры, т.е. первый аргумент должен выглядеть так: `&yourServoName`. Далее это объясняться не будет.
 ```c
@@ -74,7 +74,12 @@ void servo_driverInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint8_t ti
 // maxDuty - максимальное значение шим, которое будет выдавать микроконтроллер. Рекомендую взять значение, равное ARR-1, где ARR - arr регистр таймера
 //  Стоит уменьшить его на единицу, так как при полном заполнении есть риск перегрева мосфетов драйвера.
 
+// Следующие инициализаторы - настройки контуров управления. Рекомендуется инициализировать только те контуры, которые будут использоваться.
+// kp, ki, kd - коэффициенты ПИД регулятора контура
+// dt - период работы каждого контура (очень важно соблюдать эту величину)
+// kt - коэффициент алгоритма anti-windup. Категорически нельзя использовать при отсутствии интегральной составляющей (оставить 0)
 void servo_positionInit(servocontrol_t *servo, float kp, float ki, float kd, float dt, float kt);
 void servo_velocityInit(servocontrol_t *servo, float kp, float ki, float kd, float dt, float kt);
 void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp, float ki, float kd, float dt, float kt);
+// ratedCurrent - номинальный ток мотора в амперах
 ```
