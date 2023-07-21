@@ -130,35 +130,35 @@ int main(void) {
 	/* USER CODE BEGIN WHILE */
 	while (1) {
 		if (ModeCounter <= 1000) {
-			servo_controlPosition(&servo1, 6.666);
-			servo_controlPosition(&servo2, 6.666);
+			servo_controlPosition(&servo1, 6);
+			servo_controlPosition(&servo2, 6);
 		} else {
 			if ((ModeCounter > 1000) && (ModeCounter <= 2000)) {
 				if (STMNO == 1) {
-					servo_controlPosition(&servo1, 0);
-					servo_controlPosition(&servo2, 6.666 * 2);
+					servo_controlPosition(&servo1, -1.667);
+					servo_controlPosition(&servo2, 15);
 				} else {
-					servo_controlPosition(&servo1, 6.666 * 2);
-					servo_controlPosition(&servo2, 0);
+					servo_controlPosition(&servo1, 15);
+					servo_controlPosition(&servo2, -1.667);
 				}
 
 			} else {
 				if ((ModeCounter > 2000) && (ModeCounter <= 3000)) {
 					if (STMNO == 1) {
-						servo_controlPosition(&servo1, 0);
-						servo_controlPosition(&servo2, 0);
+						servo_controlPosition(&servo1, -1.667);
+						servo_controlPosition(&servo2, 1.667);
 					} else {
-						servo_controlPosition(&servo1, 0);
-						servo_controlPosition(&servo2, 0);
+						servo_controlPosition(&servo1, 1.667);
+						servo_controlPosition(&servo2, -1.667);
 					}
 				} else {
 					if ((ModeCounter > 3000) && (ModeCounter <= 5500)) {
 						if (STMNO == 1) {
-							servo_controlPosition(&servo1, 37.699);
-							servo_controlPosition(&servo2, -37.699);
+							servo_controlPosition(&servo1, 36.333);
+							servo_controlPosition(&servo2, -36.333);
 						} else {
-							servo_controlPosition(&servo1, 37.699);
-							servo_controlPosition(&servo2, -37.699);
+							servo_controlPosition(&servo1, 39.666);
+							servo_controlPosition(&servo2, -39.666);
 						}
 					} else{
 						if(ModeCounter > 5500){
