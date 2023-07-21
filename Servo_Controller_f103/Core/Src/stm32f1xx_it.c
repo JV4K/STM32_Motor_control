@@ -68,6 +68,7 @@ extern TIM_HandleTypeDef htim3;
 /* USER CODE BEGIN EV */
 extern servocontrol_t servo1;
 extern servocontrol_t servo2;
+extern volatile uint32_t ModeCounter;
 
 /* USER CODE END EV */
 
@@ -180,6 +181,7 @@ void PendSV_Handler(void) {
  */
 void SysTick_Handler(void) {
 	/* USER CODE BEGIN SysTick_IRQn 0 */
+	ModeCounter++;
 
 	/* USER CODE END SysTick_IRQn 0 */
 	HAL_IncTick();
@@ -202,14 +204,14 @@ void TIM3_IRQHandler(void) {
 	/* USER CODE BEGIN TIM3_IRQn 0 */
 	freq3khz++;
 	freq100hz++;
-	if (!mode) {
-		servo_controlPosition(&servo1, setAngle);
-		servo_controlPosition(&servo2, setAngle);
-	}
-	else{
-		servo_controlVelocity(&servo1, setSpeed);
-		servo_controlVelocity(&servo2, setSpeed);
-	}
+//	if (!mode) {
+//		servo_controlPosition(&servo1, setAngle);
+//		servo_controlPosition(&servo2, setAngle);
+//	}
+//	else{
+//		servo_controlVelocity(&servo1, setSpeed);
+//		servo_controlVelocity(&servo2, setSpeed);
+//	}
 
 	if (freq3khz >= 6) {
 		servo_positionLoop(&servo1);
