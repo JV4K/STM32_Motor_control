@@ -72,7 +72,7 @@ extern servocontrol_t servo1;
 
 ```c++
 void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpeed, float gearRatio,
-	uint8_t reverse);
+		uint8_t reverse);
 // servoLoops - количество используемых контуров управления
 //   Single - регулирование по углу положения вала
 //   Double - подчиненное регулирование по положению и угловой скорости
@@ -88,7 +88,7 @@ void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpe
 
 void servo_encoderInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint16_t CPR);
 // htim - указатель на обработчик таймера, например &htim1, если используется TIM1
-// CPR - количество счетов регистра таймера за один оборот мотора (если использованы два канала, CPR=(PPR*4)-1.
+// CPR - количество счетов таймера за один оборот мотора (если использованы два канала, CPR=(PPR*4)-1.
 //		PPR можно узнать из характеристик энкодера.
 
 
@@ -109,11 +109,12 @@ void servo_driverInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint8_t ti
 
 // kp, ki, kd - коэффициенты ПИД регулятора контура
 // dt - период работы каждого контура (очень важно соблюдать эту величину)
-// kt - коэффициент алгоритма anti-windup. Нельзя использовать при отсутствии интегральной составляющей (оставить 0)
+// kt - коэффициент алгоритма anti-windup. При отсутствии интегральной составляющей оставить 0
 
 void servo_positionInit(servocontrol_t *servo, float kp, float ki, float kd, float dt, float kt);
 void servo_velocityInit(servocontrol_t *servo, float kp, float ki, float kd, float dt, float kt);
-void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp, float ki, float kd, float dt, float kt);
+void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp, float ki, float kd, float dt,
+		float kt);
 // ratedCurrent - номинальный ток мотора в амперах
 ```
 </details>
