@@ -71,7 +71,8 @@ extern servocontrol_t servo1;
 <summary>Спойлер: инициализация компонентов</summary>
 
 ```c++
-void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpeed, float gearRatio, uint8_t reverse);
+void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpeed, float gearRatio,
+	uint8_t reverse);
 // servoLoops - количество используемых контуров управления
 //   Single - регулирование по углу положения вала
 //   Double - подчиненное регулирование по положению и угловой скорости
@@ -79,9 +80,9 @@ void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpe
 
 
 // motorSpeed - скорость привода до редуктора в РАД/С
-// gearRatio - передаточное число редуктора привода. Например, если передаточное число 1:21.3, передайте 21.3.
-// 		Если редуктора нет, или хотите регулировать до привод без учета редукции
-//		(бывает полезно при большом влиянии вязкого трения редуктора на работу привода), передайте 1.
+// gearRatio - передаточное число редуктора. Например, если передаточное число 1:21.3, передайте 21.3.
+// 	Если редуктора нет, или хотите регулировать до привод без учета редукции
+//	(бывает полезно при большом влиянии вязкого трения редуктора на работу привода), передайте 1.
 // reverse - определяет направление вращения, передайте 0 или 1
 
 
