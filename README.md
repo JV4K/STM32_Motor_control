@@ -205,8 +205,8 @@ HAL_TIM_Base_Start_IT(&htim3);
 /* USER CODE BEGIN TIM3_IRQn 0 */
 counter++;
 if (counter >= 180) {
-		servo_velocityLoop(&servo1);
-		counter = 0;
+	servo_velocityLoop(&servo1);
+	counter = 0;
 }
 /* USER CODE END TIM3_IRQn 0 */
 ```
