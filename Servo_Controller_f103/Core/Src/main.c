@@ -39,8 +39,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-//#define STMNO 1
-#define STMNO 2
 
 /* USER CODE END PM */
 
