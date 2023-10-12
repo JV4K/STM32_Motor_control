@@ -20,7 +20,7 @@
 
 <a id="install"></a>
 ## Установка
-Распаковать архив _servocontrol.zip из релиза в папку проекта.
+Распаковать архив _servocontrol.zip из [релиза](https://github.com/JV4K/STM32_Motor_control/releases) в папку проекта.
 
 В файлах main.c и stm32...xx_it.c включить следующий файл:
 ```c++
