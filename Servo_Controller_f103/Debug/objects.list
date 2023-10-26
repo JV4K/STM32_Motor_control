@@ -1,6 +1,8 @@
 "./Core/Src/adc.o"
+"./Core/Src/adc_lookup.o"
 "./Core/Src/dma.o"
 "./Core/Src/encoder.o"
+"./Core/Src/filters.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
 "./Core/Src/pid.o"

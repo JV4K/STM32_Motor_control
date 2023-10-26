@@ -28,6 +28,7 @@ typedef struct {
 	uint16_t minDuty;
 
 	int32_t _duty;
+	int8_t dir; // Stores current direction
 
 } pwmControl_t;
 

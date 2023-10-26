@@ -30,14 +30,17 @@ void pwm_setSpeed(pwmControl_t *driver, int32_t duty) {
 		driver->_duty = 0;
 		HAL_GPIO_WritePin(driver->dir1_Port, driver->dir1_Pin, 0);
 		HAL_GPIO_WritePin(driver->dir2_Port, driver->dir2_Pin, 0);
+		driver->dir = 0;
 	} else {
 		driver->_duty = constrain(ABS(duty), driver->minDuty, driver->maxDuty);
 		if (duty > 0) {
 			HAL_GPIO_WritePin(driver->dir1_Port, driver->dir1_Pin, 1);
 			HAL_GPIO_WritePin(driver->dir2_Port, driver->dir2_Pin, 0);
+			driver->dir = 1;
 		} else {
 			HAL_GPIO_WritePin(driver->dir1_Port, driver->dir1_Pin, 0);
 			HAL_GPIO_WritePin(driver->dir2_Port, driver->dir2_Pin, 1);
+			driver->dir = -1;
 		}
 	}
 

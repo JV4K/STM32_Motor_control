@@ -57,6 +57,7 @@ void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp, floa
 void servo_setPositionTolerance(servocontrol_t *servo, float tolerance);
 int servo_getState(servocontrol_t *servo);
 int servo_getDirection(servocontrol_t *servo);
+int servo_getCurrentDirection(servocontrol_t *servo);
 
 void servo_positionLoop(servocontrol_t *servo);
 void servo_velocityLoop(servocontrol_t *servo);

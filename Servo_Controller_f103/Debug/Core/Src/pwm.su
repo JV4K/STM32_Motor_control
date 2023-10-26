@@ -1,4 +1,4 @@
 ../Core/Src/pwm.c:11:6:pwm_initDriver	24	static
 ../Core/Src/pwm.c:23:6:pwm_dutyLimits	16	static
 ../Core/Src/pwm.c:28:6:pwm_setSpeed	16	static
-../Core/Src/pwm.c:62:6:pwm_break	16	static
+../Core/Src/pwm.c:65:6:pwm_break	16	static

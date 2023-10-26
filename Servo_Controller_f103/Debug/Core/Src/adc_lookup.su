@@ -1,0 +1,2 @@
+../Core/Src/adc_lookup.c:11:6:initLookupTable	40	static
+../Core/Src/adc_lookup.c:19:7:binarySearch	72	static

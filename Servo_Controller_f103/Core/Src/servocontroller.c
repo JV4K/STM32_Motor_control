@@ -23,14 +23,13 @@
 
  4. Gear ratio of reducer (e.g. if reducer is 1:21.3, pass 21.3)
  */
-void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpeed, float gearRatio,
-		uint8_t reverse) {
+void servo_baseInit(servocontrol_t *servo, enum loops servoLoops,
+		float motorSpeed, float gearRatio, uint8_t reverse) {
 	servo->controllerLoops = servoLoops;
 	servo->encoder.gearRatio = gearRatio;
 	if (reverse) {
 		servo->reverseFlag = -1;
-	}
-	else{
+	} else {
 		servo->reverseFlag = 1;
 	}
 	servo->maxShaftSpeed = motorSpeed / gearRatio;
@@ -47,7 +46,8 @@ void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpe
  htim - pointer to handler of timer in encoder mode.
  CPR - counts per revolution. If you are using both channels and rising/falling edges of encoder, CPR=PPR*4.
  */
-void servo_encoderInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint16_t CPR) {
+void servo_encoderInit(servocontrol_t *servo, TIM_HandleTypeDef *htim,
+		uint16_t CPR) {
 	servo->encoder.htim = htim;
 	servo->encoder.countsPerRevolution = CPR;
 }
@@ -64,9 +64,10 @@ void servo_encoderInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint16_t 
 
  GPIOs are needed to control direction with a dc-motor driver
  */
-void servo_driverInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint8_t timerChannel,
-		GPIO_TypeDef *dir1_Port, uint32_t dir1_Pin, GPIO_TypeDef *dir2_Port, uint32_t dir2_Pin,
-		uint16_t minDuty, uint16_t maxDuty) {
+void servo_driverInit(servocontrol_t *servo, TIM_HandleTypeDef *htim,
+		uint8_t timerChannel, GPIO_TypeDef *dir1_Port, uint32_t dir1_Pin,
+		GPIO_TypeDef *dir2_Port, uint32_t dir2_Pin, uint16_t minDuty,
+		uint16_t maxDuty) {
 	servo->driver.htim = htim;
 	servo->driver.timerChannel = timerChannel;
 	servo->driver.dir1_Port = dir1_Port;
@@ -96,14 +97,16 @@ void servo_driverInit(servocontrol_t *servo, TIM_HandleTypeDef *htim, uint8_t ti
 }
 
 // Initialization of controller loops with PID gains and period
-void servo_positionInit(servocontrol_t *servo, float kp, float ki, float kd, float dt, float kt) {
+void servo_positionInit(servocontrol_t *servo, float kp, float ki, float kd,
+		float dt, float kt) {
 	servo->pid_position.kp = kp;
 	servo->pid_position.ki = ki;
 	servo->pid_position.kd = kd;
 	servo->pid_position.dt = dt;
 	servo->pid_position.kt = kt;
 }
-void servo_velocityInit(servocontrol_t *servo, float kp, float ki, float kd, float dt, float kt) {
+void servo_velocityInit(servocontrol_t *servo, float kp, float ki, float kd,
+		float dt, float kt) {
 	servo->pid_velocity.kp = kp;
 	servo->pid_velocity.ki = ki;
 	servo->pid_velocity.kd = kd;
@@ -111,8 +114,8 @@ void servo_velocityInit(servocontrol_t *servo, float kp, float ki, float kd, flo
 	servo->pid_velocity.kt = kt;
 	servo->encoder.dt = dt;
 }
-void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp, float ki, float kd, float dt,
-		float kt) {
+void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp,
+		float ki, float kd, float dt, float kt) {
 	servo->pid_current.kp = kp;
 	servo->pid_current.ki = ki;
 	servo->pid_current.kd = kd;
@@ -145,12 +148,22 @@ int servo_getState(servocontrol_t *servo) {
  */
 int servo_getDirection(servocontrol_t *servo) {
 	if (servo->encoder.angularVelocity > 0) {
-		return 1*servo->reverseFlag;
+		return 1 * servo->reverseFlag;
 	}
 	if (servo->encoder.angularVelocity < 0) {
-		return -1*servo->reverseFlag;
+		return -1 * servo->reverseFlag;
 	}
 	return 0;
+}
+
+/*
+ Returns direction of motor current direction:
+ -1 : backward
+ 0  : no current
+ 1  : forward
+ */
+int servo_getCurrentDirection(servocontrol_t *servo) {
+	return servo->driver.dir * servo->reverseFlag;
 }
 
 /*
@@ -164,7 +177,8 @@ void servo_positionLoop(servocontrol_t *servo) {
 
 	switch (servo->currentMode) {
 	case Position: {
-		pid_calculate(&servo->pid_position, servo->positionSetpoint, encoder_getAngle(&servo->encoder));
+		pid_calculate(&servo->pid_position, servo->positionSetpoint,
+				encoder_getAngle(&servo->encoder));
 		if (servo->controllerLoops == Single) {
 			pwm_setSpeed(&servo->driver, pid_getOutput(&servo->pid_position));
 		} else {
@@ -189,7 +203,8 @@ void servo_positionLoop(servocontrol_t *servo) {
  */
 void servo_velocityLoop(servocontrol_t *servo) {
 	encoder_updateVelocity(&servo->encoder);
-	pid_calculate(&servo->pid_velocity, servo->velocitySetpoint, encoder_getVelocity(&servo->encoder));
+	pid_calculate(&servo->pid_velocity, servo->velocitySetpoint,
+			encoder_getVelocity(&servo->encoder));
 	switch (servo->controllerLoops) {
 	case Single:
 		pid_reset(&servo->pid_velocity);
@@ -213,7 +228,8 @@ void servo_velocityLoop(servocontrol_t *servo) {
  */
 void servo_currentLoop(servocontrol_t *servo, float currentFeedback) {
 	if (servo->controllerLoops == Triple) {
-		pid_calculate(&servo->pid_current, servo->currentSetpoint, currentFeedback);
+		pid_calculate(&servo->pid_current, servo->currentSetpoint,
+				currentFeedback);
 		pwm_setSpeed(&servo->driver, pid_getOutput(&servo->pid_current));
 	} else {
 		pid_reset(&servo->pid_current);
@@ -223,12 +239,13 @@ void servo_currentLoop(servocontrol_t *servo, float currentFeedback) {
 
 void servo_controlPosition(servocontrol_t *servo, float setpoint) {
 	servo->currentMode = Position;
-	servo->positionSetpoint = setpoint*servo->reverseFlag;
+	servo->positionSetpoint = setpoint * servo->reverseFlag;
 }
 
 void servo_controlVelocity(servocontrol_t *servo, float setpoint) {
 	if (servo->controllerLoops != Single) {
 		servo->currentMode = Velocity;
-		servo->velocitySetpoint = constrain(setpoint*servo->reverseFlag, -servo->maxShaftSpeed, servo->maxShaftSpeed);
+		servo->velocitySetpoint = constrain(setpoint * servo->reverseFlag,
+				-servo->maxShaftSpeed, servo->maxShaftSpeed);
 	}
 }

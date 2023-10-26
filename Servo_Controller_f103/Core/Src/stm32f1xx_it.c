@@ -46,7 +46,7 @@
 /* USER CODE BEGIN PV */
 uint16_t freq3khz;
 uint16_t freq100hz;
-float setAngle = 7;
+float setAngle = 0;
 float setSpeed = 20;
 uint8_t mode = 0;
 
