@@ -1,2 +1,2 @@
-../Core/Src/adc_lookup.c:11:6:initLookupTable	2
-../Core/Src/adc_lookup.c:19:7:binarySearch	8
+../Core/Src/adc_lookup.c:12:6:initLookupTable	2
+../Core/Src/adc_lookup.c:21:7:linearApproximation	10

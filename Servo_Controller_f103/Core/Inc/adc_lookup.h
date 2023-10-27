@@ -8,7 +8,7 @@
 #ifndef INC_ADC_LOOKUP_H_
 #define INC_ADC_LOOKUP_H_
 
-#define TABLE_SIZE 300  // Размер lookup-таблицы
+#define TABLE_SIZE 4096  // Размер lookup-таблицы
 
 typedef struct {
     float x;
@@ -17,6 +17,5 @@ typedef struct {
 
 void initLookupTable(TableEntry* table, float range_start, float range_end, float a, float b, float c);
 float linearApproximation(TableEntry* table, int table_size, float x);
-
 
 #endif /* INC_ADC_LOOKUP_H_ */
