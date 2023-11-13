@@ -20,7 +20,7 @@ enum loops {
 };
 
 enum servoMode {
-	Idle, Position, Velocity
+	Idle, Position, Velocity, Current
 };
 
 /*
@@ -41,6 +41,7 @@ typedef struct {
 	enum loops controllerLoops;
 	enum servoMode currentMode;
 	float maxShaftSpeed;
+	float maxCurrent;
 } servocontrol_t;
 
 void servo_baseInit(servocontrol_t *servo, enum loops servoLoops, float motorSpeed, float gearRatio, uint8_t reverse);
@@ -65,3 +66,4 @@ void servo_currentLoop(servocontrol_t *servo, float currentFeedback);
 
 void servo_controlPosition(servocontrol_t *servo, float setpoint);
 void servo_controlVelocity(servocontrol_t *servo, float setpoint);
+void servo_controlCurrent(servocontrol_t *servo, float setpoint);

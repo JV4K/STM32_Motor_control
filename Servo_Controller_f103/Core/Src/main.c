@@ -42,7 +42,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define CUR_MED_ORDER 15 // Order of median filter
+#define CUR_MED_ORDER 35 // Order of median filter
 #define A1 0.00000125208
 #define B1 0.00010988452
 
@@ -61,12 +61,10 @@ servocontrol_t servo2;
 volatile uint16_t adc[2]; // DMA buffer to store ADC values from current sensor
 
 uint8_t convCpltFlag; // DMA interrupt flag. True means that data in buffer is up to date.
-float adc1_med, adc1_med_ema, current; // Variables to store filtered ADC data (median filter -> exponential moving average)
-
+float adc1_med, adc1_med_ema; // Variables to store filtered ADC data (median filter -> exponential moving average)
+extern float current;
 MedianFilter *median_filter1; // Median filter instance
 EMAFilter *ema_filter1; // Exponential moving average filter instance
-
-int8_t currentdirtest;
 
 /* USER CODE END PV */
 
@@ -74,6 +72,11 @@ int8_t currentdirtest;
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
+
+// Some functions to shorten the code in main()
+// Look inside to see how to initialize a servo
+void initServo1Func();
+void initServo2Func();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -115,26 +118,15 @@ int main(void)
   MX_TIM3_Init();
   MX_ADC1_Init();
   MX_SPI2_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 	HAL_ADCEx_Calibration_Start(&hadc1);
 
 	// Initialization of 1st motor controller
-	servo_baseInit(&servo1, Double, 1200, 21.3, 0);
-	servo_encoderInit(&servo1, &htim1, 44);
-	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port,
-	INB_Pin, 0, 998);
-	servo_positionInit(&servo1, 50, 0, 0, 0.00033333, 0);
-	servo_velocityInit(&servo1, 20, 10, 0, 0.01, 1);
-	servo_setPositionTolerance(&servo1, 0.026);
+	initServo1Func();
 
 	// Initialization of 2nd motor controller
-	servo_baseInit(&servo2, Double, 1200, 21.3, 1);
-	servo_encoderInit(&servo2, &htim2, 44);
-	servo_driverInit(&servo2, &htim3, 2, INA2_GPIO_Port, INA2_Pin,
-	INB2_GPIO_Port, INB2_Pin, 0, 998);
-	servo_positionInit(&servo2, 50, 0, 0, 0.00033333, 0);
-	servo_velocityInit(&servo2, 20, 10, 0, 0.01, 1);
-	servo_setPositionTolerance(&servo2, 0.026);
+	initServo2Func();
 
 	// Clear CNT and start timers in encoder mode
 	__HAL_TIM_CLEAR_IT(&htim1, TIM_IT_UPDATE);
@@ -147,7 +139,7 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
 	HAL_TIM_Base_Start_IT(&htim3);
 
-	// Allow powering motors by setting Enable pins HIGH
+	// Allow powering motors by setting Enable pins of a driver HIGH
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
 
@@ -163,12 +155,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1) {
+		// TODO write comments about this code, make functions for multiple filtering
 		if (convCpltFlag) {
 			adc1_med = updateAndGetMedian(median_filter1, adc[0]);
 			adc1_med_ema = updateEMA(ema_filter1, adc1_med);
-			current = (adc1_med_ema*adc1_med_ema*A1+adc1_med_ema*B1)*servo_getCurrentDirection(&servo1);
-			//TODO: Add lookup table and then servo_getCurrentDirection(servocontrol_t *servo);
-
+			current = (adc1_med_ema * adc1_med_ema * A1 + adc1_med_ema * B1)
+					* servo_getCurrentDirection(&servo1);
 			convCpltFlag = 0;
 		}
 
@@ -230,6 +222,28 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 	if (hadc->Instance == ADC1) {
 		convCpltFlag = 1;
 	}
+}
+
+void initServo1Func() {
+	servo_baseInit(&servo1, Triple, 1200, 21.3, 0);
+	servo_encoderInit(&servo1, &htim1, 44);
+	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port,
+	INB_Pin, 0, 998);
+	servo_positionInit(&servo1, 50, 0, 0, 0.00033333, 0);
+	servo_velocityInit(&servo1, 20, 10, 0, 0.01, 1);
+	servo_currentInit(&servo1, 0.5, 0.01, 0, 0, 0.000055555, 0);
+	servo_setPositionTolerance(&servo1, 0.026);
+}
+
+void initServo2Func() {
+	servo_baseInit(&servo2, Triple, 1200, 21.3, 1);
+	servo_encoderInit(&servo2, &htim2, 44);
+	servo_driverInit(&servo2, &htim3, 2, INA2_GPIO_Port, INA2_Pin,
+	INB2_GPIO_Port, INB2_Pin, 0, 998);
+	servo_positionInit(&servo2, 50, 0, 0, 0.00033333, 0);
+	servo_velocityInit(&servo2, 20, 10, 0, 0.01, 1);
+	servo_currentInit(&servo2, 0.5, 0.01, 0, 0, 0.000055555, 0);
+	servo_setPositionTolerance(&servo2, 0.026);
 }
 
 /* USER CODE END 4 */

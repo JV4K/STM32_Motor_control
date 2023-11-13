@@ -38,7 +38,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define NUM_READ 10
 
 /* USER CODE END PM */
 
@@ -47,9 +46,16 @@
 uint16_t freq3khz;
 uint16_t freq100hz;
 float setAngle = 0;
-float setSpeed = 20;
-uint8_t mode = 0;
+float setSpeed = 3;
+float setCurrent = 0;
+uint16_t debugMode;
+float current;
 
+enum ControlMode {
+	Pos, Vel, Cur
+};
+
+enum ControlMode mode = Cur;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -230,15 +236,34 @@ void TIM3_IRQHandler(void)
   /* USER CODE BEGIN TIM3_IRQn 0 */
 	freq3khz++;
 	freq100hz++;
-	if (!mode) {
+
+//	if (!mode) {
+//		servo_controlPosition(&servo1, setAngle);
+//		servo_controlPosition(&servo2, setAngle);
+//	} else {
+//		servo_controlVelocity(&servo1, setSpeed);
+//		servo_controlVelocity(&servo2, setSpeed);
+//	}
+
+	switch (mode) {
+	case Pos:
+		debugMode = 0;
 		servo_controlPosition(&servo1, setAngle);
 		servo_controlPosition(&servo2, setAngle);
-	}
-	else{
+		break;
+	case Vel:
+		debugMode = 1;
 		servo_controlVelocity(&servo1, setSpeed);
 		servo_controlVelocity(&servo2, setSpeed);
+		break;
+	case Cur:
+		debugMode = 2;
+		servo_controlCurrent(&servo1, setCurrent);
+		servo_controlCurrent(&servo2, setCurrent);
+		break;
 	}
 
+	servo_currentLoop(&servo1, current);
 	if (freq3khz >= 6) {
 		servo_positionLoop(&servo1);
 		servo_positionLoop(&servo2);

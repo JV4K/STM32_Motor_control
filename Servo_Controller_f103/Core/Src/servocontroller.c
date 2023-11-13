@@ -121,6 +121,7 @@ void servo_currentInit(servocontrol_t *servo, float ratedCurrent, float kp,
 	servo->pid_current.kd = kd;
 	servo->pid_current.dt = dt;
 	servo->pid_current.kt = kt;
+	servo->maxCurrent = ratedCurrent;
 	if (servo->controllerLoops == Triple) {
 		servo->pid_velocity.lowerLimit = -ratedCurrent;
 		servo->pid_velocity.upperLimit = ratedCurrent;
@@ -203,8 +204,10 @@ void servo_positionLoop(servocontrol_t *servo) {
  */
 void servo_velocityLoop(servocontrol_t *servo) {
 	encoder_updateVelocity(&servo->encoder);
-	pid_calculate(&servo->pid_velocity, servo->velocitySetpoint,
-			encoder_getVelocity(&servo->encoder));
+	if (servo->currentMode != Current) {
+		pid_calculate(&servo->pid_velocity, servo->velocitySetpoint,
+				encoder_getVelocity(&servo->encoder));
+	}
 	switch (servo->controllerLoops) {
 	case Single:
 		pid_reset(&servo->pid_velocity);
@@ -214,7 +217,12 @@ void servo_velocityLoop(servocontrol_t *servo) {
 		pwm_setSpeed(&servo->driver, pid_getOutput(&servo->pid_velocity));
 		break;
 	case Triple:
-		servo->currentSetpoint = pid_getOutput(&servo->pid_velocity);
+		if (servo->currentMode != Current) {
+			servo->currentSetpoint = pid_getOutput(&servo->pid_velocity);
+		} else {
+			pid_reset(&servo->pid_velocity);
+			servo->velocitySetpoint = 0;
+		}
 		break;
 	}
 }
@@ -247,5 +255,13 @@ void servo_controlVelocity(servocontrol_t *servo, float setpoint) {
 		servo->currentMode = Velocity;
 		servo->velocitySetpoint = constrain(setpoint * servo->reverseFlag,
 				-servo->maxShaftSpeed, servo->maxShaftSpeed);
+	}
+}
+
+void servo_controlCurrent(servocontrol_t *servo, float setpoint) {
+	if (servo->controllerLoops == Triple) {
+		servo->currentMode = Current;
+		servo->currentSetpoint = constrain(setpoint * servo->reverseFlag,
+				-servo->maxCurrent, servo->maxCurrent);
 	}
 }

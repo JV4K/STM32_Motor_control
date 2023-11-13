@@ -14,10 +14,12 @@
  * 3. Counts per revolution of encoder (encoder PPR*4 when both channels and rising/falling edges are used)
  * 4. Gear ratio (e.g. if your motor has gear ratio of 1:21.3, pass 21.3). If no gearbox, pass 1;
  */
-void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle, uint16_t CPR, float dt, float gearRatio) {
+void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle,
+		uint16_t CPR, float dt, float gearRatio) {
 	encoder->htim = timerHandle;
 	encoder->countsPerRevolution = CPR;
 	encoder->dt = dt;
+	encoder->filter = initMedianFilter(MED_ORDER);
 	if (gearRatio) {
 		encoder->gearRatio = gearRatio;
 	} else {
@@ -29,18 +31,23 @@ void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle, uint16_t C
 void encoder_updatePosition(encoder_t *encoder) {
 	encoder->currentTicks = (int16_t) encoder->htim->Instance->CNT;
 
-	encoder->fullRevolutions += encoder->currentTicks / encoder->countsPerRevolution;
-	encoder->currentTicks = encoder->currentTicks % encoder->countsPerRevolution;
+	encoder->fullRevolutions += encoder->currentTicks
+			/ encoder->countsPerRevolution;
+	encoder->currentTicks = encoder->currentTicks
+			% encoder->countsPerRevolution;
 	encoder->htim->Instance->CNT = (uint16_t) encoder->currentTicks;
 
 	encoder->angle = (((float) encoder->fullRevolutions
-			+ ((float) encoder->currentTicks / encoder->countsPerRevolution)) * 2 * M_PI)
-			/ encoder->gearRatio;
+			+ ((float) encoder->currentTicks / encoder->countsPerRevolution))
+			* 2 * M_PI) / encoder->gearRatio;
 }
 
 // Calculates current angular velocity in rad/s. Must be called with a specified period (dt)
 void encoder_updateVelocity(encoder_t *encoder) {
-	encoder->angularVelocity = (encoder->angle - encoder->previousAngle) / encoder->dt;
+	float velocity = (encoder->angle - encoder->previousAngle) / encoder->dt;
+//	encoder->angularVelocity = updateAndGetMedian(encoder->filter, velocity);
+	encoder->angularVelocity = (encoder->angle - encoder->previousAngle)
+			/ encoder->dt;
 	encoder->previousAngle = encoder->angle;
 }
 
@@ -53,9 +60,9 @@ void encoder_reset(encoder_t *encoder) {
 	encoder->currentTicks = 0;
 }
 
-float encoder_getAngle(encoder_t *encoder){
+float encoder_getAngle(encoder_t *encoder) {
 	return encoder->angle;
 }
-float encoder_getVelocity(encoder_t *encoder){
+float encoder_getVelocity(encoder_t *encoder) {
 	return encoder->angularVelocity;
 }

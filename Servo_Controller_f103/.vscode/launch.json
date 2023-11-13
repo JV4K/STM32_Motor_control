@@ -1,0 +1,55 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${command:cmake.launchTargetPath}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "${command:vscode-embedded.st.gdb}",
+            "miDebuggerServerAddress": "localhost:3333",
+            "debugServerPath": "${command:vscode-embedded.st.gdbserver}",
+            "debugServerArgs": "--stm32cubeprogrammer-path ${command:vscode-embedded.st.cubeprogrammer} --swd --port-number 3333",
+            "serverStarted": "Waiting for connection on port .*\\.\\.\\.",
+            "stopAtConnect": true,
+            "postRemoteConnectCommands": [
+                {
+                    "text": "load build/debug/build/Servo_Controller_f103.elf"
+                }
+            ],
+            "logging": {
+                "engineLogging": true
+            },
+            "preLaunchTask": "Build",
+            "svdPath": "${command:vscode-embedded.st.svd}/STM32F103.svd"
+        },
+        {
+            "name": "C/C++: clang.exe build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "miDebuggerPath": "C:\\mingw64\\bin\\lldb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: clang.exe build active file"
+        }
+    ]
+}

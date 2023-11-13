@@ -1,0 +1,3 @@
+C:/Github/STM32_Motor_control/Servo_Controller_f103/build/debug/build/CMakeFiles/Servo_Controller_f103.dir
+C:/Github/STM32_Motor_control/Servo_Controller_f103/build/debug/build/CMakeFiles/edit_cache.dir
+C:/Github/STM32_Motor_control/Servo_Controller_f103/build/debug/build/CMakeFiles/rebuild_cache.dir
