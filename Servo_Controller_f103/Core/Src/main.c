@@ -42,7 +42,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define CUR_MED_ORDER 35 // Order of median filter
+#define CUR_MED_ORDER 10 // Order of median filter
 #define A1 0.00000125208
 #define B1 0.00010988452
 
@@ -147,7 +147,7 @@ int main(void)
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &adc, 2);
 
 	// Initialization of filters
-	ema_filter1 = initEMAFilter(0.09, 0);
+	ema_filter1 = initEMAFilter(0.05, 0);
 	median_filter1 = initMedianFilter(CUR_MED_ORDER);
 
   /* USER CODE END 2 */
@@ -158,6 +158,7 @@ int main(void)
 		// TODO write comments about this code, make functions for multiple filtering
 		if (convCpltFlag) {
 			adc1_med = updateAndGetMedian(median_filter1, adc[0]);
+//			adc1_med_ema = updateEMA(ema_filter1, adc[0]);
 			adc1_med_ema = updateEMA(ema_filter1, adc1_med);
 			current = (adc1_med_ema * adc1_med_ema * A1 + adc1_med_ema * B1)
 					* servo_getCurrentDirection(&servo1);
@@ -226,13 +227,13 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 
 void initServo1Func() {
 	servo_baseInit(&servo1, Triple, 1200, 21.3, 0);
-	servo_encoderInit(&servo1, &htim1, 44);
+	servo_encoderInit(&servo1, &htim1, 48);
 	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port,
-	INB_Pin, 0, 998);
-	servo_positionInit(&servo1, 50, 0, 0, 0.00033333, 0);
-	servo_velocityInit(&servo1, 20, 10, 0, 0.01, 1);
-	servo_currentInit(&servo1, 0.5, 0.01, 0, 0, 0.000055555, 0);
-	servo_setPositionTolerance(&servo1, 0.026);
+	INB_Pin, 0, 999);
+	servo_positionInit(&servo1, 4.26844128761844, 4.61720524119749, 0, 0.002, 1);
+	servo_velocityInit(&servo1, 0.007185, 0.00603, 0, 0.002, 1);
+	servo_currentInit(&servo1, 0.3, 1024.537964, 277452.562500, 0, 0.000333, 1);
+	servo_setPositionTolerance(&servo1, 0.05);
 }
 
 void initServo2Func() {
@@ -243,7 +244,7 @@ void initServo2Func() {
 	servo_positionInit(&servo2, 50, 0, 0, 0.00033333, 0);
 	servo_velocityInit(&servo2, 20, 10, 0, 0.01, 1);
 	servo_currentInit(&servo2, 0.5, 0.01, 0, 0, 0.000055555, 0);
-	servo_setPositionTolerance(&servo2, 0.026);
+	servo_setPositionTolerance(&servo2, 0.05);
 }
 
 /* USER CODE END 4 */
