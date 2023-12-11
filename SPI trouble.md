@@ -52,8 +52,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			hspi2.Instance->CR1 |= 0x100; // Устанавливаем SSI бит (software nss)
 
       			// При чтении из регистра DR, стек rx fifo обнуляется, помогает со сдвигом принимаемых данных.
-			uint32_t clearFifo = hspi2.Instance->DR; 
+			uint32_t clearFifo = hspi2.Instance->DR;
+
 		} else { // Спад сигнала на NSS
+
 			hspi2.Instance->CR1 &= 0xFEFF; // Сбрасываем SSI бит (software nss)
 			HAL_SPI_TransmitReceive_DMA(&hspi2, txbuffer, rxbuffer, 27);
 		}
