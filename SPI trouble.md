@@ -54,8 +54,8 @@ uint8_t txbuffer[27] = { 127, 170, 209, 237, 252, 252, 237, 209, 170, 127, 84,
 ...
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (GPIO_Pin == NSS_Pin) { // Фронт сигнала на NSS
-		if (HAL_GPIO_ReadPin(NSS_GPIO_Port, NSS_Pin)) {
+	if (GPIO_Pin == NSS_Pin) {
+		if (HAL_GPIO_ReadPin(NSS_GPIO_Port, NSS_Pin)) { // Фронт сигнала на NSS
 			hspi2.Instance->CR1 |= 0x100; // Устанавливаем SSI бит (software nss)
 
       			// При чтении из регистра DR, стек rx fifo обнуляется, помогает со сдвигом принимаемых данных.
