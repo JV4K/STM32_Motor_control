@@ -20,7 +20,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
 файл stm32f4xx_it.c:
 ```c
 ...
-// Объявление буферов
+// Данные
 uint8_t txbuffer[27] = { 127, 156, 184, 209, 229, 244, 252, 254, 249, 237, 219,
 		197, 170, 142, 112, 84, 57, 35, 17, 5, 0, 2, 10, 25, 45, 70, 98 };
 uint8_t rxbuffer[27];
@@ -46,6 +46,13 @@ void TIM4_IRQHandler(void)
 main.c:
 
 ```c
+// Данные
+uint8_t rxbuffer[27];
+uint8_t txbuffer[27] = { 127, 170, 209, 237, 252, 252, 237, 209, 170, 127, 84,
+		45, 17, 2, 2, 17, 45, 84, 127, 170, 209, 237, 252, 252, 237, 209, 170 };
+
+...
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == NSS_Pin) { // Фронт сигнала на NSS
 		if (HAL_GPIO_ReadPin(NSS_GPIO_Port, NSS_Pin)) {
