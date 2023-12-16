@@ -8,9 +8,8 @@
 #ifndef INC_REG_H_
 #define INC_REG_H_
 
-#endif /* INC_REG_H_ */
-
 #include "main.h"
+#include "IQmathLib.h"
 
 typedef struct {
 	float error;
@@ -67,3 +66,5 @@ void pid_setLowerLimit(pid_t *pid, float LowerLimit);
 
 // Tolerance band setter
 void pid_setToleranceBand(pid_t *pid, float ToleranceBand);
+
+#endif /* INC_REG_H_ */

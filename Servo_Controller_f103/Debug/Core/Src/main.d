@@ -27,8 +27,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/dma.h ../Core/Inc/spi.h \
- ../Core/Inc/tim.h ../Core/Inc/gpio.h ../Core/Inc/servocontroller.h \
- ../Core/Inc/encoder.h ../Core/Inc/filters.h ../Core/Inc/pid.h \
+ ../Core/Inc/tim.h ../Core/Inc/gpio.h ../Core/Inc/IQmathLib.h \
+ ../Core/Inc/servocontroller.h ../Core/Inc/encoder.h \
+ ../Core/Inc/filters.h ../Core/Inc/pid.h ../Core/Inc/IQmathLib.h \
  ../Core/Inc/pwm.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -64,8 +65,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/spi.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/gpio.h:
+../Core/Inc/IQmathLib.h:
 ../Core/Inc/servocontroller.h:
 ../Core/Inc/encoder.h:
 ../Core/Inc/filters.h:
 ../Core/Inc/pid.h:
+../Core/Inc/IQmathLib.h:
 ../Core/Inc/pwm.h:

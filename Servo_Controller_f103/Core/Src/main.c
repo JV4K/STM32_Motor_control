@@ -26,6 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "IQmathLib.h"
 #include <servocontroller.h>
 #include <filters.h>
 /* USER CODE END Includes */
@@ -51,6 +52,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+_iq18 sosa;
 
 uint8_t readyFlag; // When true, all the algorithms and systems are initialized and ready to operate
 
@@ -149,6 +151,7 @@ int main(void) {
 	// Initialization of filters
 	ema_filter1 = initEMAFilter(0.01, 0);
 	median_filter1 = initMedianFilter(CUR_MED_ORDER);
+	sosa = _IQ18(0.00189048172801324);
 
 	/* USER CODE END 2 */
 

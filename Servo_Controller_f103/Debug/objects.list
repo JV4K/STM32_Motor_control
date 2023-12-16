@@ -6,6 +6,7 @@
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
 "./Core/Src/pid.o"
+"./Core/Src/pid_iq18.o"
 "./Core/Src/pwm.o"
 "./Core/Src/servocontroller.o"
 "./Core/Src/spi.o"
