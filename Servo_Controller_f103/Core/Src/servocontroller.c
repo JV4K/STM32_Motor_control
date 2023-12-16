@@ -50,6 +50,7 @@ void servo_encoderInit(servocontrol_t *servo, TIM_HandleTypeDef *htim,
 		uint16_t CPR) {
 	servo->encoder.htim = htim;
 	servo->encoder.countsPerRevolution = CPR;
+	servo->encoder.filter = initEMAFilter(VEL_EMA, 0);
 }
 
 /*

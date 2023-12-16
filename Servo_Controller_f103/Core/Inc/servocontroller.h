@@ -15,6 +15,8 @@
 #include <pid.h>
 #include <pwm.h>
 
+#define VEL_EMA 0.1 // Smoothing factor of velocity filter
+
 enum loops {
 	Single, Double, Triple
 };

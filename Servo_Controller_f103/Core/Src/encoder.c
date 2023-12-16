@@ -15,11 +15,11 @@
  * 4. Gear ratio (e.g. if your motor has gear ratio of 1:21.3, pass 21.3). If no gearbox, pass 1;
  */
 void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle,
-		uint16_t CPR, float dt, float gearRatio) {
+		uint16_t CPR, float dt, float gearRatio, float vel_filter_k) {
 	encoder->htim = timerHandle;
 	encoder->countsPerRevolution = CPR;
 	encoder->dt = dt;
-	encoder->filter = initMedianFilter(MED_ORDER);
+	encoder->filter = initEMAFilter(vel_filter_k, 0);
 	if (gearRatio) {
 		encoder->gearRatio = gearRatio;
 	} else {
@@ -45,9 +45,9 @@ void encoder_updatePosition(encoder_t *encoder) {
 // Calculates current angular velocity in rad/s. Must be called with a specified period (dt)
 void encoder_updateVelocity(encoder_t *encoder) {
 	float velocity = (encoder->angle - encoder->previousAngle) / encoder->dt;
-//	encoder->angularVelocity = updateAndGetMedian(encoder->filter, velocity);
-	encoder->angularVelocity = (encoder->angle - encoder->previousAngle)
-			/ encoder->dt;
+	encoder->angularVelocity = updateEMA(encoder->filter, velocity);
+//	encoder->angularVelocity = (encoder->angle - encoder->previousAngle)
+//			/ encoder->dt;
 	encoder->previousAngle = encoder->angle;
 }
 

@@ -58,7 +58,7 @@ enum ControlMode {
 	Pos, Vel, Cur
 };
 
-enum ControlMode mode = Cur;
+enum ControlMode mode = Pos;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,6 +74,7 @@ enum ControlMode mode = Cur;
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
 /* USER CODE BEGIN EV */
 extern servocontrol_t servo1;
 extern servocontrol_t servo2;
@@ -223,52 +224,59 @@ void DMA1_Channel1_IRQHandler(void) {
 void TIM3_IRQHandler(void) {
 	/* USER CODE BEGIN TIM3_IRQn 0 */
 	freq3khz++;
-	freq500hz++;
-	freq50hz++;
+//	freq500hz++;
+//	freq50hz++;
 
-//	if (!mode) {
-//		servo_controlPosition(&servo1, setAngle);
-//		servo_controlPosition(&servo2, setAngle);
-//	} else {
-//		servo_controlVelocity(&servo1, setSpeed);
-//		servo_controlVelocity(&servo2, setSpeed);
+//	if (freq500hz >= 36) {
 //	}
 
-	switch (mode) {
-	case Pos:
-		debugMode = 0;
-		servo_controlPosition(&servo1, setAngle);
-		servo_controlPosition(&servo2, setAngle);
-		break;
-	case Vel:
-		debugMode = 1;
-		servo_controlVelocity(&servo1, setSpeed);
-		servo_controlVelocity(&servo2, setSpeed);
-		break;
-	case Cur:
-		debugMode = 2;
-		servo_controlCurrent(&servo1, setCurrent);
-		servo_controlCurrent(&servo2, setCurrent);
-		break;
-	}
-
-	if (freq500hz >= 36) {
-		servo_positionLoop(&servo1);
-		// servo_positionLoop(&servo2);
-		servo_velocityLoop(&servo1);
-		// servo_velocityLoop(&servo2);
-		freq500hz = 0;
-	}
 	if (freq3khz >= 6) {
+		switch (mode) {
+		case Pos:
+			debugMode = 0;
+			servo_controlPosition(&servo1, setAngle);
+			servo_controlPosition(&servo2, setAngle);
+			break;
+		case Vel:
+			debugMode = 1;
+			servo_controlVelocity(&servo1, setSpeed);
+			servo_controlVelocity(&servo2, setSpeed);
+			break;
+		case Cur:
+			debugMode = 2;
+			servo_controlCurrent(&servo1, setCurrent);
+			servo_controlCurrent(&servo2, setCurrent);
+			break;
+		}
 		servo_currentLoop(&servo1, current);
 		freq3khz = 0;
 	}
+
 //	pwm_setSpeed(&servo1.driver, setpwm);
+
 	/* USER CODE END TIM3_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim3);
 	/* USER CODE BEGIN TIM3_IRQn 1 */
 
 	/* USER CODE END TIM3_IRQn 1 */
+}
+
+/**
+ * @brief This function handles TIM4 global interrupt.
+ */
+void TIM4_IRQHandler(void) {
+	/* USER CODE BEGIN TIM4_IRQn 0 */
+	servo_positionLoop(&servo1);
+	// servo_positionLoop(&servo2);
+	servo_velocityLoop(&servo1);
+	// servo_velocityLoop(&servo2);
+	freq500hz = 0;
+
+	/* USER CODE END TIM4_IRQn 0 */
+	HAL_TIM_IRQHandler(&htim4);
+	/* USER CODE BEGIN TIM4_IRQn 1 */
+
+	/* USER CODE END TIM4_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

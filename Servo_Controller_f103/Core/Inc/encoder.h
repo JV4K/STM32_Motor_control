@@ -13,7 +13,6 @@
 #include <filters.h>
 
 #define M_PI 3.14159265358979323846
-#define MED_ORDER 5
 
 typedef struct {
 	// Handler of timer in encoder mode
@@ -34,11 +33,11 @@ typedef struct {
 	float previousAngle;
 
 	// Velocity filter
-	MedianFilter* filter;
+	EMAFilter* filter;
 } encoder_t;
 
 // Initialization with tim handler (e.g. &htim1), CPR, velocity update period and gear ratio (default = 1)
-void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle, uint16_t CPR, float dt, float gearRatio);
+void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle, uint16_t CPR, float dt, float gearRatio, float vel_filter_k);
 void encoder_updatePosition(encoder_t *encoder);
 void encoder_updateVelocity(encoder_t *encoder);
 void encoder_reset(encoder_t *encoder);
