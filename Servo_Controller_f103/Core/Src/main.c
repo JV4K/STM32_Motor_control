@@ -27,8 +27,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "IQmathLib.h"
-#include <servocontroller.h>
-#include <filters.h>
+#include <servo_iq18.h>
+#include <ema_iq18.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,30 +43,32 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define CUR_MED_ORDER 10 // Order of median filter
-#define A1 0.00000125208
-#define B1 0.00010988452
+
+#define A1 2.12993
+#define B1 0.25862
+
+#define AXIS 0 // 0 - front, 1 - back
 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-_iq18 sosa;
 
 uint8_t readyFlag; // When true, all the algorithms and systems are initialized and ready to operate
 
 // Servo structure instances
-servocontrol_t servo1;
-servocontrol_t servo2;
+servo_iq18_t servo1, servo2;
 
 volatile uint16_t adc[2]; // DMA buffer to store ADC values from current sensor
 
-uint8_t convCpltFlag; // DMA interrupt flag. True means that data in buffer is up to date.
-float adc1_med, adc1_med_ema; // Variables to store filtered ADC data (median filter -> exponential moving average)
-extern float current;
-MedianFilter *median_filter1; // Median filter instance
-EMAFilter *ema_filter1; // Exponential moving average filter instance
+uint8_t convCpltFlag, dma_order; // DMA interrupt flag. True means that data in buffer is up to date.
+int8_t current1sign, current2sign;
+_iq18 adc1_ema, adc2_ema, voltage, voltage2; // Variables to store filtered ADC data (median filter -> exponential moving average)
+extern _iq18 current, current2;
+
+EMA_iq18 *ema_filter1; // Exponential moving average filter instance
+EMA_iq18 *ema_filter2;
 
 /* USER CODE END PV */
 
@@ -79,6 +81,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc);
 // Look inside to see how to initialize a servo
 void initServo1Func();
 void initServo2Func();
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -140,6 +143,8 @@ int main(void) {
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
 	HAL_TIM_Base_Start_IT(&htim3);
 	HAL_TIM_Base_Start_IT(&htim4);
+	HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_3);
+	HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_4);
 
 	// Allow powering motors by setting Enable pins of a driver HIGH
 	HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
@@ -149,9 +154,8 @@ int main(void) {
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t*) &adc, 2);
 
 	// Initialization of filters
-	ema_filter1 = initEMAFilter(0.01, 0);
-	median_filter1 = initMedianFilter(CUR_MED_ORDER);
-	sosa = _IQ18(0.00189048172801324);
+	ema_filter1 = initEMA_iq18(0.005);
+	ema_filter2 = initEMA_iq18(0.005);
 
 	/* USER CODE END 2 */
 
@@ -160,11 +164,15 @@ int main(void) {
 	while (1) {
 		// TODO write comments about this code, make functions for multiple filtering
 		if (convCpltFlag) {
-			adc1_med = updateAndGetMedian(median_filter1, adc[0]);
-//			adc1_med_ema = updateEMA(ema_filter1, adc[0]);
-			adc1_med_ema = updateEMA(ema_filter1, adc1_med);
-			current = (adc1_med_ema * adc1_med_ema * A1 + adc1_med_ema * B1)
-					* servo_getCurrentDirection(&servo1);
+			if (dma_order) {
+				adc1_ema = updateEMA_iq18(ema_filter1, _IQ18(adc[0]));
+				current = _IQ18mpy((adc1_ema - _IQ18(2048)), _IQ18(0.001221));
+			} else {
+				adc2_ema = updateEMA_iq18(ema_filter2, _IQ18(adc[1]));
+				current2 = _IQ18mpy((adc2_ema - _IQ18(2048)), _IQ18(0.001221));
+			}
+
+			dma_order = !dma_order;
 			convCpltFlag = 0;
 		}
 
@@ -225,25 +233,44 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 }
 
 void initServo1Func() {
-	servo_baseInit(&servo1, Triple, 1065, 21.3, 0);
-	servo_encoderInit(&servo1, &htim1, 48);
-	servo_driverInit(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin, INB_GPIO_Port,
-	INB_Pin, 0, 999);
-	servo_positionInit(&servo1, 3.250075, 4.555851, 0, 0.005, 1);
-	servo_velocityInit(&servo1, 0.003431, 0.001890, 0, 0.005, 1);
-	servo_currentInit(&servo1, 0.3, 1024.537964, 277452.562500, 0, 0.000333, 1);
-	servo_setPositionTolerance(&servo1, 0.05);
+	if (!AXIS) {
+		servo_iq18_base_init(&servo1, Triple, 1065, 21.3, 0);
+		servo_iq18_encoder_init(&servo1, &htim2, 44, 0);
+	} else {
+		servo_iq18_base_init(&servo1, Triple, 1065, 21.3, 1);
+		servo_iq18_encoder_init(&servo1, &htim2, 44, 1);
+	}
+
+	servo_iq18_driver_init(&servo1, &htim3, 1, INA_GPIO_Port, INA_Pin,
+	INB_GPIO_Port,
+	INB_Pin, 0, 1000);
+	servo_iq18_position_init(&servo1, 3.57639792328828, 0, 0, 0.005, 0);
+	servo_iq18_velocity_init(&servo1, 0.00752045866780424, 0.0073678829561661,
+			0, 0.005, 0.0073678829561661);
+	servo_iq18_current_init(&servo1, 0.4, 4.28388772511172, 901.402792940329, 0,
+			0.00011111, 901.402792940329);
+	servo_iq18_setPositionTolerance(&servo1, 0.2);
 }
 
 void initServo2Func() {
-	servo_baseInit(&servo2, Triple, 1065, 21.3, 1);
-	servo_encoderInit(&servo2, &htim2, 44);
-	servo_driverInit(&servo2, &htim3, 2, INA2_GPIO_Port, INA2_Pin,
-	INB2_GPIO_Port, INB2_Pin, 0, 998);
-	servo_positionInit(&servo2, 50, 0, 0, 0.00033333, 0);
-	servo_velocityInit(&servo2, 20, 10, 0, 0.01, 1);
-	servo_currentInit(&servo2, 0.5, 0.01, 0, 0, 0.000055555, 0);
-	servo_setPositionTolerance(&servo2, 0.05);
+
+	if (!AXIS) {
+		servo_iq18_base_init(&servo2, Triple, 1065, 21.3, 1);
+		servo_iq18_encoder_init(&servo2, &htim1, 44, 1);
+	} else {
+		servo_iq18_base_init(&servo2, Triple, 1065, 21.3, 1);
+		servo_iq18_encoder_init(&servo2, &htim1, 44, 1);
+	}
+
+	servo_iq18_driver_init(&servo2, &htim3, 2, INA2_GPIO_Port, INA2_Pin,
+	INB2_GPIO_Port,
+	INB2_Pin, 0, 1000);
+	servo_iq18_position_init(&servo2, 3.57639792328828, 0, 0, 0.005, 0);
+	servo_iq18_velocity_init(&servo2, 0.00752045866780424, 0.0073678829561661,
+			0, 0.005, 0.0073678829561661);
+	servo_iq18_current_init(&servo2, 0.4, 4.28388772511172, 901.402792940329, 0,
+			0.00011111, 901.402792940329);
+	servo_iq18_setPositionTolerance(&servo2, 0.2);
 }
 
 /* USER CODE END 4 */

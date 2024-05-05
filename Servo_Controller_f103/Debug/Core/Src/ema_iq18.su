@@ -1,0 +1,2 @@
+../Core/Src/ema_iq18.c:12:11:initEMA_iq18	24	static
+../Core/Src/ema_iq18.c:22:7:updateEMA_iq18	32	static

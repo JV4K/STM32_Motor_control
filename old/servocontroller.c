@@ -197,7 +197,7 @@ void servo_positionLoop(servocontrol_t *servo) {
 }
 
 /*
- Current controller loop. Contains PID controller and algorithm which decides whether output should be passed
+ Velocity controller loop. Contains PID controller and algorithm which decides whether output should be passed
  to current loop (if system is Triple-loop) or used as pwm duty cycle (Double-loop).
 
  Must be called with specified period for velocity controller.

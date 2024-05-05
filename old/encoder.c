@@ -14,6 +14,7 @@
  * 3. Counts per revolution of encoder (encoder PPR*4 when both channels and rising/falling edges are used)
  * 4. Gear ratio (e.g. if your motor has gear ratio of 1:21.3, pass 21.3). If no gearbox, pass 1;
  */
+
 void encoder_init(encoder_t *encoder, TIM_HandleTypeDef *timerHandle,
 		uint16_t CPR, float dt, float gearRatio, float vel_filter_k) {
 	encoder->htim = timerHandle;

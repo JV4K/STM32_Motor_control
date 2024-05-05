@@ -3,3 +3,8 @@
 ../Core/Src/pid_iq18.c:43:7:pid_iq18_getOutput	1
 ../Core/Src/pid_iq18.c:48:6:pid_iq18_init	1
 ../Core/Src/pid_iq18.c:57:6:pid_iq18_setGains	1
+../Core/Src/pid_iq18.c:64:6:pid_iq18_setAntiWindup	1
+../Core/Src/pid_iq18.c:69:6:pid_iq18_setLimits	1
+../Core/Src/pid_iq18.c:74:6:pid_iq18_setUpperLimit	1
+../Core/Src/pid_iq18.c:78:6:pid_iq18_setLowerLimit	1
+../Core/Src/pid_iq18.c:83:6:pid_iq18_setToleranceBand	1

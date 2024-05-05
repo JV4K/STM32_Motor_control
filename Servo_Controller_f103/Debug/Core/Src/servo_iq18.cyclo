@@ -1,0 +1,16 @@
+../Core/Src/servo_iq18.c:9:6:servo_iq18_base_init	3
+../Core/Src/servo_iq18.c:26:6:servo_iq18_encoder_init	2
+../Core/Src/servo_iq18.c:38:6:servo_iq18_driver_init	5
+../Core/Src/servo_iq18.c:70:6:servo_iq18_position_init	1
+../Core/Src/servo_iq18.c:79:6:servo_iq18_velocity_init	1
+../Core/Src/servo_iq18.c:89:6:servo_iq18_current_init	2
+../Core/Src/servo_iq18.c:103:6:servo_iq18_setPositionTolerance	1
+../Core/Src/servo_iq18.c:107:5:servo_iq18_getState	2
+../Core/Src/servo_iq18.c:113:5:servo_iq18_getDirection	3
+../Core/Src/servo_iq18.c:123:5:servo_iq18_getCurrentDirection	1
+../Core/Src/servo_iq18.c:127:6:servo_iq18_positionLoop	3
+../Core/Src/servo_iq18.c:151:6:servo_iq18_velocityLoop	7
+../Core/Src/servo_iq18.c:180:6:servo_iq18_currentLoop	2
+../Core/Src/servo_iq18.c:193:6:servo_iq18_controlPosition	1
+../Core/Src/servo_iq18.c:198:6:servo_iq18_controlVelocity	3
+../Core/Src/servo_iq18.c:206:6:servo_iq18_controlCurrent	3

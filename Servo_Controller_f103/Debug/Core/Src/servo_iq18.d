@@ -1,4 +1,4 @@
-Core/Src/encoder.o: ../Core/Src/encoder.c ../Core/Inc/encoder.h \
+Core/Src/servo_iq18.o: ../Core/Src/servo_iq18.c ../Core/Inc/servo_iq18.h \
  ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -26,8 +26,10 @@ Core/Src/encoder.o: ../Core/Src/encoder.c ../Core/Inc/encoder.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- ../Core/Inc/filters.h
-../Core/Inc/encoder.h:
+ ../Core/Inc/IQmathLib.h ../Core/Inc/encoder_iq18.h \
+ ../Core/Inc/ema_iq18.h ../Core/Inc/pid_iq18.h ../Core/Inc/main.h \
+ ../Core/Inc/pwm.h
+../Core/Inc/servo_iq18.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -56,4 +58,9 @@ Core/Src/encoder.o: ../Core/Src/encoder.c ../Core/Inc/encoder.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
-../Core/Inc/filters.h:
+../Core/Inc/IQmathLib.h:
+../Core/Inc/encoder_iq18.h:
+../Core/Inc/ema_iq18.h:
+../Core/Inc/pid_iq18.h:
+../Core/Inc/main.h:
+../Core/Inc/pwm.h:

@@ -22,8 +22,9 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
-#include <servocontroller.h>
+#include "tim.h"
+#include "IQmathLib.h"
+#include <servo_iq18.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,27 +44,36 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-uint16_t freq3khz;
-uint16_t freq500hz;
-uint16_t freq50hz;
+uint16_t freq9khz, freq500Hz;
 
 float setAngle = 0;
 float setSpeed = 0;
 float setCurrent = 0;
+
 int16_t setpwm = 0;
-uint16_t debugMode;
-float current;
+
+uint16_t debugMode = 2, bandwidth_flag;
+
+_iq18 current, current2;
+
+uint16_t IC1, IC2, update_cnt, soscnt;
+uint32_t IC_Fin;
+uint8_t iscaptured, init;
+
+_iq18 velocity_ic;
 
 enum ControlMode {
 	Pos, Vel, Cur
 };
 
-enum ControlMode mode = Pos;
+enum ControlMode mode = Vel;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -76,8 +86,7 @@ extern DMA_HandleTypeDef hdma_adc1;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 /* USER CODE BEGIN EV */
-extern servocontrol_t servo1;
-extern servocontrol_t servo2;
+extern servo_iq18_t servo1, servo2;
 
 /* USER CODE END EV */
 
@@ -223,36 +232,27 @@ void DMA1_Channel1_IRQHandler(void) {
  */
 void TIM3_IRQHandler(void) {
 	/* USER CODE BEGIN TIM3_IRQn 0 */
-	freq3khz++;
-//	freq500hz++;
-//	freq50hz++;
 
-//	if (freq500hz >= 36) {
-//	}
+	if (freq9khz) {
+		servo_iq18_currentLoop(&servo1, current);
+		servo_iq18_currentLoop(&servo2, current2);
+		freq9khz = 0;
 
-	if (freq3khz >= 6) {
-		switch (mode) {
-		case Pos:
-			debugMode = 0;
-			servo_controlPosition(&servo1, setAngle);
-			servo_controlPosition(&servo2, setAngle);
-			break;
-		case Vel:
-			debugMode = 1;
-			servo_controlVelocity(&servo1, setSpeed);
-			servo_controlVelocity(&servo2, setSpeed);
-			break;
-		case Cur:
-			debugMode = 2;
-			servo_controlCurrent(&servo1, setCurrent);
-			servo_controlCurrent(&servo2, setCurrent);
-			break;
-		}
-		servo_currentLoop(&servo1, current);
-		freq3khz = 0;
+	} else {
+		freq9khz = 1;
 	}
 
-//	pwm_setSpeed(&servo1.driver, setpwm);
+////	 Тест полосы пропускания
+//	if (freq500Hz >= (18 - 1)) {
+//		if (bandwidth_flag) {
+//			servo_iq18_controlCurrent(&servo1, 0.1);
+//		} else {
+//			servo_iq18_controlCurrent(&servo1, 0);
+//		}
+//		bandwidth_flag = !bandwidth_flag;
+//		freq500Hz = 0;
+//	}
+//	freq500Hz++;
 
 	/* USER CODE END TIM3_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim3);
@@ -266,11 +266,6 @@ void TIM3_IRQHandler(void) {
  */
 void TIM4_IRQHandler(void) {
 	/* USER CODE BEGIN TIM4_IRQn 0 */
-	servo_positionLoop(&servo1);
-	// servo_positionLoop(&servo2);
-	servo_velocityLoop(&servo1);
-	// servo_velocityLoop(&servo2);
-	freq500hz = 0;
 
 	/* USER CODE END TIM4_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim4);
@@ -281,4 +276,64 @@ void TIM4_IRQHandler(void) {
 
 /* USER CODE BEGIN 1 */
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if (htim == &htim4) {
+		switch (debugMode) {
+		case 0:
+			debugMode = 0;
+			servo_iq18_controlPosition(&servo1, setAngle);
+//			servo_iq18_controlPosition(&servo2, setAngle);
+			break;
+		case 1:
+			debugMode = 1;
+			servo_iq18_controlVelocity(&servo1, setSpeed);
+//			servo_iq18_controlVelocity(&servo2, setSpeed);
+			break;
+		case 2:
+			debugMode = 2;
+			servo_iq18_controlCurrent(&servo1, setCurrent);
+//			servo_iq18_controlCurrent(&servo2, setCurrent);
+			break;
+		}
+
+		servo_iq18_positionLoop(&servo1);
+		servo_iq18_positionLoop(&servo2);
+
+		servo_iq18_velocityLoop(&servo1);
+		servo_iq18_velocityLoop(&servo2);
+
+
+		update_cnt++;
+		if (update_cnt >= 100) {
+			init = 0;
+			IC_Fin = 0;
+		}
+
+	}
+}
+
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
+		if (!init) {
+			IC1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+			init = 1;
+		} else {
+			IC2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+			IC_Fin = (update_cnt * 50) - IC1 + IC2;
+			if (IC_Fin) {
+				int8_t sign;
+				sign = __HAL_TIM_IS_TIM_COUNTING_DOWN(&htim1)? -1:1;
+				velocity_ic = _IQ18div(_IQ18(0.090909),
+						_IQ18mpy(_IQ18(IC_Fin), _IQ18(0.0001)))*sign;
+				velocity_ic = _IQ18mpy(velocity_ic << 1, PI_IQ18);
+			} else {
+				velocity_ic = 0;
+			}
+
+			IC1 = IC2;
+		}
+		update_cnt = 0;
+		soscnt++;
+	}
+}
 /* USER CODE END 1 */

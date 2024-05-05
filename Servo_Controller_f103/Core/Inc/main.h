@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define ENA_Pin GPIO_PIN_15
+#define ENA_GPIO_Port GPIOA
 #define INA2_Pin GPIO_PIN_3
 #define INA2_GPIO_Port GPIOB
 #define INB2_Pin GPIO_PIN_4
@@ -67,8 +69,6 @@ void Error_Handler(void);
 #define INA_GPIO_Port GPIOB
 #define INB_Pin GPIO_PIN_7
 #define INB_GPIO_Port GPIOB
-#define ENA_Pin GPIO_PIN_8
-#define ENA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

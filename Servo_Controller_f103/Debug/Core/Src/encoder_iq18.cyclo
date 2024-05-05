@@ -1,0 +1,6 @@
+../Core/Src/encoder_iq18.c:10:6:encoder_init_iq18	3
+../Core/Src/encoder_iq18.c:29:6:encoder_updatePosition_iq18	1
+../Core/Src/encoder_iq18.c:48:6:encoder_updateVelocity_qep_iq18	1
+../Core/Src/encoder_iq18.c:55:6:encoder_reset_iq18	1
+../Core/Src/encoder_iq18.c:63:7:encoder_getAngle_iq18	1
+../Core/Src/encoder_iq18.c:66:7:encoder_getVelocity_iq18	1
