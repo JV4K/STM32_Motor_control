@@ -235,24 +235,12 @@ void TIM3_IRQHandler(void) {
 
 	if (freq9khz) {
 		servo_iq18_currentLoop(&servo1, current);
-		servo_iq18_currentLoop(&servo2, current2);
+//		servo_iq18_currentLoop(&servo2, current2);
 		freq9khz = 0;
 
 	} else {
 		freq9khz = 1;
 	}
-
-////	 Тест полосы пропускания
-//	if (freq500Hz >= (18 - 1)) {
-//		if (bandwidth_flag) {
-//			servo_iq18_controlCurrent(&servo1, 0.1);
-//		} else {
-//			servo_iq18_controlCurrent(&servo1, 0);
-//		}
-//		bandwidth_flag = !bandwidth_flag;
-//		freq500Hz = 0;
-//	}
-//	freq500Hz++;
 
 	/* USER CODE END TIM3_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim3);
@@ -293,14 +281,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 			debugMode = 2;
 			servo_iq18_controlCurrent(&servo1, setCurrent);
 //			servo_iq18_controlCurrent(&servo2, setCurrent);
+
 			break;
 		}
 
 		servo_iq18_positionLoop(&servo1);
-		servo_iq18_positionLoop(&servo2);
+//		servo_iq18_positionLoop(&servo2);
 
 		servo_iq18_velocityLoop(&servo1);
-		servo_iq18_velocityLoop(&servo2);
+//		servo_iq18_velocityLoop(&servo2);
 
 
 		update_cnt++;

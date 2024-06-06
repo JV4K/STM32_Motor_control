@@ -245,11 +245,11 @@ void initServo1Func() {
 	INB_GPIO_Port,
 	INB_Pin, 0, 1000);
 	servo_iq18_position_init(&servo1, 3.57639792328828, 0, 0, 0.005, 0);
-	servo_iq18_velocity_init(&servo1, 0.00752045866780424, 0.0073678829561661,
-			0, 0.005, 0.0073678829561661);
-	servo_iq18_current_init(&servo1, 0.4, 4.28388772511172, 901.402792940329, 0,
+	servo_iq18_velocity_init(&servo1, 0.057220458984375, 0.19,
+			0, 0.005, 0.572);
+	servo_iq18_current_init(&servo1, 1, 4.28388772511172, 901.402792940329, 0,
 			0.00011111, 901.402792940329);
-	servo_iq18_setPositionTolerance(&servo1, 0.2);
+	servo_iq18_setPositionTolerance(&servo1, 0.02);
 }
 
 void initServo2Func() {
