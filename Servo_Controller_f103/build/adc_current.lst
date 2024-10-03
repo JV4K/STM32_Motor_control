@@ -1,0 +1,383 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"adc_current.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/adc_current.c"
+  18              		.section	.text.adc_cur_init,"ax",%progbits
+  19              		.align	1
+  20              		.global	adc_cur_init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	adc_cur_init:
+  26              	.LFB65:
+   1:Core/Src/adc_current.c **** #include "adc_current.h"
+   2:Core/Src/adc_current.c **** 
+   3:Core/Src/adc_current.c **** volatile uint16_t adc[2];
+   4:Core/Src/adc_current.c **** float current[2];
+   5:Core/Src/adc_current.c **** EMA_iq18 *filter1, *filter2;
+   6:Core/Src/adc_current.c **** uint32_t check;
+   7:Core/Src/adc_current.c **** int ch_order = 1;
+   8:Core/Src/adc_current.c **** 
+   9:Core/Src/adc_current.c **** void adc_cur_init()
+  10:Core/Src/adc_current.c **** {
+  27              		.loc 1 10 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 38B5     		push	{r3, r4, r5, lr}
+  32              		.cfi_def_cfa_offset 16
+  33              		.cfi_offset 3, -16
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 5, -8
+  36              		.cfi_offset 14, -4
+  11:Core/Src/adc_current.c ****     // Starting DMA for capturing current measures from ADC
+  12:Core/Src/adc_current.c ****     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&adc, 2);
+  37              		.loc 1 12 5 view .LVU1
+  38 0002 0D4C     		ldr	r4, .L3
+  39 0004 0222     		movs	r2, #2
+  40 0006 2146     		mov	r1, r4
+  41 0008 0C48     		ldr	r0, .L3+4
+  42 000a FFF7FEFF 		bl	HAL_ADC_Start_DMA
+  43              	.LVL0:
+  13:Core/Src/adc_current.c **** 
+  14:Core/Src/adc_current.c ****     // Initia;lization of filters
+  15:Core/Src/adc_current.c ****     filter1 = initEMA_iq18(0.005, _IQ18(2048));
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 2
+
+
+  44              		.loc 1 15 5 view .LVU2
+  45              		.loc 1 15 15 is_stmt 0 view .LVU3
+  46 000e 0C4D     		ldr	r5, .L3+8
+  47 0010 4FF00051 		mov	r1, #536870912
+  48 0014 2846     		mov	r0, r5
+  49 0016 FFF7FEFF 		bl	initEMA_iq18
+  50              	.LVL1:
+  51              		.loc 1 15 13 discriminator 1 view .LVU4
+  52 001a 0A4B     		ldr	r3, .L3+12
+  53 001c 1860     		str	r0, [r3]
+  16:Core/Src/adc_current.c ****     filter2 = initEMA_iq18(0.005, _IQ18(2048));
+  54              		.loc 1 16 5 is_stmt 1 view .LVU5
+  55              		.loc 1 16 15 is_stmt 0 view .LVU6
+  56 001e 4FF00051 		mov	r1, #536870912
+  57 0022 2846     		mov	r0, r5
+  58 0024 FFF7FEFF 		bl	initEMA_iq18
+  59              	.LVL2:
+  60              		.loc 1 16 13 discriminator 1 view .LVU7
+  61 0028 074B     		ldr	r3, .L3+16
+  62 002a 1860     		str	r0, [r3]
+  17:Core/Src/adc_current.c ****     adc[0] = 2048;
+  63              		.loc 1 17 5 is_stmt 1 view .LVU8
+  64              		.loc 1 17 12 is_stmt 0 view .LVU9
+  65 002c 4FF40063 		mov	r3, #2048
+  66 0030 2380     		strh	r3, [r4]	@ movhi
+  18:Core/Src/adc_current.c ****     adc[1] = 2048;
+  67              		.loc 1 18 5 is_stmt 1 view .LVU10
+  68              		.loc 1 18 12 is_stmt 0 view .LVU11
+  69 0032 6380     		strh	r3, [r4, #2]	@ movhi
+  19:Core/Src/adc_current.c **** }
+  70              		.loc 1 19 1 view .LVU12
+  71 0034 38BD     		pop	{r3, r4, r5, pc}
+  72              	.L4:
+  73 0036 00BF     		.align	2
+  74              	.L3:
+  75 0038 00000000 		.word	adc
+  76 003c 00000000 		.word	hadc1
+  77 0040 0AD7A33B 		.word	1000593162
+  78 0044 00000000 		.word	filter1
+  79 0048 00000000 		.word	filter2
+  80              		.cfi_endproc
+  81              	.LFE65:
+  83              		.global	__aeabi_i2f
+  84              		.section	.text.adc_callback_handler,"ax",%progbits
+  85              		.align	1
+  86              		.global	adc_callback_handler
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  91              	adc_callback_handler:
+  92              	.LFB66:
+  20:Core/Src/adc_current.c **** 
+  21:Core/Src/adc_current.c **** void adc_callback_handler()
+  22:Core/Src/adc_current.c **** {
+  93              		.loc 1 22 1 is_stmt 1 view -0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 3
+
+
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  23:Core/Src/adc_current.c ****     ch_order = !ch_order;
+  97              		.loc 1 23 5 view .LVU14
+  98              		.loc 1 23 16 is_stmt 0 view .LVU15
+  99 0000 1B4A     		ldr	r2, .L12
+ 100 0002 1368     		ldr	r3, [r2]
+ 101 0004 B3FA83F3 		clz	r3, r3
+ 102 0008 5B09     		lsrs	r3, r3, #5
+ 103              		.loc 1 23 14 view .LVU16
+ 104 000a 1360     		str	r3, [r2]
+  24:Core/Src/adc_current.c **** 
+  25:Core/Src/adc_current.c ****     if (system_enabled)
+ 105              		.loc 1 25 5 is_stmt 1 view .LVU17
+ 106              		.loc 1 25 9 is_stmt 0 view .LVU18
+ 107 000c 194A     		ldr	r2, .L12+4
+ 108 000e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 109              		.loc 1 25 8 view .LVU19
+ 110 0010 6AB3     		cbz	r2, .L9
+  22:Core/Src/adc_current.c ****     ch_order = !ch_order;
+ 111              		.loc 1 22 1 view .LVU20
+ 112 0012 10B5     		push	{r4, lr}
+ 113              		.cfi_def_cfa_offset 8
+ 114              		.cfi_offset 4, -8
+ 115              		.cfi_offset 14, -4
+  26:Core/Src/adc_current.c ****     {
+  27:Core/Src/adc_current.c ****         if (!ch_order)
+ 116              		.loc 1 27 9 is_stmt 1 view .LVU21
+ 117              		.loc 1 27 12 is_stmt 0 view .LVU22
+ 118 0014 ABB9     		cbnz	r3, .L7
+ 119              	.LBB2:
+  28:Core/Src/adc_current.c ****         {
+  29:Core/Src/adc_current.c ****             _iq18 adc_filtered = updateEMA_iq18(filter1, _IQ18(adc[ch_order]));
+ 120              		.loc 1 29 13 is_stmt 1 view .LVU23
+ 121              		.loc 1 29 58 is_stmt 0 view .LVU24
+ 122 0016 184A     		ldr	r2, .L12+8
+ 123 0018 32F81310 		ldrh	r1, [r2, r3, lsl #1]
+ 124              		.loc 1 29 34 view .LVU25
+ 125 001c 8904     		lsls	r1, r1, #18
+ 126 001e 174B     		ldr	r3, .L12+12
+ 127 0020 1868     		ldr	r0, [r3]
+ 128 0022 FFF7FEFF 		bl	updateEMA_iq18
+ 129              	.LVL3:
+  30:Core/Src/adc_current.c ****             current[ch_order] = _IQ18mpy((adc_filtered - _IQ18(2048)), _IQ18(CUR_SENSOR_GAIN));
+ 130              		.loc 1 30 13 is_stmt 1 view .LVU26
+ 131              		.loc 1 30 33 is_stmt 0 view .LVU27
+ 132 0026 4FF4A071 		mov	r1, #320
+ 133 002a 00F16040 		add	r0, r0, #-536870912
+ 134              	.LVL4:
+ 135              		.loc 1 30 33 view .LVU28
+ 136 002e FFF7FEFF 		bl	_IQ18mpy
+ 137              	.LVL5:
+ 138              		.loc 1 30 20 discriminator 1 view .LVU29
+ 139 0032 0F4B     		ldr	r3, .L12
+ 140 0034 1C68     		ldr	r4, [r3]
+ 141              		.loc 1 30 31 discriminator 1 view .LVU30
+ 142 0036 FFF7FEFF 		bl	__aeabi_i2f
+ 143              	.LVL6:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 4
+
+
+ 144 003a 114B     		ldr	r3, .L12+16
+ 145 003c 43F82400 		str	r0, [r3, r4, lsl #2]	@ float
+ 146              	.LVL7:
+ 147              	.L5:
+ 148              		.loc 1 30 31 discriminator 1 view .LVU31
+ 149              	.LBE2:
+  31:Core/Src/adc_current.c ****         }
+  32:Core/Src/adc_current.c ****         else
+  33:Core/Src/adc_current.c ****         {
+  34:Core/Src/adc_current.c ****             _iq18 adc_filtered = updateEMA_iq18(filter2, _IQ18(adc[ch_order]));
+  35:Core/Src/adc_current.c ****             current[ch_order] = _IQ18mpy((adc_filtered - _IQ18(2048)), _IQ18(CUR_SENSOR_GAIN));
+  36:Core/Src/adc_current.c ****         }
+  37:Core/Src/adc_current.c ****     }
+  38:Core/Src/adc_current.c **** }
+ 150              		.loc 1 38 1 view .LVU32
+ 151 0040 10BD     		pop	{r4, pc}
+ 152              	.L7:
+ 153              	.LBB3:
+  34:Core/Src/adc_current.c ****             current[ch_order] = _IQ18mpy((adc_filtered - _IQ18(2048)), _IQ18(CUR_SENSOR_GAIN));
+ 154              		.loc 1 34 13 is_stmt 1 view .LVU33
+  34:Core/Src/adc_current.c ****             current[ch_order] = _IQ18mpy((adc_filtered - _IQ18(2048)), _IQ18(CUR_SENSOR_GAIN));
+ 155              		.loc 1 34 58 is_stmt 0 view .LVU34
+ 156 0042 0D4A     		ldr	r2, .L12+8
+ 157 0044 32F81310 		ldrh	r1, [r2, r3, lsl #1]
+  34:Core/Src/adc_current.c ****             current[ch_order] = _IQ18mpy((adc_filtered - _IQ18(2048)), _IQ18(CUR_SENSOR_GAIN));
+ 158              		.loc 1 34 34 view .LVU35
+ 159 0048 8904     		lsls	r1, r1, #18
+ 160 004a 0E4B     		ldr	r3, .L12+20
+ 161 004c 1868     		ldr	r0, [r3]
+ 162 004e FFF7FEFF 		bl	updateEMA_iq18
+ 163              	.LVL8:
+  35:Core/Src/adc_current.c ****         }
+ 164              		.loc 1 35 13 is_stmt 1 view .LVU36
+  35:Core/Src/adc_current.c ****         }
+ 165              		.loc 1 35 33 is_stmt 0 view .LVU37
+ 166 0052 4FF4A071 		mov	r1, #320
+ 167 0056 00F16040 		add	r0, r0, #-536870912
+ 168              	.LVL9:
+  35:Core/Src/adc_current.c ****         }
+ 169              		.loc 1 35 33 view .LVU38
+ 170 005a FFF7FEFF 		bl	_IQ18mpy
+ 171              	.LVL10:
+  35:Core/Src/adc_current.c ****         }
+ 172              		.loc 1 35 20 discriminator 1 view .LVU39
+ 173 005e 044B     		ldr	r3, .L12
+ 174 0060 1C68     		ldr	r4, [r3]
+  35:Core/Src/adc_current.c ****         }
+ 175              		.loc 1 35 31 discriminator 1 view .LVU40
+ 176 0062 FFF7FEFF 		bl	__aeabi_i2f
+ 177              	.LVL11:
+ 178 0066 064B     		ldr	r3, .L12+16
+ 179 0068 43F82400 		str	r0, [r3, r4, lsl #2]	@ float
+ 180              	.LBE3:
+ 181              		.loc 1 38 1 view .LVU41
+ 182 006c E8E7     		b	.L5
+ 183              	.LVL12:
+ 184              	.L9:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 5
+
+
+ 185              		.cfi_def_cfa_offset 0
+ 186              		.cfi_restore 4
+ 187              		.cfi_restore 14
+ 188              		.loc 1 38 1 view .LVU42
+ 189 006e 7047     		bx	lr
+ 190              	.L13:
+ 191              		.align	2
+ 192              	.L12:
+ 193 0070 00000000 		.word	ch_order
+ 194 0074 00000000 		.word	system_enabled
+ 195 0078 00000000 		.word	adc
+ 196 007c 00000000 		.word	filter1
+ 197 0080 00000000 		.word	current
+ 198 0084 00000000 		.word	filter2
+ 199              		.cfi_endproc
+ 200              	.LFE66:
+ 202              		.section	.text.HAL_ADC_ConvCpltCallback,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	HAL_ADC_ConvCpltCallback
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 209              	HAL_ADC_ConvCpltCallback:
+ 210              	.LVL13:
+ 211              	.LFB67:
+  39:Core/Src/adc_current.c **** 
+  40:Core/Src/adc_current.c **** void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+  41:Core/Src/adc_current.c **** {
+ 212              		.loc 1 41 1 is_stmt 1 view -0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 0
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
+ 216              		.loc 1 41 1 is_stmt 0 view .LVU44
+ 217 0000 08B5     		push	{r3, lr}
+ 218              		.cfi_def_cfa_offset 8
+ 219              		.cfi_offset 3, -8
+ 220              		.cfi_offset 14, -4
+  42:Core/Src/adc_current.c ****     check++;
+ 221              		.loc 1 42 5 is_stmt 1 view .LVU45
+ 222              		.loc 1 42 10 is_stmt 0 view .LVU46
+ 223 0002 034A     		ldr	r2, .L16
+ 224 0004 1368     		ldr	r3, [r2]
+ 225 0006 0133     		adds	r3, r3, #1
+ 226 0008 1360     		str	r3, [r2]
+  43:Core/Src/adc_current.c ****     adc_callback_handler();
+ 227              		.loc 1 43 5 is_stmt 1 view .LVU47
+ 228 000a FFF7FEFF 		bl	adc_callback_handler
+ 229              	.LVL14:
+  44:Core/Src/adc_current.c **** }...
+ 230              		.loc 1 44 1 is_stmt 0 view .LVU48
+ 231 000e 08BD     		pop	{r3, pc}
+ 232              	.L17:
+ 233              		.align	2
+ 234              	.L16:
+ 235 0010 00000000 		.word	check
+ 236              		.cfi_endproc
+ 237              	.LFE67:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 6
+
+
+ 239              		.global	ch_order
+ 240              		.section	.data.ch_order,"aw"
+ 241              		.align	2
+ 244              	ch_order:
+ 245 0000 01000000 		.word	1
+ 246              		.global	check
+ 247              		.section	.bss.check,"aw",%nobits
+ 248              		.align	2
+ 251              	check:
+ 252 0000 00000000 		.space	4
+ 253              		.global	filter2
+ 254              		.section	.bss.filter2,"aw",%nobits
+ 255              		.align	2
+ 258              	filter2:
+ 259 0000 00000000 		.space	4
+ 260              		.global	filter1
+ 261              		.section	.bss.filter1,"aw",%nobits
+ 262              		.align	2
+ 265              	filter1:
+ 266 0000 00000000 		.space	4
+ 267              		.global	current
+ 268              		.section	.bss.current,"aw",%nobits
+ 269              		.align	2
+ 272              	current:
+ 273 0000 00000000 		.space	8
+ 273      00000000 
+ 274              		.global	adc
+ 275              		.section	.bss.adc,"aw",%nobits
+ 276              		.align	2
+ 279              	adc:
+ 280 0000 00000000 		.space	4
+ 281              		.text
+ 282              	.Letext0:
+ 283              		.file 2 "C:/msys64/mingw64/arm-none-eabi/include/machine/_default_types.h"
+ 284              		.file 3 "C:/msys64/mingw64/arm-none-eabi/include/sys/_stdint.h"
+ 285              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 286              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 287              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 288              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 289              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h"
+ 290              		.file 9 "Core/Inc/IQmathLib.h"
+ 291              		.file 10 "Core/Inc/ema_iq18.h"
+ 292              		.file 11 "Core/Inc/adc.h"
+ 293              		.file 12 "Core/Inc/global_flags.h"
+ 294              		.file 13 "Core/Inc/adc_current.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 adc_current.c
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:19     .text.adc_cur_init:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:25     .text.adc_cur_init:00000000 adc_cur_init
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:75     .text.adc_cur_init:00000038 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:279    .bss.adc:00000000 adc
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:265    .bss.filter1:00000000 filter1
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:258    .bss.filter2:00000000 filter2
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:85     .text.adc_callback_handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:91     .text.adc_callback_handler:00000000 adc_callback_handler
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:193    .text.adc_callback_handler:00000070 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:244    .data.ch_order:00000000 ch_order
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:272    .bss.current:00000000 current
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:203    .text.HAL_ADC_ConvCpltCallback:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:209    .text.HAL_ADC_ConvCpltCallback:00000000 HAL_ADC_ConvCpltCallback
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:235    .text.HAL_ADC_ConvCpltCallback:00000010 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:251    .bss.check:00000000 check
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:241    .data.ch_order:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:248    .bss.check:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:255    .bss.filter2:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:262    .bss.filter1:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:269    .bss.current:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccXzuAYW.s:276    .bss.adc:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_ADC_Start_DMA
+initEMA_iq18
+hadc1
+__aeabi_i2f
+updateEMA_iq18
+_IQ18mpy
+system_enabled

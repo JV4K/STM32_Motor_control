@@ -1,0 +1,407 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"loops_handler.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/loops_handler.c"
+  18              		.global	__aeabi_f2iz
+  19              		.section	.text.HAL_TIM_PeriodElapsedCallback,"ax",%progbits
+  20              		.align	1
+  21              		.global	HAL_TIM_PeriodElapsedCallback
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	HAL_TIM_PeriodElapsedCallback:
+  27              	.LVL0:
+  28              	.LFB65:
+   1:Core/Src/loops_handler.c **** #include "loops_handler.h"
+   2:Core/Src/loops_handler.c **** 
+   3:Core/Src/loops_handler.c **** uint16_t irq_counter9k, irq_counter250;
+   4:Core/Src/loops_handler.c **** 
+   5:Core/Src/loops_handler.c **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+   6:Core/Src/loops_handler.c **** {
+  29              		.loc 1 6 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+   7:Core/Src/loops_handler.c ****     if (htim == &htim3)
+  33              		.loc 1 7 5 view .LVU1
+  34              		.loc 1 7 8 is_stmt 0 view .LVU2
+  35 0000 464B     		ldr	r3, .L15
+  36 0002 8342     		cmp	r3, r0
+  37 0004 00D0     		beq	.L12
+  38 0006 7047     		bx	lr
+  39              	.L12:
+   6:Core/Src/loops_handler.c ****     if (htim == &htim3)
+  40              		.loc 1 6 1 view .LVU3
+  41 0008 70B5     		push	{r4, r5, r6, lr}
+  42              		.cfi_def_cfa_offset 16
+  43              		.cfi_offset 4, -16
+  44              		.cfi_offset 5, -12
+  45              		.cfi_offset 6, -8
+  46              		.cfi_offset 14, -4
+   8:Core/Src/loops_handler.c ****     {
+   9:Core/Src/loops_handler.c ****         if (system_enabled)
+  47              		.loc 1 9 9 is_stmt 1 view .LVU4
+  48              		.loc 1 9 13 is_stmt 0 view .LVU5
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 2
+
+
+  49 000a 454B     		ldr	r3, .L15+4
+  50 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  51              		.loc 1 9 12 view .LVU6
+  52 000e 002B     		cmp	r3, #0
+  53 0010 64D0     		beq	.L3
+  10:Core/Src/loops_handler.c ****         {
+  11:Core/Src/loops_handler.c **** 
+  12:Core/Src/loops_handler.c ****             // Allow powering motors by setting Enable pins of a driver HIGH
+  13:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
+  54              		.loc 1 13 13 is_stmt 1 view .LVU7
+  55 0012 0122     		movs	r2, #1
+  56 0014 4FF40041 		mov	r1, #32768
+  57 0018 4248     		ldr	r0, .L15+8
+  58              	.LVL1:
+  59              		.loc 1 13 13 is_stmt 0 view .LVU8
+  60 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+  61              	.LVL2:
+  14:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
+  62              		.loc 1 14 13 is_stmt 1 view .LVU9
+  63 001e 0122     		movs	r2, #1
+  64 0020 2021     		movs	r1, #32
+  65 0022 4148     		ldr	r0, .L15+12
+  66 0024 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  67              	.LVL3:
+  15:Core/Src/loops_handler.c ****             if (!irq_counter9k)
+  68              		.loc 1 15 13 view .LVU10
+  69              		.loc 1 15 17 is_stmt 0 view .LVU11
+  70 0028 404B     		ldr	r3, .L15+16
+  71 002a 1B88     		ldrh	r3, [r3]
+  72              		.loc 1 15 16 view .LVU12
+  73 002c 002B     		cmp	r3, #0
+  74 002e 38D1     		bne	.L4
+  16:Core/Src/loops_handler.c ****             {
+  17:Core/Src/loops_handler.c ****                 servo_iq18_currentLoop(&servo1_g, current[0]);
+  75              		.loc 1 17 17 is_stmt 1 view .LVU13
+  76 0030 3F4B     		ldr	r3, .L15+20
+  77 0032 1868     		ldr	r0, [r3]	@ float
+  78 0034 FFF7FEFF 		bl	__aeabi_f2iz
+  79              	.LVL4:
+  80 0038 0146     		mov	r1, r0
+  81 003a 3E48     		ldr	r0, .L15+24
+  82 003c FFF7FEFF 		bl	servo_iq18_currentLoop
+  83              	.LVL5:
+  84              	.L5:
+  18:Core/Src/loops_handler.c ****             }
+  19:Core/Src/loops_handler.c ****             else
+  20:Core/Src/loops_handler.c ****             {
+  21:Core/Src/loops_handler.c ****                 servo_iq18_currentLoop(&servo2_g, current[1]);
+  22:Core/Src/loops_handler.c ****                 slave_current_feedback(&transmit_packet, _IQ18toF(current[0]), _IQ18toF(current[1])
+  23:Core/Src/loops_handler.c ****             }
+  24:Core/Src/loops_handler.c **** 
+  25:Core/Src/loops_handler.c ****             irq_counter9k = !irq_counter9k;
+  85              		.loc 1 25 13 view .LVU14
+  86              		.loc 1 25 29 is_stmt 0 view .LVU15
+  87 0040 3A4A     		ldr	r2, .L15+16
+  88 0042 1388     		ldrh	r3, [r2]
+  89 0044 B3FA83F3 		clz	r3, r3
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 3
+
+
+  90 0048 5B09     		lsrs	r3, r3, #5
+  91              		.loc 1 25 27 view .LVU16
+  92 004a 1380     		strh	r3, [r2]	@ movhi
+  26:Core/Src/loops_handler.c **** 
+  27:Core/Src/loops_handler.c ****             irq_counter250++;
+  93              		.loc 1 27 13 is_stmt 1 view .LVU17
+  94              		.loc 1 27 27 is_stmt 0 view .LVU18
+  95 004c 3A4A     		ldr	r2, .L15+28
+  96 004e 1388     		ldrh	r3, [r2]
+  97 0050 0133     		adds	r3, r3, #1
+  98 0052 9BB2     		uxth	r3, r3
+  99 0054 1380     		strh	r3, [r2]	@ movhi
+  28:Core/Src/loops_handler.c **** 
+  29:Core/Src/loops_handler.c ****             if (irq_counter250 == 36)
+ 100              		.loc 1 29 13 is_stmt 1 view .LVU19
+ 101              		.loc 1 29 16 is_stmt 0 view .LVU20
+ 102 0056 242B     		cmp	r3, #36
+ 103 0058 3CD0     		beq	.L13
+ 104              	.L6:
+  30:Core/Src/loops_handler.c ****             {
+  31:Core/Src/loops_handler.c ****                 servo_iq18_velocityLoop(&servo1_g);
+  32:Core/Src/loops_handler.c ****             }
+  33:Core/Src/loops_handler.c **** 
+  34:Core/Src/loops_handler.c ****             if (irq_counter250 == 72)
+ 105              		.loc 1 34 13 is_stmt 1 view .LVU21
+ 106              		.loc 1 34 32 is_stmt 0 view .LVU22
+ 107 005a 374B     		ldr	r3, .L15+28
+ 108 005c 1B88     		ldrh	r3, [r3]
+ 109              		.loc 1 34 16 view .LVU23
+ 110 005e 482B     		cmp	r3, #72
+ 111 0060 4DD1     		bne	.L7
+  35:Core/Src/loops_handler.c ****             {
+  36:Core/Src/loops_handler.c ****                 servo_iq18_velocityLoop(&servo2_g);
+ 112              		.loc 1 36 17 is_stmt 1 view .LVU24
+ 113 0062 364C     		ldr	r4, .L15+32
+ 114 0064 2046     		mov	r0, r4
+ 115 0066 FFF7FEFF 		bl	servo_iq18_velocityLoop
+ 116              	.LVL6:
+  37:Core/Src/loops_handler.c ****                 irq_counter250 = 0;
+ 117              		.loc 1 37 17 view .LVU25
+ 118              		.loc 1 37 32 is_stmt 0 view .LVU26
+ 119 006a 334B     		ldr	r3, .L15+28
+ 120 006c 0022     		movs	r2, #0
+ 121 006e 1A80     		strh	r2, [r3]	@ movhi
+  38:Core/Src/loops_handler.c **** 
+  39:Core/Src/loops_handler.c ****                 slave_velocity_feedback(&transmit_packet, _IQ18toF(servo1_g.encoder.angularVelocity
+ 122              		.loc 1 39 17 is_stmt 1 view .LVU27
+ 123 0070 304E     		ldr	r6, .L15+24
+ 124 0072 F068     		ldr	r0, [r6, #12]
+ 125 0074 FFF7FEFF 		bl	_IQ18toF
+ 126              	.LVL7:
+ 127 0078 0546     		mov	r5, r0
+ 128              		.loc 1 39 17 is_stmt 0 discriminator 1 view .LVU28
+ 129 007a E068     		ldr	r0, [r4, #12]
+ 130 007c FFF7FEFF 		bl	_IQ18toF
+ 131              	.LVL8:
+ 132 0080 0246     		mov	r2, r0
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 4
+
+
+ 133              		.loc 1 39 17 discriminator 2 view .LVU29
+ 134 0082 2946     		mov	r1, r5
+ 135 0084 2E48     		ldr	r0, .L15+36
+ 136 0086 FFF7FEFF 		bl	slave_velocity_feedback
+ 137              	.LVL9:
+  40:Core/Src/loops_handler.c ****                 servo_iq18_controlVelocity(&servo1_g, valid_packet.velocity_task1);
+ 138              		.loc 1 40 17 is_stmt 1 view .LVU30
+ 139 008a 2E4D     		ldr	r5, .L15+40
+ 140 008c D5F80110 		ldr	r1, [r5, #1]	@ unaligned
+ 141 0090 3046     		mov	r0, r6
+ 142 0092 FFF7FEFF 		bl	servo_iq18_controlVelocity
+ 143              	.LVL10:
+  41:Core/Src/loops_handler.c ****                 servo_iq18_controlVelocity(&servo2_g, valid_packet.velocity_task2);
+ 144              		.loc 1 41 17 view .LVU31
+ 145 0096 D5F80510 		ldr	r1, [r5, #5]	@ unaligned
+ 146 009a 2046     		mov	r0, r4
+ 147 009c FFF7FEFF 		bl	servo_iq18_controlVelocity
+ 148              	.LVL11:
+ 149 00a0 2DE0     		b	.L7
+ 150              	.L4:
+  21:Core/Src/loops_handler.c ****                 slave_current_feedback(&transmit_packet, _IQ18toF(current[0]), _IQ18toF(current[1])
+ 151              		.loc 1 21 17 view .LVU32
+  21:Core/Src/loops_handler.c ****                 slave_current_feedback(&transmit_packet, _IQ18toF(current[0]), _IQ18toF(current[1])
+ 152              		.loc 1 21 58 is_stmt 0 view .LVU33
+ 153 00a2 234D     		ldr	r5, .L15+20
+  21:Core/Src/loops_handler.c ****                 slave_current_feedback(&transmit_packet, _IQ18toF(current[0]), _IQ18toF(current[1])
+ 154              		.loc 1 21 17 view .LVU34
+ 155 00a4 6868     		ldr	r0, [r5, #4]	@ float
+ 156 00a6 FFF7FEFF 		bl	__aeabi_f2iz
+ 157              	.LVL12:
+ 158 00aa 0146     		mov	r1, r0
+ 159 00ac 2348     		ldr	r0, .L15+32
+ 160 00ae FFF7FEFF 		bl	servo_iq18_currentLoop
+ 161              	.LVL13:
+  22:Core/Src/loops_handler.c ****             }
+ 162              		.loc 1 22 17 is_stmt 1 view .LVU35
+ 163 00b2 2868     		ldr	r0, [r5]	@ float
+ 164 00b4 FFF7FEFF 		bl	__aeabi_f2iz
+ 165              	.LVL14:
+ 166 00b8 FFF7FEFF 		bl	_IQ18toF
+ 167              	.LVL15:
+ 168 00bc 0446     		mov	r4, r0
+  22:Core/Src/loops_handler.c ****             }
+ 169              		.loc 1 22 17 is_stmt 0 discriminator 1 view .LVU36
+ 170 00be 6868     		ldr	r0, [r5, #4]	@ float
+ 171 00c0 FFF7FEFF 		bl	__aeabi_f2iz
+ 172              	.LVL16:
+ 173 00c4 FFF7FEFF 		bl	_IQ18toF
+ 174              	.LVL17:
+ 175 00c8 0246     		mov	r2, r0
+  22:Core/Src/loops_handler.c ****             }
+ 176              		.loc 1 22 17 discriminator 2 view .LVU37
+ 177 00ca 2146     		mov	r1, r4
+ 178 00cc 1C48     		ldr	r0, .L15+36
+ 179 00ce FFF7FEFF 		bl	slave_current_feedback
+ 180              	.LVL18:
+ 181 00d2 B5E7     		b	.L5
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 5
+
+
+ 182              	.L13:
+  31:Core/Src/loops_handler.c ****             }
+ 183              		.loc 1 31 17 is_stmt 1 view .LVU38
+ 184 00d4 1748     		ldr	r0, .L15+24
+ 185 00d6 FFF7FEFF 		bl	servo_iq18_velocityLoop
+ 186              	.LVL19:
+ 187 00da BEE7     		b	.L6
+ 188              	.LVL20:
+ 189              	.L3:
+  42:Core/Src/loops_handler.c ****             }
+  43:Core/Src/loops_handler.c ****         }
+  44:Core/Src/loops_handler.c ****         else
+  45:Core/Src/loops_handler.c ****         {
+  46:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_RESET);
+ 190              		.loc 1 46 13 view .LVU39
+ 191 00dc 0022     		movs	r2, #0
+ 192 00de 4FF40041 		mov	r1, #32768
+ 193 00e2 1048     		ldr	r0, .L15+8
+ 194              	.LVL21:
+ 195              		.loc 1 46 13 is_stmt 0 view .LVU40
+ 196 00e4 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 197              	.LVL22:
+  47:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_RESET);
+ 198              		.loc 1 47 13 is_stmt 1 view .LVU41
+ 199 00e8 0022     		movs	r2, #0
+ 200 00ea 2021     		movs	r1, #32
+ 201 00ec 0E48     		ldr	r0, .L15+12
+ 202 00ee FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 203              	.LVL23:
+  48:Core/Src/loops_handler.c ****             servo_iq18_reset(&servo1_g);
+ 204              		.loc 1 48 13 view .LVU42
+ 205 00f2 1048     		ldr	r0, .L15+24
+ 206 00f4 FFF7FEFF 		bl	servo_iq18_reset
+ 207              	.LVL24:
+  49:Core/Src/loops_handler.c ****             servo_iq18_reset(&servo2_g);
+ 208              		.loc 1 49 13 view .LVU43
+ 209 00f8 1048     		ldr	r0, .L15+32
+ 210 00fa FFF7FEFF 		bl	servo_iq18_reset
+ 211              	.LVL25:
+ 212              	.L7:
+  50:Core/Src/loops_handler.c ****         }
+  51:Core/Src/loops_handler.c ****         if (reset_flag)
+ 213              		.loc 1 51 9 view .LVU44
+ 214              		.loc 1 51 13 is_stmt 0 view .LVU45
+ 215 00fe 124B     		ldr	r3, .L15+44
+ 216 0100 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 217              		.loc 1 51 12 view .LVU46
+ 218 0102 03B9     		cbnz	r3, .L14
+ 219              	.L1:
+  52:Core/Src/loops_handler.c ****         {
+  53:Core/Src/loops_handler.c ****             servo_iq18_reset(&servo1_g);
+  54:Core/Src/loops_handler.c ****             servo_iq18_reset(&servo2_g);
+  55:Core/Src/loops_handler.c ****             slave_servo_enc_is_reset(&transmit_packet);
+  56:Core/Src/loops_handler.c ****             // transmit_packet.servos_reset = 0;
+  57:Core/Src/loops_handler.c ****         }
+  58:Core/Src/loops_handler.c ****     }
+  59:Core/Src/loops_handler.c **** }...
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 6
+
+
+ 220              		.loc 1 59 1 view .LVU47
+ 221 0104 70BD     		pop	{r4, r5, r6, pc}
+ 222              	.L14:
+  53:Core/Src/loops_handler.c ****             servo_iq18_reset(&servo1_g);
+ 223              		.loc 1 53 13 is_stmt 1 view .LVU48
+ 224 0106 0B48     		ldr	r0, .L15+24
+ 225 0108 FFF7FEFF 		bl	servo_iq18_reset
+ 226              	.LVL26:
+  54:Core/Src/loops_handler.c ****             servo_iq18_reset(&servo2_g);
+ 227              		.loc 1 54 13 view .LVU49
+ 228 010c 0B48     		ldr	r0, .L15+32
+ 229 010e FFF7FEFF 		bl	servo_iq18_reset
+ 230              	.LVL27:
+  55:Core/Src/loops_handler.c ****             slave_servo_enc_is_reset(&transmit_packet);
+ 231              		.loc 1 55 13 view .LVU50
+ 232 0112 0B48     		ldr	r0, .L15+36
+ 233 0114 FFF7FEFF 		bl	slave_servo_enc_is_reset
+ 234              	.LVL28:
+ 235              		.loc 1 59 1 is_stmt 0 view .LVU51
+ 236 0118 F4E7     		b	.L1
+ 237              	.L16:
+ 238 011a 00BF     		.align	2
+ 239              	.L15:
+ 240 011c 00000000 		.word	htim3
+ 241 0120 00000000 		.word	system_enabled
+ 242 0124 00080140 		.word	1073809408
+ 243 0128 000C0140 		.word	1073810432
+ 244 012c 00000000 		.word	irq_counter9k
+ 245 0130 00000000 		.word	current
+ 246 0134 00000000 		.word	servo1_g
+ 247 0138 00000000 		.word	irq_counter250
+ 248 013c 00000000 		.word	servo2_g
+ 249 0140 00000000 		.word	transmit_packet
+ 250 0144 00000000 		.word	valid_packet
+ 251 0148 00000000 		.word	reset_flag
+ 252              		.cfi_endproc
+ 253              	.LFE65:
+ 255              		.global	irq_counter250
+ 256              		.section	.bss.irq_counter250,"aw",%nobits
+ 257              		.align	1
+ 260              	irq_counter250:
+ 261 0000 0000     		.space	2
+ 262              		.global	irq_counter9k
+ 263              		.section	.bss.irq_counter9k,"aw",%nobits
+ 264              		.align	1
+ 267              	irq_counter9k:
+ 268 0000 0000     		.space	2
+ 269              		.text
+ 270              	.Letext0:
+ 271              		.file 2 "C:/msys64/mingw64/arm-none-eabi/include/machine/_default_types.h"
+ 272              		.file 3 "C:/msys64/mingw64/arm-none-eabi/include/sys/_stdint.h"
+ 273              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 274              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 275              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 276              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 277              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h"
+ 278              		.file 9 "Core/Inc/IQmathLib.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 7
+
+
+ 279              		.file 10 "Core/Inc/ema_iq18.h"
+ 280              		.file 11 "Core/Inc/encoder_iq18.h"
+ 281              		.file 12 "Core/Inc/pid_iq18.h"
+ 282              		.file 13 "Core/Inc/pwm.h"
+ 283              		.file 14 "Core/Inc/servo_iq18.h"
+ 284              		.file 15 "Core/Inc/tim.h"
+ 285              		.file 16 "Core/Inc/servo_init.h"
+ 286              		.file 17 "Core/Inc/global_flags.h"
+ 287              		.file 18 "Core/Inc/adc_current.h"
+ 288              		.file 19 "Core/Inc/spi_comms.h"
+ 289              		.file 20 "Core/Inc/spi_slave_handler.h"
+ 290              		.file 21 "Core/Inc/spi_slave.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 loops_handler.c
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:20     .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:26     .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:240    .text.HAL_TIM_PeriodElapsedCallback:0000011c $d
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:267    .bss.irq_counter9k:00000000 irq_counter9k
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:260    .bss.irq_counter250:00000000 irq_counter250
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:257    .bss.irq_counter250:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\cct0eGdV.s:264    .bss.irq_counter9k:00000000 $d
+
+UNDEFINED SYMBOLS
+__aeabi_f2iz
+HAL_GPIO_WritePin
+servo_iq18_currentLoop
+servo_iq18_velocityLoop
+_IQ18toF
+slave_velocity_feedback
+servo_iq18_controlVelocity
+slave_current_feedback
+servo_iq18_reset
+slave_servo_enc_is_reset
+htim3
+system_enabled
+current
+servo1_g
+servo2_g
+transmit_packet
+valid_packet
+reset_flag

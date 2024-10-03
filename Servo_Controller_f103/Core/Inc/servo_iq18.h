@@ -79,5 +79,7 @@ void servo_iq18_controlPosition(servo_iq18_t *servo, float setpoint);
 void servo_iq18_controlVelocity(servo_iq18_t *servo, float setpoint);
 void servo_iq18_controlCurrent(servo_iq18_t *servo, float setpoint);
 
+void servo_iq18_reset(servo_iq18_t *servo);
+
 
 #endif /* INC_SERVO_IQ18_H_ */

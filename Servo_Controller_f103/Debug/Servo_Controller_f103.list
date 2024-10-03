@@ -29,21 +29,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  12 .comment      00000086  00000000  00000000  00020089  2**0
                   CONTENTS, READONLY
- 13 .debug_info   000111fb  00000000  00000000  0002010f  2**0
+ 13 .debug_info   00011248  00000000  00000000  0002010f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00003098  00000000  00000000  0003130a  2**0
+ 14 .debug_abbrev 000030b4  00000000  00000000  00031357  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00001008  00000000  00000000  000343a8  2**3
+ 15 .debug_aranges 00001008  00000000  00000000  00034410  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 00000e60  00000000  00000000  000353b0  2**3
+ 16 .debug_ranges 00000e60  00000000  00000000  00035418  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0001a26b  00000000  00000000  00036210  2**0
+ 17 .debug_macro  0001a26b  00000000  00000000  00036278  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00015329  00000000  00000000  0005047b  2**0
+ 18 .debug_line   0001532b  00000000  00000000  000504e3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00093361  00000000  00000000  000657a4  2**0
+ 19 .debug_str    0009336c  00000000  00000000  0006580e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  000043c8  00000000  00000000  000f8b08  2**2
+ 20 .debug_frame  000043c8  00000000  00000000  000f8b7c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3621,7 +3621,9 @@ void SysTick_Handler(void) {
 	/* USER CODE END SysTick_IRQn 0 */
 	HAL_IncTick();
  8001a96:	f000 fc57 	bl	8002348 <HAL_IncTick>
-	/* USER CODE BEGIN SysTick_IRQn 1 */
+//		counterlut = 0;
+//	}
+
 
 	/* USER CODE END SysTick_IRQn 1 */
 }

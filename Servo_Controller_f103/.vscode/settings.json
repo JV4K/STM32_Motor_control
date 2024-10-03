@@ -1,6 +1,24 @@
 {
-    "cmake.configureOnOpen": true,
+    "cortex-debug.armToolchainPath": "C:\\MSYS64\\MINGW64\\BIN",
+    "cortex-debug.openocdPath": "C:\\MSYS64\\MINGW64\\BIN\\OPENOCD.EXE",
     "files.associations": {
-        "encoder.h": "c"
+        "main.h": "c",
+        "stm32f1xx_hal.h": "c",
+        "stm32f1xx_hal_conf.h": "c",
+        "servo_init.h": "c",
+        "adc_current.h": "c",
+        "servo_iq18.h": "c",
+        "encoder_iq18.h": "c",
+        "main_init.h": "c",
+        "loops_handler.h": "c",
+        "pins_init.h": "c",
+        "global_flags.h": "c",
+        "stdlib.h": "c",
+        "ema_iq18.h": "c",
+        "spi_comms.h": "c",
+        "spi_slave.h": "c",
+        "spi_slave_handler.h": "c",
+        "tim.h": "c",
+        "spi.h": "c"
     }
 }

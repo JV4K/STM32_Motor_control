@@ -9,11 +9,11 @@
 #include <stdlib.h>
 
 // Initialize the EMA filter
-EMA_iq18* initEMA_iq18(float alpha) {
+EMA_iq18* initEMA_iq18(float alpha, _iq18 initial_value) {
 	EMA_iq18 *filter = (EMA_iq18*) malloc(sizeof(EMA_iq18));
 	if (filter != NULL) {
 		filter->alpha = _IQ18(alpha);
-		filter->previous = 0;
+		filter->previous = initial_value;
 	}
 	return filter;
 }

@@ -27,7 +27,7 @@ void servo_iq18_encoder_init(servo_iq18_t *servo, TIM_HandleTypeDef *htim,
 		uint16_t CPR, uint8_t encoder_is_reversed) {
 	servo->encoder.htim = htim;
 	servo->encoder.countsPerRevolution = CPR;
-	servo->encoder.filter = initEMA_iq18(VEL_EMA);
+	servo->encoder.filter = initEMA_iq18(VEL_EMA, 0);
 	if(!encoder_is_reversed){
 		servo->encoder.reverse_flag = 1;
 	}else{
@@ -209,4 +209,11 @@ void servo_iq18_controlCurrent(servo_iq18_t *servo, float setpoint) {
 		servo->currentSetpoint = _IQsat(_IQ18(setpoint * servo->reverseFlag),
 				servo->maxCurrent, -servo->maxCurrent);
 	}
+}
+
+void servo_iq18_reset(servo_iq18_t *servo){
+	encoder_reset_iq18(&servo->encoder);
+	pid_iq18_reset(&servo->pid_current);
+	pid_iq18_reset(&servo->pid_velocity);
+	pid_iq18_reset(&servo->pid_position);
 }
