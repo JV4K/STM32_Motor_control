@@ -1,0 +1,189 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"spi_slave.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/spi_slave.c"
+  18              		.section	.text.slave_system_enabled,"ax",%progbits
+  19              		.align	1
+  20              		.global	slave_system_enabled
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	slave_system_enabled:
+  26              	.LVL0:
+  27              	.LFB65:
+   1:Core/Src/spi_slave.c **** #include "spi_slave.h"
+   2:Core/Src/spi_slave.c **** 
+   3:Core/Src/spi_slave.c **** void slave_system_enabled(miso_packet_t *packet_to_master) {
+  28              		.loc 1 3 60 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+   4:Core/Src/spi_slave.c ****     packet_to_master->status |= 0x01;
+  33              		.loc 1 4 5 view .LVU1
+  34              		.loc 1 4 21 is_stmt 0 view .LVU2
+  35 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  36              		.loc 1 4 30 view .LVU3
+  37 0002 43F00103 		orr	r3, r3, #1
+  38 0006 0370     		strb	r3, [r0]
+   5:Core/Src/spi_slave.c **** }
+  39              		.loc 1 5 1 view .LVU4
+  40 0008 7047     		bx	lr
+  41              		.cfi_endproc
+  42              	.LFE65:
+  44              		.section	.text.slave_system_disabled,"ax",%progbits
+  45              		.align	1
+  46              		.global	slave_system_disabled
+  47              		.syntax unified
+  48              		.thumb
+  49              		.thumb_func
+  51              	slave_system_disabled:
+  52              	.LVL1:
+  53              	.LFB66:
+   6:Core/Src/spi_slave.c **** 
+   7:Core/Src/spi_slave.c **** void slave_system_disabled(miso_packet_t *packet_to_master) {
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s 			page 2
+
+
+  54              		.loc 1 7 61 is_stmt 1 view -0
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58              		@ link register save eliminated.
+   8:Core/Src/spi_slave.c ****     packet_to_master->status &= ~0x01;
+  59              		.loc 1 8 5 view .LVU6
+  60              		.loc 1 8 21 is_stmt 0 view .LVU7
+  61 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  62              		.loc 1 8 30 view .LVU8
+  63 0002 23F00103 		bic	r3, r3, #1
+  64 0006 0370     		strb	r3, [r0]
+   9:Core/Src/spi_slave.c **** }
+  65              		.loc 1 9 1 view .LVU9
+  66 0008 7047     		bx	lr
+  67              		.cfi_endproc
+  68              	.LFE66:
+  70              		.section	.text.slave_servo_enc_is_reset,"ax",%progbits
+  71              		.align	1
+  72              		.global	slave_servo_enc_is_reset
+  73              		.syntax unified
+  74              		.thumb
+  75              		.thumb_func
+  77              	slave_servo_enc_is_reset:
+  78              	.LVL2:
+  79              	.LFB67:
+  10:Core/Src/spi_slave.c **** 
+  11:Core/Src/spi_slave.c **** void slave_servo_enc_is_reset(miso_packet_t *packet_to_master) {
+  80              		.loc 1 11 64 is_stmt 1 view -0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  12:Core/Src/spi_slave.c ****     packet_to_master->servos_reset = 1;
+  85              		.loc 1 12 5 view .LVU11
+  86              		.loc 1 12 36 is_stmt 0 view .LVU12
+  87 0000 0123     		movs	r3, #1
+  88 0002 4376     		strb	r3, [r0, #25]
+  13:Core/Src/spi_slave.c **** }
+  89              		.loc 1 13 1 view .LVU13
+  90 0004 7047     		bx	lr
+  91              		.cfi_endproc
+  92              	.LFE67:
+  94              		.section	.text.slave_velocity_feedback,"ax",%progbits
+  95              		.align	1
+  96              		.global	slave_velocity_feedback
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 101              	slave_velocity_feedback:
+ 102              	.LVL3:
+ 103              	.LFB68:
+  14:Core/Src/spi_slave.c **** 
+  15:Core/Src/spi_slave.c **** void slave_velocity_feedback(miso_packet_t *packet_to_master, float velocity1, float velocity2) {
+ 104              		.loc 1 15 97 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s 			page 3
+
+
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+  16:Core/Src/spi_slave.c ****     packet_to_master->velocity_feedback1 = velocity1;
+ 109              		.loc 1 16 5 view .LVU15
+ 110              		.loc 1 16 42 is_stmt 0 view .LVU16
+ 111 0000 C0F80910 		str	r1, [r0, #9]	@ unaligned
+  17:Core/Src/spi_slave.c ****     packet_to_master->velocity_feedback2 = velocity2;
+ 112              		.loc 1 17 5 is_stmt 1 view .LVU17
+ 113              		.loc 1 17 42 is_stmt 0 view .LVU18
+ 114 0004 C0F80D20 		str	r2, [r0, #13]	@ unaligned
+  18:Core/Src/spi_slave.c **** }
+ 115              		.loc 1 18 1 view .LVU19
+ 116 0008 7047     		bx	lr
+ 117              		.cfi_endproc
+ 118              	.LFE68:
+ 120              		.section	.text.slave_current_feedback,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	slave_current_feedback
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	slave_current_feedback:
+ 128              	.LVL4:
+ 129              	.LFB69:
+  19:Core/Src/spi_slave.c **** 
+  20:Core/Src/spi_slave.c **** void slave_current_feedback(miso_packet_t *packet_to_master, float current1, float current2) {
+ 130              		.loc 1 20 94 is_stmt 1 view -0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		@ link register save eliminated.
+  21:Core/Src/spi_slave.c ****     packet_to_master->current_feedback1 = current1;
+ 135              		.loc 1 21 5 view .LVU21
+ 136              		.loc 1 21 41 is_stmt 0 view .LVU22
+ 137 0000 C0F81110 		str	r1, [r0, #17]	@ unaligned
+  22:Core/Src/spi_slave.c ****     packet_to_master->current_feedback2 = current2;
+ 138              		.loc 1 22 5 is_stmt 1 view .LVU23
+ 139              		.loc 1 22 41 is_stmt 0 view .LVU24
+ 140 0004 C0F81520 		str	r2, [r0, #21]	@ unaligned
+  23:Core/Src/spi_slave.c **** }
+ 141              		.loc 1 23 1 view .LVU25
+ 142 0008 7047     		bx	lr
+ 143              		.cfi_endproc
+ 144              	.LFE69:
+ 146              		.text
+ 147              	.Letext0:
+ 148              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 149              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 150              		.file 4 "Core/Inc/spi_comms.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi_slave.c
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:19     .text.slave_system_enabled:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:25     .text.slave_system_enabled:00000000 slave_system_enabled
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:45     .text.slave_system_disabled:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:51     .text.slave_system_disabled:00000000 slave_system_disabled
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:71     .text.slave_servo_enc_is_reset:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:77     .text.slave_servo_enc_is_reset:00000000 slave_servo_enc_is_reset
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:95     .text.slave_velocity_feedback:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:101    .text.slave_velocity_feedback:00000000 slave_velocity_feedback
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:121    .text.slave_current_feedback:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cc3k6SJq.s:127    .text.slave_current_feedback:00000000 slave_current_feedback
+
+NO UNDEFINED SYMBOLS

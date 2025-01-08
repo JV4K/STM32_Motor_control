@@ -9,6 +9,8 @@
 /* MOSI packet struct ---------------------------------------------------------*/
 typedef struct {
     uint8_t mode;               // MODE register bytes
+    float angle_task1;       // Velocity command for wheel 1
+    float angle_task2;       // Velocity command for wheel 2
     float velocity_task1;       // Velocity command for wheel 1
     float velocity_task2;       // Velocity command for wheel 2
     uint8_t reset_servos;       // Command to reset servos
@@ -18,6 +20,8 @@ typedef struct {
 /* MISO packet struct ---------------------------------------------------------*/
 typedef struct {
     uint8_t status;             // STATUS register bytes (enabled/disabled)
+    float angle_feedback1;   // Velocity feedback for wheel 1
+    float angle_feedback2;   // Velocity feedback for wheel 2
     float velocity_feedback1;   // Velocity feedback for wheel 1
     float velocity_feedback2;   // Velocity feedback for wheel 2
     float current_feedback1;    // Current feedback for wheel 1

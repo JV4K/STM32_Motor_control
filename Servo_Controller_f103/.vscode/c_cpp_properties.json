@@ -13,7 +13,7 @@
         "STM32F103xB",
         "USE_HAL_DRIVER"
       ],
-      "compilerPath": "C:\\MSYS64\\MINGW64\\BIN\\ARM-NONE-EABI-GCC.EXE"
+      "compilerPath": "C:\\USERS\\ZHMIS\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\ARM-NONE-EABI-GCC\\13.3.1-1.1.1\\.CONTENT\\BIN\\ARM-NONE-EABI-GCC.EXE"
     }
   ],
   "version": 4

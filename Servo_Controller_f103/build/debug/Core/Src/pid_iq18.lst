@@ -1,0 +1,742 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"pid_iq18.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/pid_iq18.c"
+  18              		.section	.text.pid_iq18_reset,"ax",%progbits
+  19              		.align	1
+  20              		.global	pid_iq18_reset
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	pid_iq18_reset:
+  26              	.LVL0:
+  27              	.LFB66:
+   1:Core/Src/pid_iq18.c **** /*
+   2:Core/Src/pid_iq18.c ****  * pid_iq18.c
+   3:Core/Src/pid_iq18.c ****  *
+   4:Core/Src/pid_iq18.c ****  *  Created on: Dec 16, 2023
+   5:Core/Src/pid_iq18.c ****  *      Author: JV4K
+   6:Core/Src/pid_iq18.c ****  */
+   7:Core/Src/pid_iq18.c **** 
+   8:Core/Src/pid_iq18.c **** #include "pid_iq18.h"
+   9:Core/Src/pid_iq18.c **** 
+  10:Core/Src/pid_iq18.c **** // Must be called with specified update period
+  11:Core/Src/pid_iq18.c **** void pid_iq18_calculate(pid_iq18_t *pid, _iq18 setpoint, _iq18 feedback) {
+  12:Core/Src/pid_iq18.c **** 	pid->error = setpoint - feedback;
+  13:Core/Src/pid_iq18.c **** 
+  14:Core/Src/pid_iq18.c **** 	if ((pid->error > -(pid->toleranceBand))
+  15:Core/Src/pid_iq18.c **** 			&& (pid->error < pid->toleranceBand)) {
+  16:Core/Src/pid_iq18.c **** 		pid->error = 0;
+  17:Core/Src/pid_iq18.c **** 		pid_iq18_reset(pid);
+  18:Core/Src/pid_iq18.c **** 	}
+  19:Core/Src/pid_iq18.c **** 
+  20:Core/Src/pid_iq18.c **** 	pid->P = _IQ18mpy(pid->error, pid->kp);
+  21:Core/Src/pid_iq18.c **** 	pid->I += _IQ18mpy(
+  22:Core/Src/pid_iq18.c **** 			(_IQ18mpy(pid->error, pid->ki)
+  23:Core/Src/pid_iq18.c **** 					+ _IQ18mpy(pid->output - pid->rawOutput, pid->kb)),
+  24:Core/Src/pid_iq18.c **** 			pid->dt);
+  25:Core/Src/pid_iq18.c **** 	pid->D = _IQ18div(_IQ18mpy((pid->error - pid->previousError), pid->kd),
+  26:Core/Src/pid_iq18.c **** 			pid->dt);
+  27:Core/Src/pid_iq18.c **** 
+  28:Core/Src/pid_iq18.c **** 	pid->rawOutput = pid->P + pid->I + pid->D;
+  29:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+  30:Core/Src/pid_iq18.c **** 	pid->previousError = pid->error;
+  31:Core/Src/pid_iq18.c **** }
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 2
+
+
+  32:Core/Src/pid_iq18.c **** 
+  33:Core/Src/pid_iq18.c **** // Resets all the components and previous error
+  34:Core/Src/pid_iq18.c **** void pid_iq18_reset(pid_iq18_t *pid) {
+  28              		.loc 1 34 38 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  35:Core/Src/pid_iq18.c **** 	pid->P = 0;
+  33              		.loc 1 35 2 view .LVU1
+  34              		.loc 1 35 9 is_stmt 0 view .LVU2
+  35 0000 0023     		movs	r3, #0
+  36 0002 8361     		str	r3, [r0, #24]
+  36:Core/Src/pid_iq18.c **** 	pid->I = 0;
+  37              		.loc 1 36 2 is_stmt 1 view .LVU3
+  38              		.loc 1 36 9 is_stmt 0 view .LVU4
+  39 0004 C361     		str	r3, [r0, #28]
+  37:Core/Src/pid_iq18.c **** 	pid->D = 0;
+  40              		.loc 1 37 2 is_stmt 1 view .LVU5
+  41              		.loc 1 37 9 is_stmt 0 view .LVU6
+  42 0006 0362     		str	r3, [r0, #32]
+  38:Core/Src/pid_iq18.c **** 	pid->previousError = 0;
+  43              		.loc 1 38 2 is_stmt 1 view .LVU7
+  44              		.loc 1 38 21 is_stmt 0 view .LVU8
+  45 0008 8363     		str	r3, [r0, #56]
+  39:Core/Src/pid_iq18.c **** 	pid->output = 0;
+  46              		.loc 1 39 2 is_stmt 1 view .LVU9
+  47              		.loc 1 39 14 is_stmt 0 view .LVU10
+  48 000a 4363     		str	r3, [r0, #52]
+  40:Core/Src/pid_iq18.c **** }
+  49              		.loc 1 40 1 view .LVU11
+  50 000c 7047     		bx	lr
+  51              		.cfi_endproc
+  52              	.LFE66:
+  54              		.section	.text.pid_iq18_calculate,"ax",%progbits
+  55              		.align	1
+  56              		.global	pid_iq18_calculate
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  61              	pid_iq18_calculate:
+  62              	.LVL1:
+  63              	.LFB65:
+  11:Core/Src/pid_iq18.c **** 	pid->error = setpoint - feedback;
+  64              		.loc 1 11 74 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  11:Core/Src/pid_iq18.c **** 	pid->error = setpoint - feedback;
+  68              		.loc 1 11 74 is_stmt 0 view .LVU13
+  69 0000 38B5     		push	{r3, r4, r5, lr}
+  70              		.cfi_def_cfa_offset 16
+  71              		.cfi_offset 3, -16
+  72              		.cfi_offset 4, -12
+  73              		.cfi_offset 5, -8
+  74              		.cfi_offset 14, -4
+  75 0002 0446     		mov	r4, r0
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 3
+
+
+  12:Core/Src/pid_iq18.c **** 
+  76              		.loc 1 12 2 is_stmt 1 view .LVU14
+  12:Core/Src/pid_iq18.c **** 
+  77              		.loc 1 12 24 is_stmt 0 view .LVU15
+  78 0004 891A     		subs	r1, r1, r2
+  79              	.LVL2:
+  12:Core/Src/pid_iq18.c **** 
+  80              		.loc 1 12 13 view .LVU16
+  81 0006 0160     		str	r1, [r0]
+  14:Core/Src/pid_iq18.c **** 			&& (pid->error < pid->toleranceBand)) {
+  82              		.loc 1 14 2 is_stmt 1 view .LVU17
+  14:Core/Src/pid_iq18.c **** 			&& (pid->error < pid->toleranceBand)) {
+  83              		.loc 1 14 25 is_stmt 0 view .LVU18
+  84 0008 4369     		ldr	r3, [r0, #20]
+  14:Core/Src/pid_iq18.c **** 			&& (pid->error < pid->toleranceBand)) {
+  85              		.loc 1 14 20 view .LVU19
+  86 000a 5A42     		rsbs	r2, r3, #0
+  87              	.LVL3:
+  14:Core/Src/pid_iq18.c **** 			&& (pid->error < pid->toleranceBand)) {
+  88              		.loc 1 14 5 view .LVU20
+  89 000c 9142     		cmp	r1, r2
+  90 000e 01DD     		ble	.L3
+  15:Core/Src/pid_iq18.c **** 		pid->error = 0;
+  91              		.loc 1 15 4 view .LVU21
+  92 0010 9942     		cmp	r1, r3
+  93 0012 30DB     		blt	.L6
+  94              	.LVL4:
+  95              	.L3:
+  20:Core/Src/pid_iq18.c **** 	pid->I += _IQ18mpy(
+  96              		.loc 1 20 2 is_stmt 1 view .LVU22
+  20:Core/Src/pid_iq18.c **** 	pid->I += _IQ18mpy(
+  97              		.loc 1 20 11 is_stmt 0 view .LVU23
+  98 0014 6168     		ldr	r1, [r4, #4]
+  99 0016 2068     		ldr	r0, [r4]
+ 100 0018 FFF7FEFF 		bl	_IQ18mpy
+ 101              	.LVL5:
+  20:Core/Src/pid_iq18.c **** 	pid->I += _IQ18mpy(
+ 102              		.loc 1 20 9 discriminator 1 view .LVU24
+ 103 001c A061     		str	r0, [r4, #24]
+  21:Core/Src/pid_iq18.c **** 			(_IQ18mpy(pid->error, pid->ki)
+ 104              		.loc 1 21 2 is_stmt 1 view .LVU25
+  22:Core/Src/pid_iq18.c **** 					+ _IQ18mpy(pid->output - pid->rawOutput, pid->kb)),
+ 105              		.loc 1 22 5 is_stmt 0 view .LVU26
+ 106 001e A168     		ldr	r1, [r4, #8]
+ 107 0020 2068     		ldr	r0, [r4]
+ 108 0022 FFF7FEFF 		bl	_IQ18mpy
+ 109              	.LVL6:
+ 110 0026 0546     		mov	r5, r0
+  23:Core/Src/pid_iq18.c **** 			pid->dt);
+ 111              		.loc 1 23 20 view .LVU27
+ 112 0028 606B     		ldr	r0, [r4, #52]
+  23:Core/Src/pid_iq18.c **** 			pid->dt);
+ 113              		.loc 1 23 34 view .LVU28
+ 114 002a 236B     		ldr	r3, [r4, #48]
+  23:Core/Src/pid_iq18.c **** 			pid->dt);
+ 115              		.loc 1 23 8 view .LVU29
+ 116 002c 2169     		ldr	r1, [r4, #16]
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 4
+
+
+ 117 002e C01A     		subs	r0, r0, r3
+ 118 0030 FFF7FEFF 		bl	_IQ18mpy
+ 119              	.LVL7:
+  21:Core/Src/pid_iq18.c **** 			(_IQ18mpy(pid->error, pid->ki)
+ 120              		.loc 1 21 12 view .LVU30
+ 121 0034 616A     		ldr	r1, [r4, #36]
+ 122 0036 2844     		add	r0, r0, r5
+ 123 0038 FFF7FEFF 		bl	_IQ18mpy
+ 124              	.LVL8:
+  21:Core/Src/pid_iq18.c **** 			(_IQ18mpy(pid->error, pid->ki)
+ 125              		.loc 1 21 5 discriminator 1 view .LVU31
+ 126 003c E369     		ldr	r3, [r4, #28]
+  21:Core/Src/pid_iq18.c **** 			(_IQ18mpy(pid->error, pid->ki)
+ 127              		.loc 1 21 9 discriminator 1 view .LVU32
+ 128 003e 0344     		add	r3, r3, r0
+ 129 0040 E361     		str	r3, [r4, #28]
+  25:Core/Src/pid_iq18.c **** 			pid->dt);
+ 130              		.loc 1 25 2 is_stmt 1 view .LVU33
+  25:Core/Src/pid_iq18.c **** 			pid->dt);
+ 131              		.loc 1 25 33 is_stmt 0 view .LVU34
+ 132 0042 2068     		ldr	r0, [r4]
+  25:Core/Src/pid_iq18.c **** 			pid->dt);
+ 133              		.loc 1 25 46 view .LVU35
+ 134 0044 A36B     		ldr	r3, [r4, #56]
+  25:Core/Src/pid_iq18.c **** 			pid->dt);
+ 135              		.loc 1 25 11 view .LVU36
+ 136 0046 E168     		ldr	r1, [r4, #12]
+ 137 0048 C01A     		subs	r0, r0, r3
+ 138 004a FFF7FEFF 		bl	_IQ18mpy
+ 139              	.LVL9:
+  25:Core/Src/pid_iq18.c **** 			pid->dt);
+ 140              		.loc 1 25 11 discriminator 1 view .LVU37
+ 141 004e 616A     		ldr	r1, [r4, #36]
+ 142 0050 FFF7FEFF 		bl	_IQ18div
+ 143              	.LVL10:
+  25:Core/Src/pid_iq18.c **** 			pid->dt);
+ 144              		.loc 1 25 9 discriminator 2 view .LVU38
+ 145 0054 2062     		str	r0, [r4, #32]
+  28:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+ 146              		.loc 1 28 2 is_stmt 1 view .LVU39
+  28:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+ 147              		.loc 1 28 22 is_stmt 0 view .LVU40
+ 148 0056 A369     		ldr	r3, [r4, #24]
+  28:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+ 149              		.loc 1 28 31 view .LVU41
+ 150 0058 E269     		ldr	r2, [r4, #28]
+  28:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+ 151              		.loc 1 28 26 view .LVU42
+ 152 005a 1344     		add	r3, r3, r2
+  28:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+ 153              		.loc 1 28 35 view .LVU43
+ 154 005c 1844     		add	r0, r0, r3
+  28:Core/Src/pid_iq18.c **** 	pid->output = _IQsat(pid->rawOutput, pid->upperLimit, pid->lowerLimit);
+ 155              		.loc 1 28 17 view .LVU44
+ 156 005e 2063     		str	r0, [r4, #48]
+  29:Core/Src/pid_iq18.c **** 	pid->previousError = pid->error;
+ 157              		.loc 1 29 2 is_stmt 1 view .LVU45
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 5
+
+
+  29:Core/Src/pid_iq18.c **** 	pid->previousError = pid->error;
+ 158              		.loc 1 29 16 is_stmt 0 view .LVU46
+ 159 0060 A36A     		ldr	r3, [r4, #40]
+ 160 0062 9842     		cmp	r0, r3
+ 161 0064 03DC     		bgt	.L4
+  29:Core/Src/pid_iq18.c **** 	pid->previousError = pid->error;
+ 162              		.loc 1 29 16 discriminator 2 view .LVU47
+ 163 0066 E36A     		ldr	r3, [r4, #44]
+ 164 0068 8342     		cmp	r3, r0
+ 165 006a B8BF     		it	lt
+ 166 006c 0346     		movlt	r3, r0
+ 167              	.L4:
+  29:Core/Src/pid_iq18.c **** 	pid->previousError = pid->error;
+ 168              		.loc 1 29 14 discriminator 4 view .LVU48
+ 169 006e 6363     		str	r3, [r4, #52]
+  30:Core/Src/pid_iq18.c **** }
+ 170              		.loc 1 30 2 is_stmt 1 view .LVU49
+  30:Core/Src/pid_iq18.c **** }
+ 171              		.loc 1 30 26 is_stmt 0 view .LVU50
+ 172 0070 2368     		ldr	r3, [r4]
+  30:Core/Src/pid_iq18.c **** }
+ 173              		.loc 1 30 21 view .LVU51
+ 174 0072 A363     		str	r3, [r4, #56]
+  31:Core/Src/pid_iq18.c **** 
+ 175              		.loc 1 31 1 view .LVU52
+ 176 0074 38BD     		pop	{r3, r4, r5, pc}
+ 177              	.LVL11:
+ 178              	.L6:
+  16:Core/Src/pid_iq18.c **** 		pid_iq18_reset(pid);
+ 179              		.loc 1 16 3 is_stmt 1 view .LVU53
+  16:Core/Src/pid_iq18.c **** 		pid_iq18_reset(pid);
+ 180              		.loc 1 16 14 is_stmt 0 view .LVU54
+ 181 0076 0023     		movs	r3, #0
+ 182 0078 0360     		str	r3, [r0]
+  17:Core/Src/pid_iq18.c **** 	}
+ 183              		.loc 1 17 3 is_stmt 1 view .LVU55
+ 184 007a FFF7FEFF 		bl	pid_iq18_reset
+ 185              	.LVL12:
+  17:Core/Src/pid_iq18.c **** 	}
+ 186              		.loc 1 17 3 is_stmt 0 view .LVU56
+ 187 007e C9E7     		b	.L3
+ 188              		.cfi_endproc
+ 189              	.LFE65:
+ 191              		.section	.text.pid_iq18_getOutput,"ax",%progbits
+ 192              		.align	1
+ 193              		.global	pid_iq18_getOutput
+ 194              		.syntax unified
+ 195              		.thumb
+ 196              		.thumb_func
+ 198              	pid_iq18_getOutput:
+ 199              	.LVL13:
+ 200              	.LFB67:
+  41:Core/Src/pid_iq18.c **** 
+  42:Core/Src/pid_iq18.c **** // Getter for output
+  43:Core/Src/pid_iq18.c **** _iq18 pid_iq18_getOutput(pid_iq18_t *pid) {
+ 201              		.loc 1 43 43 is_stmt 1 view -0
+ 202              		.cfi_startproc
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 6
+
+
+ 203              		@ args = 0, pretend = 0, frame = 0
+ 204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 205              		@ link register save eliminated.
+  44:Core/Src/pid_iq18.c **** 	return pid->output;
+ 206              		.loc 1 44 2 view .LVU58
+  45:Core/Src/pid_iq18.c **** }
+ 207              		.loc 1 45 1 is_stmt 0 view .LVU59
+ 208 0000 406B     		ldr	r0, [r0, #52]
+ 209              	.LVL14:
+ 210              		.loc 1 45 1 view .LVU60
+ 211 0002 7047     		bx	lr
+ 212              		.cfi_endproc
+ 213              	.LFE67:
+ 215              		.global	__aeabi_fmul
+ 216              		.global	__aeabi_f2iz
+ 217              		.global	__aeabi_fdiv
+ 218              		.section	.text.pid_iq18_init,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	pid_iq18_init
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	pid_iq18_init:
+ 226              	.LVL15:
+ 227              	.LFB68:
+  46:Core/Src/pid_iq18.c **** 
+  47:Core/Src/pid_iq18.c **** // Initialization with gains and function call frequency in herz
+  48:Core/Src/pid_iq18.c **** void pid_iq18_init(pid_iq18_t *pid, float Kp, float Ki, float Kd,
+  49:Core/Src/pid_iq18.c **** 		float Frequency) {
+ 228              		.loc 1 49 20 is_stmt 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 4, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		.loc 1 49 20 is_stmt 0 view .LVU62
+ 233 0000 70B5     		push	{r4, r5, r6, lr}
+ 234              		.cfi_def_cfa_offset 16
+ 235              		.cfi_offset 4, -16
+ 236              		.cfi_offset 5, -12
+ 237              		.cfi_offset 6, -8
+ 238              		.cfi_offset 14, -4
+ 239 0002 0446     		mov	r4, r0
+ 240 0004 0846     		mov	r0, r1
+ 241              	.LVL16:
+ 242              		.loc 1 49 20 view .LVU63
+ 243 0006 1646     		mov	r6, r2
+ 244 0008 1D46     		mov	r5, r3
+  50:Core/Src/pid_iq18.c **** 	pid->kp = _IQ18(Kp);
+ 245              		.loc 1 50 2 is_stmt 1 view .LVU64
+ 246              		.loc 1 50 12 is_stmt 0 view .LVU65
+ 247 000a 4FF09141 		mov	r1, #1216348160
+ 248              	.LVL17:
+ 249              		.loc 1 50 12 view .LVU66
+ 250 000e FFF7FEFF 		bl	__aeabi_fmul
+ 251              	.LVL18:
+ 252              		.loc 1 50 12 view .LVU67
+ 253 0012 FFF7FEFF 		bl	__aeabi_f2iz
+ 254              	.LVL19:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 7
+
+
+ 255              		.loc 1 50 10 view .LVU68
+ 256 0016 6060     		str	r0, [r4, #4]
+  51:Core/Src/pid_iq18.c **** 	pid->ki = _IQ18(Ki);
+ 257              		.loc 1 51 2 is_stmt 1 view .LVU69
+ 258              		.loc 1 51 12 is_stmt 0 view .LVU70
+ 259 0018 4FF09141 		mov	r1, #1216348160
+ 260 001c 3046     		mov	r0, r6
+ 261 001e FFF7FEFF 		bl	__aeabi_fmul
+ 262              	.LVL20:
+ 263 0022 FFF7FEFF 		bl	__aeabi_f2iz
+ 264              	.LVL21:
+ 265              		.loc 1 51 10 view .LVU71
+ 266 0026 A060     		str	r0, [r4, #8]
+  52:Core/Src/pid_iq18.c **** 	pid->kd = _IQ18(Kd);
+ 267              		.loc 1 52 2 is_stmt 1 view .LVU72
+ 268              		.loc 1 52 12 is_stmt 0 view .LVU73
+ 269 0028 4FF09141 		mov	r1, #1216348160
+ 270 002c 2846     		mov	r0, r5
+ 271 002e FFF7FEFF 		bl	__aeabi_fmul
+ 272              	.LVL22:
+ 273 0032 FFF7FEFF 		bl	__aeabi_f2iz
+ 274              	.LVL23:
+ 275              		.loc 1 52 10 view .LVU74
+ 276 0036 E060     		str	r0, [r4, #12]
+  53:Core/Src/pid_iq18.c **** 	pid->dt = _IQ18(((float ) 1 / Frequency));
+ 277              		.loc 1 53 2 is_stmt 1 view .LVU75
+ 278              		.loc 1 53 12 is_stmt 0 view .LVU76
+ 279 0038 0499     		ldr	r1, [sp, #16]	@ float
+ 280 003a 4FF07E50 		mov	r0, #1065353216
+ 281 003e FFF7FEFF 		bl	__aeabi_fdiv
+ 282              	.LVL24:
+ 283 0042 4FF09141 		mov	r1, #1216348160
+ 284 0046 FFF7FEFF 		bl	__aeabi_fmul
+ 285              	.LVL25:
+ 286 004a FFF7FEFF 		bl	__aeabi_f2iz
+ 287              	.LVL26:
+ 288              		.loc 1 53 10 view .LVU77
+ 289 004e 6062     		str	r0, [r4, #36]
+  54:Core/Src/pid_iq18.c **** }
+ 290              		.loc 1 54 1 view .LVU78
+ 291 0050 70BD     		pop	{r4, r5, r6, pc}
+ 292              		.loc 1 54 1 view .LVU79
+ 293              		.cfi_endproc
+ 294              	.LFE68:
+ 296              		.section	.text.pid_iq18_setGains,"ax",%progbits
+ 297              		.align	1
+ 298              		.global	pid_iq18_setGains
+ 299              		.syntax unified
+ 300              		.thumb
+ 301              		.thumb_func
+ 303              	pid_iq18_setGains:
+ 304              	.LVL27:
+ 305              	.LFB69:
+  55:Core/Src/pid_iq18.c **** 
+  56:Core/Src/pid_iq18.c **** // Setter for gains
+  57:Core/Src/pid_iq18.c **** void pid_iq18_setGains(pid_iq18_t *pid, float Kp, float Ki, float Kd) {
+ 306              		.loc 1 57 71 is_stmt 1 view -0
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 8
+
+
+ 307              		.cfi_startproc
+ 308              		@ args = 0, pretend = 0, frame = 0
+ 309              		@ frame_needed = 0, uses_anonymous_args = 0
+ 310              		.loc 1 57 71 is_stmt 0 view .LVU81
+ 311 0000 70B5     		push	{r4, r5, r6, lr}
+ 312              		.cfi_def_cfa_offset 16
+ 313              		.cfi_offset 4, -16
+ 314              		.cfi_offset 5, -12
+ 315              		.cfi_offset 6, -8
+ 316              		.cfi_offset 14, -4
+ 317 0002 0446     		mov	r4, r0
+ 318 0004 0846     		mov	r0, r1
+ 319              	.LVL28:
+ 320              		.loc 1 57 71 view .LVU82
+ 321 0006 1646     		mov	r6, r2
+ 322 0008 1D46     		mov	r5, r3
+  58:Core/Src/pid_iq18.c **** 	pid->kp = _IQ18(Kp);
+ 323              		.loc 1 58 2 is_stmt 1 view .LVU83
+ 324              		.loc 1 58 12 is_stmt 0 view .LVU84
+ 325 000a 4FF09141 		mov	r1, #1216348160
+ 326              	.LVL29:
+ 327              		.loc 1 58 12 view .LVU85
+ 328 000e FFF7FEFF 		bl	__aeabi_fmul
+ 329              	.LVL30:
+ 330              		.loc 1 58 12 view .LVU86
+ 331 0012 FFF7FEFF 		bl	__aeabi_f2iz
+ 332              	.LVL31:
+ 333              		.loc 1 58 10 view .LVU87
+ 334 0016 6060     		str	r0, [r4, #4]
+  59:Core/Src/pid_iq18.c **** 	pid->ki = _IQ18(Ki);
+ 335              		.loc 1 59 2 is_stmt 1 view .LVU88
+ 336              		.loc 1 59 12 is_stmt 0 view .LVU89
+ 337 0018 4FF09141 		mov	r1, #1216348160
+ 338 001c 3046     		mov	r0, r6
+ 339 001e FFF7FEFF 		bl	__aeabi_fmul
+ 340              	.LVL32:
+ 341 0022 FFF7FEFF 		bl	__aeabi_f2iz
+ 342              	.LVL33:
+ 343              		.loc 1 59 10 view .LVU90
+ 344 0026 A060     		str	r0, [r4, #8]
+  60:Core/Src/pid_iq18.c **** 	pid->kd = _IQ18(Kd);
+ 345              		.loc 1 60 2 is_stmt 1 view .LVU91
+ 346              		.loc 1 60 12 is_stmt 0 view .LVU92
+ 347 0028 4FF09141 		mov	r1, #1216348160
+ 348 002c 2846     		mov	r0, r5
+ 349 002e FFF7FEFF 		bl	__aeabi_fmul
+ 350              	.LVL34:
+ 351 0032 FFF7FEFF 		bl	__aeabi_f2iz
+ 352              	.LVL35:
+ 353              		.loc 1 60 10 view .LVU93
+ 354 0036 E060     		str	r0, [r4, #12]
+  61:Core/Src/pid_iq18.c **** }
+ 355              		.loc 1 61 1 view .LVU94
+ 356 0038 70BD     		pop	{r4, r5, r6, pc}
+ 357              		.loc 1 61 1 view .LVU95
+ 358              		.cfi_endproc
+ 359              	.LFE69:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 9
+
+
+ 361              		.section	.text.pid_iq18_setAntiWindup,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	pid_iq18_setAntiWindup
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	pid_iq18_setAntiWindup:
+ 369              	.LVL36:
+ 370              	.LFB70:
+  62:Core/Src/pid_iq18.c **** 
+  63:Core/Src/pid_iq18.c **** // Integral component anti-windup gain
+  64:Core/Src/pid_iq18.c **** void pid_iq18_setAntiWindup(pid_iq18_t *pid, _iq18 Kb) {
+ 371              		.loc 1 64 56 is_stmt 1 view -0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		@ link register save eliminated.
+  65:Core/Src/pid_iq18.c **** 	pid->kb = _IQ18(Kb);
+ 376              		.loc 1 65 2 view .LVU97
+ 377              		.loc 1 65 12 is_stmt 0 view .LVU98
+ 378 0000 8904     		lsls	r1, r1, #18
+ 379              	.LVL37:
+ 380              		.loc 1 65 10 view .LVU99
+ 381 0002 0161     		str	r1, [r0, #16]
+  66:Core/Src/pid_iq18.c **** }
+ 382              		.loc 1 66 1 view .LVU100
+ 383 0004 7047     		bx	lr
+ 384              		.cfi_endproc
+ 385              	.LFE70:
+ 387              		.section	.text.pid_iq18_setLimits,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	pid_iq18_setLimits
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 394              	pid_iq18_setLimits:
+ 395              	.LVL38:
+ 396              	.LFB71:
+  67:Core/Src/pid_iq18.c **** 
+  68:Core/Src/pid_iq18.c **** // Setters for output limits
+  69:Core/Src/pid_iq18.c **** void pid_iq18_setLimits(pid_iq18_t *pid, float UpperLimit, float LowerLimit) {
+ 397              		.loc 1 69 78 is_stmt 1 view -0
+ 398              		.cfi_startproc
+ 399              		@ args = 0, pretend = 0, frame = 0
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401              		.loc 1 69 78 is_stmt 0 view .LVU102
+ 402 0000 38B5     		push	{r3, r4, r5, lr}
+ 403              		.cfi_def_cfa_offset 16
+ 404              		.cfi_offset 3, -16
+ 405              		.cfi_offset 4, -12
+ 406              		.cfi_offset 5, -8
+ 407              		.cfi_offset 14, -4
+ 408 0002 0446     		mov	r4, r0
+ 409 0004 0D46     		mov	r5, r1
+  70:Core/Src/pid_iq18.c **** 	pid->lowerLimit = _IQ18(LowerLimit);
+ 410              		.loc 1 70 2 is_stmt 1 view .LVU103
+ 411              		.loc 1 70 20 is_stmt 0 view .LVU104
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 10
+
+
+ 412 0006 4FF09141 		mov	r1, #1216348160
+ 413              	.LVL39:
+ 414              		.loc 1 70 20 view .LVU105
+ 415 000a 1046     		mov	r0, r2
+ 416              	.LVL40:
+ 417              		.loc 1 70 20 view .LVU106
+ 418 000c FFF7FEFF 		bl	__aeabi_fmul
+ 419              	.LVL41:
+ 420              		.loc 1 70 20 view .LVU107
+ 421 0010 FFF7FEFF 		bl	__aeabi_f2iz
+ 422              	.LVL42:
+ 423              		.loc 1 70 18 view .LVU108
+ 424 0014 E062     		str	r0, [r4, #44]
+  71:Core/Src/pid_iq18.c **** 	pid->upperLimit = _IQ18(UpperLimit);
+ 425              		.loc 1 71 2 is_stmt 1 view .LVU109
+ 426              		.loc 1 71 20 is_stmt 0 view .LVU110
+ 427 0016 4FF09141 		mov	r1, #1216348160
+ 428 001a 2846     		mov	r0, r5
+ 429 001c FFF7FEFF 		bl	__aeabi_fmul
+ 430              	.LVL43:
+ 431 0020 FFF7FEFF 		bl	__aeabi_f2iz
+ 432              	.LVL44:
+ 433              		.loc 1 71 18 view .LVU111
+ 434 0024 A062     		str	r0, [r4, #40]
+  72:Core/Src/pid_iq18.c **** }
+ 435              		.loc 1 72 1 view .LVU112
+ 436 0026 38BD     		pop	{r3, r4, r5, pc}
+ 437              		.loc 1 72 1 view .LVU113
+ 438              		.cfi_endproc
+ 439              	.LFE71:
+ 441              		.section	.text.pid_iq18_setUpperLimit,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	pid_iq18_setUpperLimit
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 448              	pid_iq18_setUpperLimit:
+ 449              	.LVL45:
+ 450              	.LFB72:
+  73:Core/Src/pid_iq18.c **** 
+  74:Core/Src/pid_iq18.c **** void pid_iq18_setUpperLimit(pid_iq18_t *pid, float UpperLimit) {
+ 451              		.loc 1 74 64 is_stmt 1 view -0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455              		.loc 1 74 64 is_stmt 0 view .LVU115
+ 456 0000 10B5     		push	{r4, lr}
+ 457              		.cfi_def_cfa_offset 8
+ 458              		.cfi_offset 4, -8
+ 459              		.cfi_offset 14, -4
+ 460 0002 0446     		mov	r4, r0
+ 461 0004 0846     		mov	r0, r1
+ 462              	.LVL46:
+  75:Core/Src/pid_iq18.c **** 	pid->upperLimit = _IQ18(UpperLimit);
+ 463              		.loc 1 75 2 is_stmt 1 view .LVU116
+ 464              		.loc 1 75 20 is_stmt 0 view .LVU117
+ 465 0006 4FF09141 		mov	r1, #1216348160
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 11
+
+
+ 466              	.LVL47:
+ 467              		.loc 1 75 20 view .LVU118
+ 468 000a FFF7FEFF 		bl	__aeabi_fmul
+ 469              	.LVL48:
+ 470              		.loc 1 75 20 view .LVU119
+ 471 000e FFF7FEFF 		bl	__aeabi_f2iz
+ 472              	.LVL49:
+ 473              		.loc 1 75 18 view .LVU120
+ 474 0012 A062     		str	r0, [r4, #40]
+  76:Core/Src/pid_iq18.c **** }
+ 475              		.loc 1 76 1 view .LVU121
+ 476 0014 10BD     		pop	{r4, pc}
+ 477              		.loc 1 76 1 view .LVU122
+ 478              		.cfi_endproc
+ 479              	.LFE72:
+ 481              		.section	.text.pid_iq18_setLowerLimit,"ax",%progbits
+ 482              		.align	1
+ 483              		.global	pid_iq18_setLowerLimit
+ 484              		.syntax unified
+ 485              		.thumb
+ 486              		.thumb_func
+ 488              	pid_iq18_setLowerLimit:
+ 489              	.LVL50:
+ 490              	.LFB73:
+  77:Core/Src/pid_iq18.c **** 
+  78:Core/Src/pid_iq18.c **** void pid_iq18_setLowerLimit(pid_iq18_t *pid, float LowerLimit) {
+ 491              		.loc 1 78 64 is_stmt 1 view -0
+ 492              		.cfi_startproc
+ 493              		@ args = 0, pretend = 0, frame = 0
+ 494              		@ frame_needed = 0, uses_anonymous_args = 0
+ 495              		.loc 1 78 64 is_stmt 0 view .LVU124
+ 496 0000 10B5     		push	{r4, lr}
+ 497              		.cfi_def_cfa_offset 8
+ 498              		.cfi_offset 4, -8
+ 499              		.cfi_offset 14, -4
+ 500 0002 0446     		mov	r4, r0
+ 501 0004 0846     		mov	r0, r1
+ 502              	.LVL51:
+  79:Core/Src/pid_iq18.c **** 	pid->lowerLimit = _IQ18(LowerLimit);
+ 503              		.loc 1 79 2 is_stmt 1 view .LVU125
+ 504              		.loc 1 79 20 is_stmt 0 view .LVU126
+ 505 0006 4FF09141 		mov	r1, #1216348160
+ 506              	.LVL52:
+ 507              		.loc 1 79 20 view .LVU127
+ 508 000a FFF7FEFF 		bl	__aeabi_fmul
+ 509              	.LVL53:
+ 510              		.loc 1 79 20 view .LVU128
+ 511 000e FFF7FEFF 		bl	__aeabi_f2iz
+ 512              	.LVL54:
+ 513              		.loc 1 79 18 view .LVU129
+ 514 0012 E062     		str	r0, [r4, #44]
+  80:Core/Src/pid_iq18.c **** }
+ 515              		.loc 1 80 1 view .LVU130
+ 516 0014 10BD     		pop	{r4, pc}
+ 517              		.loc 1 80 1 view .LVU131
+ 518              		.cfi_endproc
+ 519              	.LFE73:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 12
+
+
+ 521              		.section	.text.pid_iq18_setToleranceBand,"ax",%progbits
+ 522              		.align	1
+ 523              		.global	pid_iq18_setToleranceBand
+ 524              		.syntax unified
+ 525              		.thumb
+ 526              		.thumb_func
+ 528              	pid_iq18_setToleranceBand:
+ 529              	.LVL55:
+ 530              	.LFB74:
+  81:Core/Src/pid_iq18.c **** 
+  82:Core/Src/pid_iq18.c **** // Tolerance band setter
+  83:Core/Src/pid_iq18.c **** void pid_iq18_setToleranceBand(pid_iq18_t *pid, float ToleranceBand) {
+ 531              		.loc 1 83 70 is_stmt 1 view -0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 0
+ 534              		@ frame_needed = 0, uses_anonymous_args = 0
+ 535              		.loc 1 83 70 is_stmt 0 view .LVU133
+ 536 0000 10B5     		push	{r4, lr}
+ 537              		.cfi_def_cfa_offset 8
+ 538              		.cfi_offset 4, -8
+ 539              		.cfi_offset 14, -4
+ 540 0002 0446     		mov	r4, r0
+ 541 0004 0846     		mov	r0, r1
+ 542              	.LVL56:
+  84:Core/Src/pid_iq18.c **** 	pid->toleranceBand = _IQ18(ToleranceBand);
+ 543              		.loc 1 84 2 is_stmt 1 view .LVU134
+ 544              		.loc 1 84 23 is_stmt 0 view .LVU135
+ 545 0006 4FF09141 		mov	r1, #1216348160
+ 546              	.LVL57:
+ 547              		.loc 1 84 23 view .LVU136
+ 548 000a FFF7FEFF 		bl	__aeabi_fmul
+ 549              	.LVL58:
+ 550              		.loc 1 84 23 view .LVU137
+ 551 000e FFF7FEFF 		bl	__aeabi_f2iz
+ 552              	.LVL59:
+ 553              		.loc 1 84 21 view .LVU138
+ 554 0012 6061     		str	r0, [r4, #20]
+  85:Core/Src/pid_iq18.c **** }
+ 555              		.loc 1 85 1 view .LVU139
+ 556 0014 10BD     		pop	{r4, pc}
+ 557              		.loc 1 85 1 view .LVU140
+ 558              		.cfi_endproc
+ 559              	.LFE74:
+ 561              		.text
+ 562              	.Letext0:
+ 563              		.file 2 "Core/Inc/pid_iq18.h"
+ 564              		.file 3 "Core/Inc/IQmathLib.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 pid_iq18.c
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:19     .text.pid_iq18_reset:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:25     .text.pid_iq18_reset:00000000 pid_iq18_reset
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:55     .text.pid_iq18_calculate:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:61     .text.pid_iq18_calculate:00000000 pid_iq18_calculate
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:192    .text.pid_iq18_getOutput:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:198    .text.pid_iq18_getOutput:00000000 pid_iq18_getOutput
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:219    .text.pid_iq18_init:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:225    .text.pid_iq18_init:00000000 pid_iq18_init
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:297    .text.pid_iq18_setGains:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:303    .text.pid_iq18_setGains:00000000 pid_iq18_setGains
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:362    .text.pid_iq18_setAntiWindup:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:368    .text.pid_iq18_setAntiWindup:00000000 pid_iq18_setAntiWindup
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:388    .text.pid_iq18_setLimits:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:394    .text.pid_iq18_setLimits:00000000 pid_iq18_setLimits
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:442    .text.pid_iq18_setUpperLimit:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:448    .text.pid_iq18_setUpperLimit:00000000 pid_iq18_setUpperLimit
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:482    .text.pid_iq18_setLowerLimit:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:488    .text.pid_iq18_setLowerLimit:00000000 pid_iq18_setLowerLimit
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:522    .text.pid_iq18_setToleranceBand:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccefFaDb.s:528    .text.pid_iq18_setToleranceBand:00000000 pid_iq18_setToleranceBand
+
+UNDEFINED SYMBOLS
+_IQ18mpy
+_IQ18div
+__aeabi_fmul
+__aeabi_f2iz
+__aeabi_fdiv

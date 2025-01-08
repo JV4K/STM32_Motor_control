@@ -1,0 +1,44 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccomtG2S.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"global_flags.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/global_flags.c"
+  18              		.global	reset_flag
+  19              		.section	.bss.reset_flag,"aw",%nobits
+  22              	reset_flag:
+  23 0000 00       		.space	1
+  24              		.global	system_enabled
+  25              		.section	.bss.system_enabled,"aw",%nobits
+  28              	system_enabled:
+  29 0000 00       		.space	1
+  30              		.text
+  31              	.Letext0:
+  32              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+  33              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+  34              		.file 4 "Core/Inc/global_flags.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccomtG2S.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 global_flags.c
+C:\Users\zhmis\AppData\Local\Temp\ccomtG2S.s:22     .bss.reset_flag:00000000 reset_flag
+C:\Users\zhmis\AppData\Local\Temp\ccomtG2S.s:23     .bss.reset_flag:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccomtG2S.s:28     .bss.system_enabled:00000000 system_enabled
+C:\Users\zhmis\AppData\Local\Temp\ccomtG2S.s:29     .bss.system_enabled:00000000 $d
+
+NO UNDEFINED SYMBOLS

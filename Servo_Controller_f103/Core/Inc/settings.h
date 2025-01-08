@@ -8,9 +8,8 @@
 /* --- Directions ---*/
 
 // Choose whether it's front or rear axis controller (uncomment needed)
-#define AXIS_FRONT
-// #define AXIS_REAR
-
+// #define AXIS_FRONT
+#define AXIS_REAR
 
 
 /* --- Spec of servo (assuming they are the same) ---*/

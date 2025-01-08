@@ -24,6 +24,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 															 (uint8_t *)&received_packet, sizeof(mosi_packet_t));
 			if (transmit_packet.servos_reset)
 			{
+				// Todo: add servo reset code
 				transmit_packet.servos_reset = 0;
 			}
 		}
