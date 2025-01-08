@@ -1,0 +1,333 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"crc_8_16.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/crc_8_16.c"
+  18              		.section	.text.crc8_ccitt,"ax",%progbits
+  19              		.align	1
+  20              		.global	crc8_ccitt
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	crc8_ccitt:
+  26              	.LVL0:
+  27              	.LFB0:
+   1:Core/Src/crc_8_16.c **** #include "crc_8_16.h"
+   2:Core/Src/crc_8_16.c **** 
+   3:Core/Src/crc_8_16.c **** // CRC-8-CCITT-FALSE calculation
+   4:Core/Src/crc_8_16.c **** uint8_t crc8_ccitt(uint8_t *data, size_t length) {
+  28              		.loc 1 4 50 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 4 50 is_stmt 0 view .LVU1
+  33 0000 00B5     		push	{lr}
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 14, -4
+  36 0002 8646     		mov	lr, r0
+   5:Core/Src/crc_8_16.c ****     uint8_t crc = CRC8_INIT;
+  37              		.loc 1 5 5 is_stmt 1 view .LVU2
+  38              	.LVL1:
+   6:Core/Src/crc_8_16.c **** 
+   7:Core/Src/crc_8_16.c ****     for (size_t i = 0; i < length; ++i) {
+  39              		.loc 1 7 5 view .LVU3
+  40              	.LBB2:
+  41              		.loc 1 7 10 view .LVU4
+  42              		.loc 1 7 17 is_stmt 0 view .LVU5
+  43 0004 4FF0000C 		mov	ip, #0
+  44              	.LBE2:
+   5:Core/Src/crc_8_16.c ****     uint8_t crc = CRC8_INIT;
+  45              		.loc 1 5 13 view .LVU6
+  46 0008 6046     		mov	r0, ip
+  47              	.LVL2:
+  48              	.LBB5:
+  49              		.loc 1 7 5 view .LVU7
+  50 000a 0EE0     		b	.L2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 2
+
+
+  51              	.LVL3:
+  52              	.L4:
+  53              	.LBB3:
+   8:Core/Src/crc_8_16.c ****         crc ^= data[i];
+   9:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+  10:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+  11:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC8_POLY;
+  12:Core/Src/crc_8_16.c ****             } else {
+  13:Core/Src/crc_8_16.c ****                 crc <<= 1;
+  54              		.loc 1 13 17 is_stmt 1 view .LVU8
+  55              		.loc 1 13 21 is_stmt 0 view .LVU9
+  56 000c 4000     		lsls	r0, r0, #1
+  57              	.LVL4:
+  58              		.loc 1 13 21 view .LVU10
+  59 000e C0B2     		uxtb	r0, r0
+  60              	.LVL5:
+  61              	.L5:
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+  62              		.loc 1 9 40 is_stmt 1 discriminator 2 view .LVU11
+  63 0010 013B     		subs	r3, r3, #1
+  64              	.LVL6:
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+  65              		.loc 1 9 40 is_stmt 0 discriminator 2 view .LVU12
+  66 0012 DBB2     		uxtb	r3, r3
+  67              	.LVL7:
+  68              	.L3:
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+  69              		.loc 1 9 35 is_stmt 1 discriminator 1 view .LVU13
+  70 0014 3BB1     		cbz	r3, .L9
+  10:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC8_POLY;
+  71              		.loc 1 10 13 view .LVU14
+  10:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC8_POLY;
+  72              		.loc 1 10 17 is_stmt 0 view .LVU15
+  73 0016 42B2     		sxtb	r2, r0
+  10:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC8_POLY;
+  74              		.loc 1 10 16 view .LVU16
+  75 0018 002A     		cmp	r2, #0
+  76 001a F7DA     		bge	.L4
+  11:Core/Src/crc_8_16.c ****             } else {
+  77              		.loc 1 11 17 is_stmt 1 view .LVU17
+  11:Core/Src/crc_8_16.c ****             } else {
+  78              		.loc 1 11 34 is_stmt 0 view .LVU18
+  79 001c 5200     		lsls	r2, r2, #1
+  80 001e 82F00702 		eor	r2, r2, #7
+  11:Core/Src/crc_8_16.c ****             } else {
+  81              		.loc 1 11 21 view .LVU19
+  82 0022 D0B2     		uxtb	r0, r2
+  83              	.LVL8:
+  11:Core/Src/crc_8_16.c ****             } else {
+  84              		.loc 1 11 21 view .LVU20
+  85 0024 F4E7     		b	.L5
+  86              	.L9:
+  11:Core/Src/crc_8_16.c ****             } else {
+  87              		.loc 1 11 21 view .LVU21
+  88              	.LBE3:
+   7:Core/Src/crc_8_16.c ****         crc ^= data[i];
+  89              		.loc 1 7 36 is_stmt 1 discriminator 2 view .LVU22
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 3
+
+
+  90 0026 0CF1010C 		add	ip, ip, #1
+  91              	.LVL9:
+  92              	.L2:
+   7:Core/Src/crc_8_16.c ****         crc ^= data[i];
+  93              		.loc 1 7 26 discriminator 1 view .LVU23
+  94 002a 8C45     		cmp	ip, r1
+  95 002c 04D2     		bcs	.L10
+   8:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+  96              		.loc 1 8 9 view .LVU24
+   8:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+  97              		.loc 1 8 20 is_stmt 0 view .LVU25
+  98 002e 1EF80C30 		ldrb	r3, [lr, ip]	@ zero_extendqisi2
+   8:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+  99              		.loc 1 8 13 view .LVU26
+ 100 0032 5840     		eors	r0, r0, r3
+ 101              	.LVL10:
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+ 102              		.loc 1 9 9 is_stmt 1 view .LVU27
+ 103              	.LBB4:
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+ 104              		.loc 1 9 14 view .LVU28
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+ 105              		.loc 1 9 22 is_stmt 0 view .LVU29
+ 106 0034 0823     		movs	r3, #8
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+ 107              		.loc 1 9 9 view .LVU30
+ 108 0036 EDE7     		b	.L3
+ 109              	.LVL11:
+ 110              	.L10:
+   9:Core/Src/crc_8_16.c ****             if (crc & 0x80) {
+ 111              		.loc 1 9 9 view .LVU31
+ 112              	.LBE4:
+ 113              	.LBE5:
+  14:Core/Src/crc_8_16.c ****             }
+  15:Core/Src/crc_8_16.c ****         }
+  16:Core/Src/crc_8_16.c ****     }
+  17:Core/Src/crc_8_16.c ****     return crc;
+ 114              		.loc 1 17 5 is_stmt 1 view .LVU32
+  18:Core/Src/crc_8_16.c **** }
+ 115              		.loc 1 18 1 is_stmt 0 view .LVU33
+ 116 0038 5DF804FB 		ldr	pc, [sp], #4
+ 117              		.cfi_endproc
+ 118              	.LFE0:
+ 120              		.section	.text.crc16_ccitt,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	crc16_ccitt
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	crc16_ccitt:
+ 128              	.LVL12:
+ 129              	.LFB1:
+  19:Core/Src/crc_8_16.c **** 
+  20:Core/Src/crc_8_16.c **** // CRC-16-CCITT-FALSE calculation
+  21:Core/Src/crc_8_16.c **** uint16_t crc16_ccitt(uint8_t *data, size_t length) {
+ 130              		.loc 1 21 52 is_stmt 1 view -0
+ 131              		.cfi_startproc
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 4
+
+
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		.loc 1 21 52 is_stmt 0 view .LVU35
+ 135 0000 00B5     		push	{lr}
+ 136              		.cfi_def_cfa_offset 4
+ 137              		.cfi_offset 14, -4
+ 138 0002 8646     		mov	lr, r0
+  22:Core/Src/crc_8_16.c ****     uint16_t crc = CRC16_INIT;
+ 139              		.loc 1 22 5 is_stmt 1 view .LVU36
+ 140              	.LVL13:
+  23:Core/Src/crc_8_16.c **** 
+  24:Core/Src/crc_8_16.c ****     for (size_t i = 0; i < length; ++i) {
+ 141              		.loc 1 24 5 view .LVU37
+ 142              	.LBB6:
+ 143              		.loc 1 24 10 view .LVU38
+ 144              		.loc 1 24 17 is_stmt 0 view .LVU39
+ 145 0004 4FF0000C 		mov	ip, #0
+ 146              	.LBE6:
+  22:Core/Src/crc_8_16.c ****     uint16_t crc = CRC16_INIT;
+ 147              		.loc 1 22 14 view .LVU40
+ 148 0008 4FF6FF70 		movw	r0, #65535
+ 149              	.LVL14:
+ 150              	.LBB9:
+ 151              		.loc 1 24 5 view .LVU41
+ 152 000c 0FE0     		b	.L12
+ 153              	.LVL15:
+ 154              	.L14:
+ 155              	.LBB7:
+  25:Core/Src/crc_8_16.c ****         crc ^= (data[i] << 8);
+  26:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+  27:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+  28:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC16_POLY;
+  29:Core/Src/crc_8_16.c ****             } else {
+  30:Core/Src/crc_8_16.c ****                 crc <<= 1;
+ 156              		.loc 1 30 17 is_stmt 1 view .LVU42
+ 157              		.loc 1 30 21 is_stmt 0 view .LVU43
+ 158 000e 4000     		lsls	r0, r0, #1
+ 159              	.LVL16:
+ 160              		.loc 1 30 21 view .LVU44
+ 161 0010 80B2     		uxth	r0, r0
+ 162              	.LVL17:
+ 163              	.L15:
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 164              		.loc 1 26 40 is_stmt 1 discriminator 2 view .LVU45
+ 165 0012 013B     		subs	r3, r3, #1
+ 166              	.LVL18:
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 167              		.loc 1 26 40 is_stmt 0 discriminator 2 view .LVU46
+ 168 0014 DBB2     		uxtb	r3, r3
+ 169              	.LVL19:
+ 170              	.L13:
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 171              		.loc 1 26 35 is_stmt 1 discriminator 1 view .LVU47
+ 172 0016 43B1     		cbz	r3, .L19
+  27:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC16_POLY;
+ 173              		.loc 1 27 13 view .LVU48
+  27:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC16_POLY;
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 5
+
+
+ 174              		.loc 1 27 17 is_stmt 0 view .LVU49
+ 175 0018 02B2     		sxth	r2, r0
+  27:Core/Src/crc_8_16.c ****                 crc = (crc << 1) ^ CRC16_POLY;
+ 176              		.loc 1 27 16 view .LVU50
+ 177 001a 002A     		cmp	r2, #0
+ 178 001c F7DA     		bge	.L14
+  28:Core/Src/crc_8_16.c ****             } else {
+ 179              		.loc 1 28 17 is_stmt 1 view .LVU51
+  28:Core/Src/crc_8_16.c ****             } else {
+ 180              		.loc 1 28 34 is_stmt 0 view .LVU52
+ 181 001e 41F22100 		movw	r0, #4129
+ 182              	.LVL20:
+  28:Core/Src/crc_8_16.c ****             } else {
+ 183              		.loc 1 28 34 view .LVU53
+ 184 0022 80EA4200 		eor	r0, r0, r2, lsl #1
+  28:Core/Src/crc_8_16.c ****             } else {
+ 185              		.loc 1 28 21 view .LVU54
+ 186 0026 80B2     		uxth	r0, r0
+ 187              	.LVL21:
+  28:Core/Src/crc_8_16.c ****             } else {
+ 188              		.loc 1 28 21 view .LVU55
+ 189 0028 F3E7     		b	.L15
+ 190              	.L19:
+  28:Core/Src/crc_8_16.c ****             } else {
+ 191              		.loc 1 28 21 view .LVU56
+ 192              	.LBE7:
+  24:Core/Src/crc_8_16.c ****         crc ^= (data[i] << 8);
+ 193              		.loc 1 24 36 is_stmt 1 discriminator 2 view .LVU57
+ 194 002a 0CF1010C 		add	ip, ip, #1
+ 195              	.LVL22:
+ 196              	.L12:
+  24:Core/Src/crc_8_16.c ****         crc ^= (data[i] << 8);
+ 197              		.loc 1 24 26 discriminator 1 view .LVU58
+ 198 002e 8C45     		cmp	ip, r1
+ 199 0030 05D2     		bcs	.L20
+  25:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+ 200              		.loc 1 25 9 view .LVU59
+  25:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+ 201              		.loc 1 25 21 is_stmt 0 view .LVU60
+ 202 0032 1EF80C30 		ldrb	r3, [lr, ip]	@ zero_extendqisi2
+  25:Core/Src/crc_8_16.c ****         for (uint8_t bit = 8; bit > 0; --bit) {
+ 203              		.loc 1 25 13 view .LVU61
+ 204 0036 80EA0320 		eor	r0, r0, r3, lsl #8
+ 205              	.LVL23:
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 206              		.loc 1 26 9 is_stmt 1 view .LVU62
+ 207              	.LBB8:
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 208              		.loc 1 26 14 view .LVU63
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 209              		.loc 1 26 22 is_stmt 0 view .LVU64
+ 210 003a 0823     		movs	r3, #8
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 211              		.loc 1 26 9 view .LVU65
+ 212 003c EBE7     		b	.L13
+ 213              	.LVL24:
+ 214              	.L20:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 6
+
+
+  26:Core/Src/crc_8_16.c ****             if (crc & 0x8000) {
+ 215              		.loc 1 26 9 view .LVU66
+ 216              	.LBE8:
+ 217              	.LBE9:
+  31:Core/Src/crc_8_16.c ****             }
+  32:Core/Src/crc_8_16.c ****         }
+  33:Core/Src/crc_8_16.c ****     }
+  34:Core/Src/crc_8_16.c ****     return crc;
+ 218              		.loc 1 34 5 is_stmt 1 view .LVU67
+  35:Core/Src/crc_8_16.c **** }...
+ 219              		.loc 1 35 1 is_stmt 0 view .LVU68
+ 220 003e 5DF804FB 		ldr	pc, [sp], #4
+ 221              		.cfi_endproc
+ 222              	.LFE1:
+ 224              		.text
+ 225              	.Letext0:
+ 226              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 227              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 228              		.file 4 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 crc_8_16.c
+C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s:19     .text.crc8_ccitt:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s:25     .text.crc8_ccitt:00000000 crc8_ccitt
+C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s:121    .text.crc16_ccitt:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccA0I4zG.s:127    .text.crc16_ccitt:00000000 crc16_ccitt
+
+NO UNDEFINED SYMBOLS

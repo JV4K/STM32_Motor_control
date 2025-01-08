@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -49,97 +49,97 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
   21:Core/Src/main.c **** #include "adc.h"
   22:Core/Src/main.c **** #include "crc.h"
   23:Core/Src/main.c **** #include "dma.h"
-  24:Core/Src/main.c **** #include "spi.h"
-  25:Core/Src/main.c **** #include "tim.h"
+  24:Core/Src/main.c **** #include "tim.h"
+  25:Core/Src/main.c **** #include "usart.h"
   26:Core/Src/main.c **** #include "gpio.h"
   27:Core/Src/main.c **** 
   28:Core/Src/main.c **** /* Private includes ----------------------------------------------------------*/
   29:Core/Src/main.c **** /* USER CODE BEGIN Includes */
   30:Core/Src/main.c **** #include "IQmathLib.h"
   31:Core/Src/main.c **** #include "main_init.h"
-  32:Core/Src/main.c **** /* USER CODE END Includes */
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 2
+  32:Core/Src/main.c **** #include "potamon_bus_lowlvl_handle.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 2
 
 
-  33:Core/Src/main.c **** 
-  34:Core/Src/main.c **** /* Private typedef -----------------------------------------------------------*/
-  35:Core/Src/main.c **** /* USER CODE BEGIN PTD */
-  36:Core/Src/main.c **** 
-  37:Core/Src/main.c **** /* USER CODE END PTD */
-  38:Core/Src/main.c **** 
-  39:Core/Src/main.c **** /* Private define ------------------------------------------------------------*/
-  40:Core/Src/main.c **** /* USER CODE BEGIN PD */
-  41:Core/Src/main.c **** 
-  42:Core/Src/main.c **** /* USER CODE END PD */
-  43:Core/Src/main.c **** 
-  44:Core/Src/main.c **** /* Private macro -------------------------------------------------------------*/
-  45:Core/Src/main.c **** /* USER CODE BEGIN PM */
-  46:Core/Src/main.c **** 
-  47:Core/Src/main.c **** /* USER CODE END PM */
-  48:Core/Src/main.c **** 
-  49:Core/Src/main.c **** /* Private variables ---------------------------------------------------------*/
-  50:Core/Src/main.c **** 
-  51:Core/Src/main.c **** /* USER CODE BEGIN PV */
-  52:Core/Src/main.c **** uint8_t servo1_debug_mode;
-  53:Core/Src/main.c **** uint8_t servo2_debug_mode;
-  54:Core/Src/main.c **** 
-  55:Core/Src/main.c **** float s1_set_cur, s1_set_vel;
-  56:Core/Src/main.c **** float s2_set_cur, s2_set_vel;
-  57:Core/Src/main.c **** 
-  58:Core/Src/main.c **** /* USER CODE END PV */
-  59:Core/Src/main.c **** 
-  60:Core/Src/main.c **** /* Private function prototypes -----------------------------------------------*/
-  61:Core/Src/main.c **** void SystemClock_Config(void);
-  62:Core/Src/main.c **** /* USER CODE BEGIN PFP */
-  63:Core/Src/main.c **** 
-  64:Core/Src/main.c **** /* USER CODE END PFP */
-  65:Core/Src/main.c **** 
-  66:Core/Src/main.c **** /* Private user code ---------------------------------------------------------*/
-  67:Core/Src/main.c **** /* USER CODE BEGIN 0 */
-  68:Core/Src/main.c **** 
-  69:Core/Src/main.c **** /* USER CODE END 0 */
-  70:Core/Src/main.c **** 
-  71:Core/Src/main.c **** /**
-  72:Core/Src/main.c ****   * @brief  The application entry point.
-  73:Core/Src/main.c ****   * @retval int
-  74:Core/Src/main.c ****   */
-  75:Core/Src/main.c **** int main(void)
-  76:Core/Src/main.c **** {
-  77:Core/Src/main.c **** 
-  78:Core/Src/main.c ****   /* USER CODE BEGIN 1 */
-  79:Core/Src/main.c **** 
-  80:Core/Src/main.c ****   /* USER CODE END 1 */
-  81:Core/Src/main.c **** 
-  82:Core/Src/main.c ****   /* MCU Configuration--------------------------------------------------------*/
-  83:Core/Src/main.c **** 
-  84:Core/Src/main.c ****   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  85:Core/Src/main.c ****   HAL_Init();
-  86:Core/Src/main.c **** 
-  87:Core/Src/main.c ****   /* USER CODE BEGIN Init */
-  88:Core/Src/main.c **** 
-  89:Core/Src/main.c ****   /* USER CODE END Init */
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 3
+  33:Core/Src/main.c **** /* USER CODE END Includes */
+  34:Core/Src/main.c **** 
+  35:Core/Src/main.c **** /* Private typedef -----------------------------------------------------------*/
+  36:Core/Src/main.c **** /* USER CODE BEGIN PTD */
+  37:Core/Src/main.c **** 
+  38:Core/Src/main.c **** /* USER CODE END PTD */
+  39:Core/Src/main.c **** 
+  40:Core/Src/main.c **** /* Private define ------------------------------------------------------------*/
+  41:Core/Src/main.c **** /* USER CODE BEGIN PD */
+  42:Core/Src/main.c **** 
+  43:Core/Src/main.c **** /* USER CODE END PD */
+  44:Core/Src/main.c **** 
+  45:Core/Src/main.c **** /* Private macro -------------------------------------------------------------*/
+  46:Core/Src/main.c **** /* USER CODE BEGIN PM */
+  47:Core/Src/main.c **** 
+  48:Core/Src/main.c **** /* USER CODE END PM */
+  49:Core/Src/main.c **** 
+  50:Core/Src/main.c **** /* Private variables ---------------------------------------------------------*/
+  51:Core/Src/main.c **** 
+  52:Core/Src/main.c **** /* USER CODE BEGIN PV */
+  53:Core/Src/main.c **** uint8_t servo1_debug_mode;
+  54:Core/Src/main.c **** uint8_t servo2_debug_mode;
+  55:Core/Src/main.c **** 
+  56:Core/Src/main.c **** float s1_set_cur, s1_set_vel;
+  57:Core/Src/main.c **** float s2_set_cur, s2_set_vel;
+  58:Core/Src/main.c **** 
+  59:Core/Src/main.c **** /* USER CODE END PV */
+  60:Core/Src/main.c **** 
+  61:Core/Src/main.c **** /* Private function prototypes -----------------------------------------------*/
+  62:Core/Src/main.c **** void SystemClock_Config(void);
+  63:Core/Src/main.c **** /* USER CODE BEGIN PFP */
+  64:Core/Src/main.c **** 
+  65:Core/Src/main.c **** /* USER CODE END PFP */
+  66:Core/Src/main.c **** 
+  67:Core/Src/main.c **** /* Private user code ---------------------------------------------------------*/
+  68:Core/Src/main.c **** /* USER CODE BEGIN 0 */
+  69:Core/Src/main.c **** 
+  70:Core/Src/main.c **** /* USER CODE END 0 */
+  71:Core/Src/main.c **** 
+  72:Core/Src/main.c **** /**
+  73:Core/Src/main.c ****   * @brief  The application entry point.
+  74:Core/Src/main.c ****   * @retval int
+  75:Core/Src/main.c ****   */
+  76:Core/Src/main.c **** int main(void)
+  77:Core/Src/main.c **** {
+  78:Core/Src/main.c **** 
+  79:Core/Src/main.c ****   /* USER CODE BEGIN 1 */
+  80:Core/Src/main.c **** 
+  81:Core/Src/main.c ****   /* USER CODE END 1 */
+  82:Core/Src/main.c **** 
+  83:Core/Src/main.c ****   /* MCU Configuration--------------------------------------------------------*/
+  84:Core/Src/main.c **** 
+  85:Core/Src/main.c ****   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  86:Core/Src/main.c ****   HAL_Init();
+  87:Core/Src/main.c **** 
+  88:Core/Src/main.c ****   /* USER CODE BEGIN Init */
+  89:Core/Src/main.c **** 
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 3
 
 
-  90:Core/Src/main.c **** 
-  91:Core/Src/main.c ****   /* Configure the system clock */
-  92:Core/Src/main.c ****   SystemClock_Config();
-  93:Core/Src/main.c **** 
-  94:Core/Src/main.c ****   /* USER CODE BEGIN SysInit */
-  95:Core/Src/main.c **** 
-  96:Core/Src/main.c ****   /* USER CODE END SysInit */
-  97:Core/Src/main.c **** 
-  98:Core/Src/main.c ****   /* Initialize all configured peripherals */
-  99:Core/Src/main.c ****   MX_GPIO_Init();
- 100:Core/Src/main.c ****   MX_DMA_Init();
- 101:Core/Src/main.c ****   MX_TIM1_Init();
- 102:Core/Src/main.c ****   MX_TIM2_Init();
- 103:Core/Src/main.c ****   MX_TIM3_Init();
- 104:Core/Src/main.c ****   MX_ADC1_Init();
- 105:Core/Src/main.c ****   MX_SPI2_Init();
+  90:Core/Src/main.c ****   /* USER CODE END Init */
+  91:Core/Src/main.c **** 
+  92:Core/Src/main.c ****   /* Configure the system clock */
+  93:Core/Src/main.c ****   SystemClock_Config();
+  94:Core/Src/main.c **** 
+  95:Core/Src/main.c ****   /* USER CODE BEGIN SysInit */
+  96:Core/Src/main.c **** 
+  97:Core/Src/main.c ****   /* USER CODE END SysInit */
+  98:Core/Src/main.c **** 
+  99:Core/Src/main.c ****   /* Initialize all configured peripherals */
+ 100:Core/Src/main.c ****   MX_GPIO_Init();
+ 101:Core/Src/main.c ****   MX_DMA_Init();
+ 102:Core/Src/main.c ****   MX_TIM1_Init();
+ 103:Core/Src/main.c ****   MX_TIM2_Init();
+ 104:Core/Src/main.c ****   MX_TIM3_Init();
+ 105:Core/Src/main.c ****   MX_ADC1_Init();
  106:Core/Src/main.c ****   MX_CRC_Init();
- 107:Core/Src/main.c ****   /* USER CODE BEGIN 2 */
- 108:Core/Src/main.c ****   MX_SPI2_Init();
+ 107:Core/Src/main.c ****   MX_USART3_UART_Init();
+ 108:Core/Src/main.c ****   /* USER CODE BEGIN 2 */
  109:Core/Src/main.c ****   MX_CRC_Init();
  110:Core/Src/main.c ****   init_mtr_ctrl(); // Initializes all peripherals and structures needed for motor control
  111:Core/Src/main.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  144:Core/Src/main.c ****     /* USER CODE END WHILE */
  145:Core/Src/main.c **** 
  146:Core/Src/main.c ****     /* USER CODE BEGIN 3 */
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 4
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 4
 
 
  147:Core/Src/main.c ****   }
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  201:Core/Src/main.c **** /**
  202:Core/Src/main.c ****   * @brief  This function is executed in case of error occurrence.
  203:Core/Src/main.c ****   * @retval None
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 5
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 5
 
 
  204:Core/Src/main.c ****   */
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
   39:Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
   40:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
   41:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 6
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 6
 
 
   42:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
   96:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
   97:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
   98:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 7
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 7
 
 
   99:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
   47              	.LBE5:
   48              	.LBE4:
  210:Core/Src/main.c ****   while (1)
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 8
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 8
 
 
   49              		.loc 1 210 3 view .LVU4
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  164:Core/Src/main.c ****   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   95              		.loc 1 164 3 is_stmt 1 view .LVU14
  164:Core/Src/main.c ****   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 9
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 9
 
 
   96              		.loc 1 164 36 is_stmt 0 view .LVU15
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  132 004a 0691     		str	r1, [sp, #24]
  181:Core/Src/main.c ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
  133              		.loc 1 181 3 is_stmt 1 view .LVU34
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 10
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 10
 
 
  181:Core/Src/main.c ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  172              	.L8:
  173              		.cfi_restore_state
  173:Core/Src/main.c ****   }
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 11
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 11
 
 
  174              		.loc 1 173 5 is_stmt 1 view .LVU51
@@ -624,8 +624,8 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  193              		.thumb_func
  195              	main:
  196              	.LFB65:
-  76:Core/Src/main.c **** 
- 197              		.loc 1 76 1 view -0
+  77:Core/Src/main.c **** 
+ 197              		.loc 1 77 1 view -0
  198              		.cfi_startproc
  199              		@ Volatile: function does not return.
  200              		@ args = 0, pretend = 0, frame = 0
@@ -634,141 +634,137 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 1
  203              		.cfi_def_cfa_offset 8
  204              		.cfi_offset 3, -8
  205              		.cfi_offset 14, -4
-  85:Core/Src/main.c **** 
- 206              		.loc 1 85 3 view .LVU55
+  86:Core/Src/main.c **** 
+ 206              		.loc 1 86 3 view .LVU55
  207 0002 FFF7FEFF 		bl	HAL_Init
  208              	.LVL7:
-  92:Core/Src/main.c **** 
- 209              		.loc 1 92 3 view .LVU56
+  93:Core/Src/main.c **** 
+ 209              		.loc 1 93 3 view .LVU56
  210 0006 FFF7FEFF 		bl	SystemClock_Config
  211              	.LVL8:
-  99:Core/Src/main.c ****   MX_DMA_Init();
- 212              		.loc 1 99 3 view .LVU57
+ 100:Core/Src/main.c ****   MX_DMA_Init();
+ 212              		.loc 1 100 3 view .LVU57
  213 000a FFF7FEFF 		bl	MX_GPIO_Init
  214              	.LVL9:
- 100:Core/Src/main.c ****   MX_TIM1_Init();
- 215              		.loc 1 100 3 view .LVU58
+ 101:Core/Src/main.c ****   MX_TIM1_Init();
+ 215              		.loc 1 101 3 view .LVU58
  216 000e FFF7FEFF 		bl	MX_DMA_Init
  217              	.LVL10:
- 101:Core/Src/main.c ****   MX_TIM2_Init();
- 218              		.loc 1 101 3 view .LVU59
+ 102:Core/Src/main.c ****   MX_TIM2_Init();
+ 218              		.loc 1 102 3 view .LVU59
  219 0012 FFF7FEFF 		bl	MX_TIM1_Init
  220              	.LVL11:
- 102:Core/Src/main.c ****   MX_TIM3_Init();
- 221              		.loc 1 102 3 view .LVU60
+ 103:Core/Src/main.c ****   MX_TIM3_Init();
+ 221              		.loc 1 103 3 view .LVU60
  222 0016 FFF7FEFF 		bl	MX_TIM2_Init
  223              	.LVL12:
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 12
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 12
 
 
- 103:Core/Src/main.c ****   MX_ADC1_Init();
- 224              		.loc 1 103 3 view .LVU61
+ 104:Core/Src/main.c ****   MX_ADC1_Init();
+ 224              		.loc 1 104 3 view .LVU61
  225 001a FFF7FEFF 		bl	MX_TIM3_Init
  226              	.LVL13:
- 104:Core/Src/main.c ****   MX_SPI2_Init();
- 227              		.loc 1 104 3 view .LVU62
+ 105:Core/Src/main.c ****   MX_CRC_Init();
+ 227              		.loc 1 105 3 view .LVU62
  228 001e FFF7FEFF 		bl	MX_ADC1_Init
  229              	.LVL14:
- 105:Core/Src/main.c ****   MX_CRC_Init();
- 230              		.loc 1 105 3 view .LVU63
- 231 0022 FFF7FEFF 		bl	MX_SPI2_Init
+ 106:Core/Src/main.c ****   MX_USART3_UART_Init();
+ 230              		.loc 1 106 3 view .LVU63
+ 231 0022 FFF7FEFF 		bl	MX_CRC_Init
  232              	.LVL15:
- 106:Core/Src/main.c ****   /* USER CODE BEGIN 2 */
- 233              		.loc 1 106 3 view .LVU64
- 234 0026 FFF7FEFF 		bl	MX_CRC_Init
+ 107:Core/Src/main.c ****   /* USER CODE BEGIN 2 */
+ 233              		.loc 1 107 3 view .LVU64
+ 234 0026 FFF7FEFF 		bl	MX_USART3_UART_Init
  235              	.LVL16:
- 108:Core/Src/main.c ****   MX_CRC_Init();
- 236              		.loc 1 108 3 view .LVU65
- 237 002a FFF7FEFF 		bl	MX_SPI2_Init
- 238              	.LVL17:
  109:Core/Src/main.c ****   init_mtr_ctrl(); // Initializes all peripherals and structures needed for motor control
- 239              		.loc 1 109 3 view .LVU66
- 240 002e FFF7FEFF 		bl	MX_CRC_Init
- 241              	.LVL18:
+ 236              		.loc 1 109 3 view .LVU65
+ 237 002a FFF7FEFF 		bl	MX_CRC_Init
+ 238              	.LVL17:
  110:Core/Src/main.c **** 
- 242              		.loc 1 110 3 view .LVU67
- 243 0032 FFF7FEFF 		bl	init_mtr_ctrl
- 244              	.LVL19:
- 245              	.L12:
+ 239              		.loc 1 110 3 view .LVU66
+ 240 002e FFF7FEFF 		bl	init_mtr_ctrl
+ 241              	.LVL18:
+ 242              	.L12:
  117:Core/Src/main.c ****   {
- 246              		.loc 1 117 3 view .LVU68
+ 243              		.loc 1 117 3 view .LVU67
  147:Core/Src/main.c ****   /* USER CODE END 3 */
- 247              		.loc 1 147 3 view .LVU69
+ 244              		.loc 1 147 3 view .LVU68
  117:Core/Src/main.c ****   {
- 248              		.loc 1 117 9 view .LVU70
- 249 0036 FEE7     		b	.L12
- 250              		.cfi_endproc
- 251              	.LFE65:
- 253              		.global	s2_set_vel
- 254              		.section	.bss.s2_set_vel,"aw",%nobits
- 255              		.align	2
- 258              	s2_set_vel:
- 259 0000 00000000 		.space	4
- 260              		.global	s2_set_cur
- 261              		.section	.bss.s2_set_cur,"aw",%nobits
- 262              		.align	2
- 265              	s2_set_cur:
- 266 0000 00000000 		.space	4
- 267              		.global	s1_set_vel
- 268              		.section	.bss.s1_set_vel,"aw",%nobits
- 269              		.align	2
- 272              	s1_set_vel:
- 273 0000 00000000 		.space	4
- 274              		.global	s1_set_cur
- 275              		.section	.bss.s1_set_cur,"aw",%nobits
- 276              		.align	2
- 279              	s1_set_cur:
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 13
+ 245              		.loc 1 117 9 view .LVU69
+ 246 0032 FEE7     		b	.L12
+ 247              		.cfi_endproc
+ 248              	.LFE65:
+ 250              		.global	s2_set_vel
+ 251              		.section	.bss.s2_set_vel,"aw",%nobits
+ 252              		.align	2
+ 255              	s2_set_vel:
+ 256 0000 00000000 		.space	4
+ 257              		.global	s2_set_cur
+ 258              		.section	.bss.s2_set_cur,"aw",%nobits
+ 259              		.align	2
+ 262              	s2_set_cur:
+ 263 0000 00000000 		.space	4
+ 264              		.global	s1_set_vel
+ 265              		.section	.bss.s1_set_vel,"aw",%nobits
+ 266              		.align	2
+ 269              	s1_set_vel:
+ 270 0000 00000000 		.space	4
+ 271              		.global	s1_set_cur
+ 272              		.section	.bss.s1_set_cur,"aw",%nobits
+ 273              		.align	2
+ 276              	s1_set_cur:
+ 277 0000 00000000 		.space	4
+ 278              		.global	servo2_debug_mode
+ 279              		.section	.bss.servo2_debug_mode,"aw",%nobits
+ 282              	servo2_debug_mode:
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 13
 
 
- 280 0000 00000000 		.space	4
- 281              		.global	servo2_debug_mode
- 282              		.section	.bss.servo2_debug_mode,"aw",%nobits
- 285              	servo2_debug_mode:
- 286 0000 00       		.space	1
- 287              		.global	servo1_debug_mode
- 288              		.section	.bss.servo1_debug_mode,"aw",%nobits
- 291              	servo1_debug_mode:
- 292 0000 00       		.space	1
- 293              		.text
- 294              	.Letext0:
- 295              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
- 296              		.file 4 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
- 297              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
- 298              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h"
- 299              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h"
- 300              		.file 8 "Core/Inc/crc.h"
- 301              		.file 9 "Core/Inc/spi.h"
- 302              		.file 10 "Core/Inc/adc.h"
- 303              		.file 11 "Core/Inc/tim.h"
- 304              		.file 12 "Core/Inc/dma.h"
- 305              		.file 13 "Core/Inc/gpio.h"
- 306              		.file 14 "Core/Inc/main_init.h"
- 307              		.file 15 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
- 308              		.file 16 "<built-in>"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s 			page 14
+ 283 0000 00       		.space	1
+ 284              		.global	servo1_debug_mode
+ 285              		.section	.bss.servo1_debug_mode,"aw",%nobits
+ 288              	servo1_debug_mode:
+ 289 0000 00       		.space	1
+ 290              		.text
+ 291              	.Letext0:
+ 292              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 293              		.file 4 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 294              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 295              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h"
+ 296              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h"
+ 297              		.file 8 "Core/Inc/usart.h"
+ 298              		.file 9 "Core/Inc/crc.h"
+ 299              		.file 10 "Core/Inc/adc.h"
+ 300              		.file 11 "Core/Inc/tim.h"
+ 301              		.file 12 "Core/Inc/dma.h"
+ 302              		.file 13 "Core/Inc/gpio.h"
+ 303              		.file 14 "Core/Inc/main_init.h"
+ 304              		.file 15 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 305              		.file 16 "<built-in>"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:19     .text.Error_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:25     .text.Error_Handler:00000000 Error_Handler
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:57     .text.SystemClock_Config:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:63     .text.SystemClock_Config:00000000 SystemClock_Config
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:189    .text.main:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:195    .text.main:00000000 main
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:258    .bss.s2_set_vel:00000000 s2_set_vel
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:255    .bss.s2_set_vel:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:265    .bss.s2_set_cur:00000000 s2_set_cur
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:262    .bss.s2_set_cur:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:272    .bss.s1_set_vel:00000000 s1_set_vel
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:269    .bss.s1_set_vel:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:279    .bss.s1_set_cur:00000000 s1_set_cur
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:276    .bss.s1_set_cur:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:285    .bss.servo2_debug_mode:00000000 servo2_debug_mode
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:286    .bss.servo2_debug_mode:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:291    .bss.servo1_debug_mode:00000000 servo1_debug_mode
-C:\Users\zhmis\AppData\Local\Temp\ccKnhVD3.s:292    .bss.servo1_debug_mode:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:19     .text.Error_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:25     .text.Error_Handler:00000000 Error_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:57     .text.SystemClock_Config:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:63     .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:189    .text.main:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:195    .text.main:00000000 main
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:255    .bss.s2_set_vel:00000000 s2_set_vel
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:252    .bss.s2_set_vel:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:262    .bss.s2_set_cur:00000000 s2_set_cur
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:259    .bss.s2_set_cur:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:269    .bss.s1_set_vel:00000000 s1_set_vel
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:266    .bss.s1_set_vel:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:276    .bss.s1_set_cur:00000000 s1_set_cur
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:273    .bss.s1_set_cur:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:282    .bss.servo2_debug_mode:00000000 servo2_debug_mode
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:283    .bss.servo2_debug_mode:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:288    .bss.servo1_debug_mode:00000000 servo1_debug_mode
+C:\Users\zhmis\AppData\Local\Temp\ccMy30tW.s:289    .bss.servo1_debug_mode:00000000 $d
 
 UNDEFINED SYMBOLS
 memset
@@ -782,6 +778,6 @@ MX_TIM1_Init
 MX_TIM2_Init
 MX_TIM3_Init
 MX_ADC1_Init
-MX_SPI2_Init
 MX_CRC_Init
+MX_USART3_UART_Init
 init_mtr_ctrl

@@ -21,14 +21,15 @@
 #include "adc.h"
 #include "crc.h"
 #include "dma.h"
-#include "spi.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "IQmathLib.h"
 #include "main_init.h"
+#include "potamon_bus_lowlvl_handle.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,10 +103,9 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_ADC1_Init();
-  MX_SPI2_Init();
   MX_CRC_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  MX_SPI2_Init();
   MX_CRC_Init();
   init_mtr_ctrl(); // Initializes all peripherals and structures needed for motor control
 

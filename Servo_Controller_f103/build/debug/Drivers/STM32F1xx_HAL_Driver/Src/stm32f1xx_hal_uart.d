@@ -1,5 +1,5 @@
-build/debug/Core/Src/spi_comms.o: Core/Src/spi_comms.c \
- Core/Inc/spi_comms.h Core/Inc/main.h \
+build/debug/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o: \
+ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  Core/Inc/stm32f1xx_hal_conf.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -23,11 +23,9 @@ build/debug/Core/Src/spi_comms.o: Core/Src/spi_comms.c \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h Core/Inc/crc.h
-Core/Inc/spi_comms.h:
-Core/Inc/main.h:
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 Core/Inc/stm32f1xx_hal_conf.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:
@@ -53,7 +51,6 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
-Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
-Core/Inc/crc.h:
+Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:

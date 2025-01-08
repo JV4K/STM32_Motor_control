@@ -1,0 +1,168 @@
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"potamon_bus_lowlvl_handle.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Core/Src/potamon_bus_lowlvl_handle.c"
+  18              		.section	.text.HAL_UART_RxCpltCallback,"ax",%progbits
+  19              		.align	1
+  20              		.global	HAL_UART_RxCpltCallback
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	HAL_UART_RxCpltCallback:
+  26              	.LVL0:
+  27              	.LFB65:
+   1:Core/Src/potamon_bus_lowlvl_handle.c **** #include "potamon_bus_lowlvl_handle.h"
+   2:Core/Src/potamon_bus_lowlvl_handle.c **** 
+   3:Core/Src/potamon_bus_lowlvl_handle.c **** pack_data_ctrl_servo_t rx_packet, valid_packet;
+   4:Core/Src/potamon_bus_lowlvl_handle.c **** 
+   5:Core/Src/potamon_bus_lowlvl_handle.c **** void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+   6:Core/Src/potamon_bus_lowlvl_handle.c **** {
+  28              		.loc 1 6 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 6 1 is_stmt 0 view .LVU1
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 3, -16
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+   7:Core/Src/potamon_bus_lowlvl_handle.c ****     if (rx_packet.crc16 == crc16_ccitt((uint8_t*)&rx_packet, sizeof(rx_packet)-2))
+  39              		.loc 1 7 5 is_stmt 1 view .LVU2
+  40              		.loc 1 7 18 is_stmt 0 view .LVU3
+  41 0002 0D48     		ldr	r0, .L5
+  42              	.LVL1:
+  43              		.loc 1 7 18 view .LVU4
+  44 0004 C489     		ldrh	r4, [r0, #14]
+  45              		.loc 1 7 28 view .LVU5
+  46 0006 0E21     		movs	r1, #14
+  47 0008 FFF7FEFF 		bl	crc16_ccitt
+  48              	.LVL2:
+  49              		.loc 1 7 8 discriminator 1 view .LVU6
+  50 000c 8442     		cmp	r4, r0
+  51 000e 05D0     		beq	.L4
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s 			page 2
+
+
+  52              	.L2:
+   8:Core/Src/potamon_bus_lowlvl_handle.c ****     {
+   9:Core/Src/potamon_bus_lowlvl_handle.c ****         if (rx_packet.ID == SERVO_DATA_ID)
+  10:Core/Src/potamon_bus_lowlvl_handle.c ****         {
+  11:Core/Src/potamon_bus_lowlvl_handle.c ****             memcpy(&rx_packet, &valid_packet, sizeof(valid_packet));
+  12:Core/Src/potamon_bus_lowlvl_handle.c ****             system_enabled = valid_packet.mode;
+  13:Core/Src/potamon_bus_lowlvl_handle.c ****         }
+  14:Core/Src/potamon_bus_lowlvl_handle.c ****     }
+  15:Core/Src/potamon_bus_lowlvl_handle.c ****     HAL_UART_Receive_IT(&huart3, (uint8_t*)&valid_packet, sizeof(valid_packet));
+  53              		.loc 1 15 5 is_stmt 1 view .LVU7
+  54 0010 1022     		movs	r2, #16
+  55 0012 0A49     		ldr	r1, .L5+4
+  56 0014 0A48     		ldr	r0, .L5+8
+  57 0016 FFF7FEFF 		bl	HAL_UART_Receive_IT
+  58              	.LVL3:
+  16:Core/Src/potamon_bus_lowlvl_handle.c **** }...
+  59              		.loc 1 16 1 is_stmt 0 view .LVU8
+  60 001a 38BD     		pop	{r3, r4, r5, pc}
+  61              	.L4:
+   9:Core/Src/potamon_bus_lowlvl_handle.c ****         if (rx_packet.ID == SERVO_DATA_ID)
+  62              		.loc 1 9 9 is_stmt 1 view .LVU9
+   9:Core/Src/potamon_bus_lowlvl_handle.c ****         if (rx_packet.ID == SERVO_DATA_ID)
+  63              		.loc 1 9 22 is_stmt 0 view .LVU10
+  64 001c 064B     		ldr	r3, .L5
+  65 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+   9:Core/Src/potamon_bus_lowlvl_handle.c ****         if (rx_packet.ID == SERVO_DATA_ID)
+  66              		.loc 1 9 12 view .LVU11
+  67 0020 402B     		cmp	r3, #64
+  68 0022 F5D1     		bne	.L2
+  11:Core/Src/potamon_bus_lowlvl_handle.c ****             memcpy(&rx_packet, &valid_packet, sizeof(valid_packet));
+  69              		.loc 1 11 13 is_stmt 1 view .LVU12
+  70 0024 044D     		ldr	r5, .L5
+  71 0026 054C     		ldr	r4, .L5+4
+  72 0028 94E80F00 		ldm	r4, {r0, r1, r2, r3}
+  73 002c 85E80F00 		stm	r5, {r0, r1, r2, r3}
+  12:Core/Src/potamon_bus_lowlvl_handle.c ****             system_enabled = valid_packet.mode;
+  74              		.loc 1 12 13 view .LVU13
+  12:Core/Src/potamon_bus_lowlvl_handle.c ****             system_enabled = valid_packet.mode;
+  75              		.loc 1 12 42 is_stmt 0 view .LVU14
+  76 0030 627B     		ldrb	r2, [r4, #13]	@ zero_extendqisi2
+  12:Core/Src/potamon_bus_lowlvl_handle.c ****             system_enabled = valid_packet.mode;
+  77              		.loc 1 12 28 view .LVU15
+  78 0032 044B     		ldr	r3, .L5+12
+  79 0034 1A70     		strb	r2, [r3]
+  80 0036 EBE7     		b	.L2
+  81              	.L6:
+  82              		.align	2
+  83              	.L5:
+  84 0038 00000000 		.word	rx_packet
+  85 003c 00000000 		.word	valid_packet
+  86 0040 00000000 		.word	huart3
+  87 0044 00000000 		.word	system_enabled
+  88              		.cfi_endproc
+  89              	.LFE65:
+  91              		.global	valid_packet
+  92              		.section	.bss.valid_packet,"aw",%nobits
+  93              		.align	2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s 			page 3
+
+
+  96              	valid_packet:
+  97 0000 00000000 		.space	16
+  97      00000000 
+  97      00000000 
+  97      00000000 
+  98              		.global	rx_packet
+  99              		.section	.bss.rx_packet,"aw",%nobits
+ 100              		.align	2
+ 103              	rx_packet:
+ 104 0000 00000000 		.space	16
+ 104      00000000 
+ 104      00000000 
+ 104      00000000 
+ 105              		.text
+ 106              	.Letext0:
+ 107              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 108              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 109              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 110              		.file 5 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 111              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 112              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 113              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 114              		.file 9 "Core/Inc/potamon_bus_protocol.h"
+ 115              		.file 10 "Core/Inc/usart.h"
+ 116              		.file 11 "Core/Inc/global_flags.h"
+ 117              		.file 12 "Core/Inc/potamon_bus_lowlvl_handle.h"
+ 118              		.file 13 "Core/Inc/crc_8_16.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 potamon_bus_lowlvl_handle.c
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:19     .text.HAL_UART_RxCpltCallback:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:25     .text.HAL_UART_RxCpltCallback:00000000 HAL_UART_RxCpltCallback
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:84     .text.HAL_UART_RxCpltCallback:00000038 $d
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:103    .bss.rx_packet:00000000 rx_packet
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:96     .bss.valid_packet:00000000 valid_packet
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:93     .bss.valid_packet:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccaDWWT4.s:100    .bss.rx_packet:00000000 $d
+
+UNDEFINED SYMBOLS
+crc16_ccitt
+HAL_UART_Receive_IT
+huart3
+system_enabled

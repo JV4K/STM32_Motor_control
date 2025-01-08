@@ -1,6 +1,7 @@
-build/debug/Core/Src/spi_slave_handler.o: Core/Src/spi_slave_handler.c \
- Core/Inc/spi_slave_handler.h Core/Inc/spi_slave.h Core/Inc/spi_comms.h \
- Core/Inc/main.h Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+build/debug/Core/Src/potamon_bus_lowlvl_handle.o: \
+ Core/Src/potamon_bus_lowlvl_handle.c \
+ Core/Inc/potamon_bus_lowlvl_handle.h Core/Inc/main.h \
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  Core/Inc/stm32f1xx_hal_conf.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -23,13 +24,12 @@ build/debug/Core/Src/spi_slave_handler.o: Core/Src/spi_slave_handler.c \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
- Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h Core/Inc/crc.h \
- Core/Inc/spi.h Core/Inc/gpio.h Core/Inc/global_flags.h
-Core/Inc/spi_slave_handler.h:
-Core/Inc/spi_slave.h:
-Core/Inc/spi_comms.h:
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h Core/Inc/usart.h \
+ Core/Inc/potamon_bus_protocol.h Core/Inc/crc_8_16.h \
+ Core/Inc/global_flags.h
+Core/Inc/potamon_bus_lowlvl_handle.h:
 Core/Inc/main.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 Core/Inc/stm32f1xx_hal_conf.h:
@@ -56,10 +56,10 @@ Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_crc.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
-Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
-Core/Inc/crc.h:
-Core/Inc/spi.h:
-Core/Inc/gpio.h:
+Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
+Core/Inc/usart.h:
+Core/Inc/potamon_bus_protocol.h:
+Core/Inc/crc_8_16.h:
 Core/Inc/global_flags.h:
