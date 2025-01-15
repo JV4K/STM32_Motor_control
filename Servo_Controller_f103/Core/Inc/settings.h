@@ -53,6 +53,8 @@ For max safety use rated current of a motor.    */
 // Defines for servo directions for different axis (defined in the beginning of file)
 #ifdef AXIS_FRONT
 
+#define S_NUM 1
+
 #define SERVO1_REVERSE 0
 #define SERVO1_ENC_REVERSE 0
 #define SERVO2_REVERSE 1
@@ -61,6 +63,8 @@ For max safety use rated current of a motor.    */
 #endif
 
 #ifdef AXIS_REAR
+
+#define S_NUM 2
 
 #define SERVO1_REVERSE 1
 #define SERVO1_ENC_REVERSE 1

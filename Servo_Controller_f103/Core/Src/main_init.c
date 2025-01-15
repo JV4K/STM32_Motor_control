@@ -19,7 +19,7 @@ void init_mtr_ctrl()
     servo_iq18_reset(&servo2_g);
 
     TXOFF;
-    HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx_packet, sizeof(rx_packet));
+    HAL_UART_Receive_IT(&huart3, (uint8_t*)&packet_sync, S_SYNC);
 
     // Init finished
     system_enabled = 0;

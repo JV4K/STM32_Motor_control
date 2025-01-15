@@ -76,7 +76,7 @@ void servo_iq18_velocityLoop(servo_iq18_t *servo);
 void servo_iq18_currentLoop(servo_iq18_t *servo, _iq18 currentFeedback);
 
 void servo_iq18_controlPosition(servo_iq18_t *servo, float setpoint);
-void servo_iq18_controlVelocity(servo_iq18_t *servo, float setpoint);
+void servo_iq18_controlVelocity(servo_iq18_t *servo, int16_t setpoint_q9);
 void servo_iq18_controlCurrent(servo_iq18_t *servo, float setpoint);
 
 void servo_iq18_reset(servo_iq18_t *servo);

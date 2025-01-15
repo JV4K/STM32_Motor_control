@@ -195,10 +195,11 @@ void servo_iq18_controlPosition(servo_iq18_t *servo, float setpoint) {
 	servo->positionSetpoint = _IQ18(setpoint) * servo->reverseFlag;
 }
 
-void servo_iq18_controlVelocity(servo_iq18_t *servo, float setpoint) {
+void servo_iq18_controlVelocity(servo_iq18_t *servo, int16_t setpoint_q9) {
 	if (servo->controllerLoops != Single) {
 		servo->currentMode = Velocity;
-		servo->velocitySetpoint = _IQsat(_IQ18(setpoint) * servo->reverseFlag,
+		_iq18 vel_setp_iq18 = (_iq18)setpoint_q9 << 9;
+		servo->velocitySetpoint = _IQsat(vel_setp_iq18 * servo->reverseFlag,
 				servo->maxShaftSpeed, -servo->maxShaftSpeed);
 	}
 }

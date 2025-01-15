@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
-#include "crc.h"
 #include "dma.h"
 #include "tim.h"
 #include "usart.h"
@@ -103,10 +102,9 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_ADC1_Init();
-  MX_CRC_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-  MX_CRC_Init();
+
   init_mtr_ctrl(); // Initializes all peripherals and structures needed for motor control
 
 

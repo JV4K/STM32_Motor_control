@@ -21,7 +21,9 @@
         "tim.h": "c",
         "spi.h": "c",
         "potamon_bus_lowlvl_handle.h": "c",
-        "potamon_bus_protocol.h": "c"
+        "potamon_bus_protocol.h": "c",
+        "crc_8_16.h": "c",
+        "usart.h": "c"
     },
     "stm32-for-vscode.openOCDPath": "C:\\USERS\\ZHMIS\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.12.0-4.1\\.CONTENT\\BIN\\OPENOCD.EXE",
     "stm32-for-vscode.makePath": "C:\\USERS\\ZHMIS\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\WINDOWS-BUILD-TOOLS\\4.4.1-3.1\\.CONTENT\\BIN\\MAKE.EXE",

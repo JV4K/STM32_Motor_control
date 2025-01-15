@@ -58,8 +58,13 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LED_Pin GPIO_PIN_13
+#define LED_GPIO_Port GPIOC
 #define RS485_TX_EN_Pin GPIO_PIN_1
 #define RS485_TX_EN_GPIO_Port GPIOB
+#define NSS_Pin GPIO_PIN_12
+#define NSS_GPIO_Port GPIOB
+#define NSS_EXTI_IRQn EXTI15_10_IRQn
 #define ENA_Pin GPIO_PIN_15
 #define ENA_GPIO_Port GPIOA
 #define INA2_Pin GPIO_PIN_3
@@ -74,7 +79,8 @@ void Error_Handler(void);
 #define INB_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+#define LED_ON HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 0);
+#define LED_OFF HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 1);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

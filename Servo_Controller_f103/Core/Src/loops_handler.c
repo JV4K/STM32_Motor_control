@@ -35,8 +35,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
                 servo_iq18_velocityLoop(&servo2_g);
                 irq_counter250 = 0;
 
-                servo_iq18_controlVelocity(&servo1_g, ((float)valid_packet.velocity_1)/100);
-                servo_iq18_controlVelocity(&servo2_g, ((float)valid_packet.velocity_1)/100);
+                servo_iq18_controlVelocity(&servo1_g, data_ctrl.velocity_1);
+                servo_iq18_controlVelocity(&servo2_g, data_ctrl.velocity_2);
             }
         }
         else

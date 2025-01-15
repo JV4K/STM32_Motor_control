@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 1
   30:Core/Src/dma.c **** /*----------------------------------------------------------------------------*/
   31:Core/Src/dma.c **** 
   32:Core/Src/dma.c **** /* USER CODE BEGIN 1 */
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s 			page 2
 
 
   33:Core/Src/dma.c **** 
@@ -85,7 +85,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 1
   37              	.LBB2:
   38              		.loc 1 43 3 view .LVU2
   39              		.loc 1 43 3 view .LVU3
-  40 0004 0A4B     		ldr	r3, .L3
+  40 0004 124B     		ldr	r3, .L3
   41 0006 5A69     		ldr	r2, [r3, #20]
   42 0008 42F00102 		orr	r2, r2, #1
   43 000c 5A61     		str	r2, [r3, #20]
@@ -112,36 +112,62 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 1
   59 0022 0B20     		movs	r0, #11
   60 0024 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
   61              	.LVL1:
-  49:Core/Src/dma.c **** 
-  50:Core/Src/dma.c **** }
-  62              		.loc 1 50 1 is_stmt 0 view .LVU9
-  63 0028 03B0     		add	sp, sp, #12
-  64              		.cfi_def_cfa_offset 4
-  65              		@ sp needed
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 3
+  49:Core/Src/dma.c ****   /* DMA1_Channel2_IRQn interrupt configuration */
+  50:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 0, 0);
+  62              		.loc 1 50 3 view .LVU9
+  63 0028 0022     		movs	r2, #0
+  64 002a 1146     		mov	r1, r2
+  65 002c 0C20     		movs	r0, #12
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s 			page 3
 
 
-  66 002a 5DF804FB 		ldr	pc, [sp], #4
-  67              	.L4:
-  68 002e 00BF     		.align	2
-  69              	.L3:
-  70 0030 00100240 		.word	1073876992
-  71              		.cfi_endproc
-  72              	.LFE65:
-  74              		.text
-  75              	.Letext0:
-  76              		.file 2 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
-  77              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
-  78              		.file 4 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
-  79              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s 			page 4
+  66 002e FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  67              	.LVL2:
+  51:Core/Src/dma.c ****   HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
+  68              		.loc 1 51 3 view .LVU10
+  69 0032 0C20     		movs	r0, #12
+  70 0034 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  71              	.LVL3:
+  52:Core/Src/dma.c ****   /* DMA1_Channel3_IRQn interrupt configuration */
+  53:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
+  72              		.loc 1 53 3 view .LVU11
+  73 0038 0022     		movs	r2, #0
+  74 003a 1146     		mov	r1, r2
+  75 003c 0D20     		movs	r0, #13
+  76 003e FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  77              	.LVL4:
+  54:Core/Src/dma.c ****   HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+  78              		.loc 1 54 3 view .LVU12
+  79 0042 0D20     		movs	r0, #13
+  80 0044 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  81              	.LVL5:
+  55:Core/Src/dma.c **** 
+  56:Core/Src/dma.c **** }
+  82              		.loc 1 56 1 is_stmt 0 view .LVU13
+  83 0048 03B0     		add	sp, sp, #12
+  84              		.cfi_def_cfa_offset 4
+  85              		@ sp needed
+  86 004a 5DF804FB 		ldr	pc, [sp], #4
+  87              	.L4:
+  88 004e 00BF     		.align	2
+  89              	.L3:
+  90 0050 00100240 		.word	1073876992
+  91              		.cfi_endproc
+  92              	.LFE65:
+  94              		.text
+  95              	.Letext0:
+  96              		.file 2 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+  97              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+  98              		.file 4 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+  99              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h"
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 dma.c
-C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s:19     .text.MX_DMA_Init:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s:25     .text.MX_DMA_Init:00000000 MX_DMA_Init
-C:\Users\zhmis\AppData\Local\Temp\ccqFRmJE.s:70     .text.MX_DMA_Init:00000030 $d
+C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s:19     .text.MX_DMA_Init:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s:25     .text.MX_DMA_Init:00000000 MX_DMA_Init
+C:\Users\zhmis\AppData\Local\Temp\ccz2m5qZ.s:90     .text.MX_DMA_Init:00000050 $d
 
 UNDEFINED SYMBOLS
 HAL_NVIC_SetPriority

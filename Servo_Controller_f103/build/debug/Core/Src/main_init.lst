@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 1
   13:Core/Src/main_init.c **** 
   14:Core/Src/main_init.c ****     // Init ADC&DMA
   15:Core/Src/main_init.c ****     adc_cur_init();
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s 			page 2
 
 
   44              		.loc 1 15 5 view .LVU4
@@ -84,9 +84,9 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 1
   58 0022 0848     		ldr	r0, .L3+8
   59 0024 FFF7FEFF 		bl	HAL_GPIO_WritePin
   60              	.LVL6:
-  22:Core/Src/main_init.c ****     HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx_packet, sizeof(rx_packet));
+  22:Core/Src/main_init.c ****     HAL_UART_Receive_IT(&huart3, (uint8_t*)&packet_sync, S_SYNC);
   61              		.loc 1 22 5 view .LVU8
-  62 0028 1022     		movs	r2, #16
+  62 0028 0222     		movs	r2, #2
   63 002a 0749     		ldr	r1, .L3+12
   64 002c 0748     		ldr	r0, .L3+16
   65 002e FFF7FEFF 		bl	HAL_UART_Receive_IT
@@ -108,7 +108,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 1
   77 003c 00000000 		.word	servo1_g
   78 0040 00000000 		.word	servo2_g
   79 0044 000C0140 		.word	1073810432
-  80 0048 00000000 		.word	rx_packet
+  80 0048 00000000 		.word	packet_sync
   81 004c 00000000 		.word	huart3
   82 0050 00000000 		.word	system_enabled
   83              		.cfi_endproc
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 1
   88              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
   89              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
   90              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 3
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s 			page 3
 
 
   91              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
@@ -139,14 +139,14 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 1
  106              		.file 20 "Core/Inc/potamon_bus_lowlvl_handle.h"
  107              		.file 21 "Core/Inc/adc_current.h"
  108              		.file 22 "Core/Inc/pins_init.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s 			page 4
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main_init.c
-C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s:19     .text.init_mtr_ctrl:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s:25     .text.init_mtr_ctrl:00000000 init_mtr_ctrl
-C:\Users\zhmis\AppData\Local\Temp\ccez2FiZ.s:77     .text.init_mtr_ctrl:0000003c $d
+C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s:19     .text.init_mtr_ctrl:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s:25     .text.init_mtr_ctrl:00000000 init_mtr_ctrl
+C:\Users\zhmis\AppData\Local\Temp\ccllmm8e.s:77     .text.init_mtr_ctrl:0000003c $d
 
 UNDEFINED SYMBOLS
 pin_init_mtcrl
@@ -158,6 +158,6 @@ HAL_GPIO_WritePin
 HAL_UART_Receive_IT
 servo1_g
 servo2_g
-rx_packet
+packet_sync
 huart3
 system_enabled

@@ -1,7 +1,7 @@
 #include "adc_current.h"
 
 volatile uint16_t adc[2];
-float current[2];
+_iq18 current[2];
 EMA_iq18 *filter1, *filter2;
 uint32_t check;
 int ch_order = 1;
