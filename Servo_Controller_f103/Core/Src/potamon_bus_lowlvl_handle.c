@@ -46,6 +46,8 @@ void sync_packet_handler(pack_sync_t *packet)
         system_enabled = 0;
         expected_packet = SYNC;
         HAL_UART_Receive_DMA(&huart3, (uint8_t *)&packet_sync, S_SYNC);
+        data_ctrl.velocity_1 = 0;
+        data_ctrl.velocity_2 = 0;
         break;
     case 0x01: // STATE_VEL_CTRL
         system_enabled = 1;
@@ -176,6 +178,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             LED_ON;
             failed_sync_packets_count++;
             system_enabled = 0;
+            data_ctrl.velocity_1 = 0;
+            data_ctrl.velocity_2 = 0;
+            expected_packet = SYNC;
+            HAL_UART_Receive_DMA(&huart3, (uint8_t *)&packet_sync, S_SYNC);
         }
         break;
     case DATA_CTRL_S1:
@@ -190,7 +196,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             {
                 LED_ON;
                 system_enabled = 0;
+                data_ctrl.velocity_1 = 0;
+                data_ctrl.velocity_2 = 0;
                 failed_data_packets_count++;
+                expected_packet = SYNC;
+                HAL_UART_Receive_DMA(&huart3, (uint8_t *)&packet_sync, S_SYNC);
             }
         }
         expected_packet = SYNC;
@@ -225,7 +235,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         {
             LED_ON;
             system_enabled = 0;
+            data_ctrl.velocity_1 = 0;
+            data_ctrl.velocity_2 = 0;
             failed_data_packets_count++;
+            expected_packet = SYNC;
+            HAL_UART_Receive_DMA(&huart3, (uint8_t *)&packet_sync, S_SYNC);
         }
         break;
     case DATA_TRAJ_CHUNK:
