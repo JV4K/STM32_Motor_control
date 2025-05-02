@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
   11:Core/Src/loops_handler.c **** 
   12:Core/Src/loops_handler.c ****             // Allow powering motors by setting Enable pins of a driver HIGH
   13:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 2
 
 
   14:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA2_GPIO_Port, ENA2_Pin, GPIO_PIN_SET);
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
   54              		.loc 1 9 12 view .LVU7
   55 000e 002B     		cmp	r3, #0
   56 0010 40D0     		beq	.L3
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 3
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 3
 
 
   13:Core/Src/loops_handler.c ****             HAL_GPIO_WritePin(ENA_GPIO_Port, ENA_Pin, GPIO_PIN_SET);
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
   28:Core/Src/loops_handler.c ****             if (irq_counter250 == 36)
   99              		.loc 1 28 13 is_stmt 1 view .LVU20
   28:Core/Src/loops_handler.c ****             if (irq_counter250 == 36)
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 4
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 4
 
 
  100              		.loc 1 28 16 is_stmt 0 view .LVU21
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
  144 008e FFF7FEFF 		bl	servo_iq18_velocityLoop
  145              	.LVL11:
  146 0092 DEE7     		b	.L6
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 5
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 5
 
 
  147              	.LVL12:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
  191              	.L11:
  192 00cc 00000000 		.word	htim3
  193 00d0 00000000 		.word	system_enabled
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 6
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 6
 
 
  194 00d4 00080140 		.word	1073809408
@@ -343,18 +343,18 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 1
  238              		.file 18 "Core/Inc/adc_current.h"
  239              		.file 19 "Core/Inc/potamon_bus_protocol.h"
  240              		.file 20 "Core/Inc/potamon_bus_lowlvl_handle.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s 			page 7
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 loops_handler.c
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:19     .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:25     .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:192    .text.HAL_TIM_PeriodElapsedCallback:000000cc $d
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:218    .bss.irq_counter9k:00000000 irq_counter9k
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:211    .bss.irq_counter250:00000000 irq_counter250
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:208    .bss.irq_counter250:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccpy6ld3.s:215    .bss.irq_counter9k:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:19     .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:25     .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:192    .text.HAL_TIM_PeriodElapsedCallback:000000cc $d
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:218    .bss.irq_counter9k:00000000 irq_counter9k
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:211    .bss.irq_counter250:00000000 irq_counter250
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:208    .bss.irq_counter250:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\cchJpi4l.s:215    .bss.irq_counter9k:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

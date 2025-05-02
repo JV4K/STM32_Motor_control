@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
   30:Core/Src/stm32f1xx_it.c **** /* Private typedef -----------------------------------------------------------*/
   31:Core/Src/stm32f1xx_it.c **** /* USER CODE BEGIN TD */
   32:Core/Src/stm32f1xx_it.c **** 
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 2
 
 
   33:Core/Src/stm32f1xx_it.c **** /* USER CODE END TD */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
   87:Core/Src/stm32f1xx_it.c **** /*           Cortex-M3 Processor Interruption and Exception Handlers          */
   88:Core/Src/stm32f1xx_it.c **** /******************************************************************************/
   89:Core/Src/stm32f1xx_it.c **** /**
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 3
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 3
 
 
   90:Core/Src/stm32f1xx_it.c ****   * @brief This function handles Non maskable interrupt.
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  114:Core/Src/stm32f1xx_it.c ****     /* USER CODE END W1_HardFault_IRQn 0 */
  115:Core/Src/stm32f1xx_it.c ****   }
   58              		.loc 1 115 3 view .LVU6
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 4
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 4
 
 
  111:Core/Src/stm32f1xx_it.c ****   {
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  135:Core/Src/stm32f1xx_it.c ****   */
  136:Core/Src/stm32f1xx_it.c **** void BusFault_Handler(void)
  137:Core/Src/stm32f1xx_it.c **** {
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 5
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 5
 
 
   96              		.loc 1 137 1 view -0
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  156:Core/Src/stm32f1xx_it.c ****   {
  128              		.loc 1 156 9 view .LVU19
  129 0000 FEE7     		b	.L10
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 6
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 6
 
 
  130              		.cfi_endproc
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  183:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 0 */
  184:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
  185:Core/Src/stm32f1xx_it.c **** 
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 7
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 7
 
 
  186:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 1 */
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  203 0000 08B5     		push	{r3, lr}
  204              		.cfi_def_cfa_offset 8
  205              		.cfi_offset 3, -8
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 8
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 8
 
 
  206              		.cfi_offset 14, -4
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  233:Core/Src/stm32f1xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
  234:Core/Src/stm32f1xx_it.c **** 
  235:Core/Src/stm32f1xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 1 */
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 9
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 9
 
 
  236:Core/Src/stm32f1xx_it.c **** }
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  278              		.syntax unified
  279              		.thumb
  280              		.thumb_func
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 10
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 10
 
 
  282              	DMA1_Channel3_IRQHandler:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  318 0000 08B5     		push	{r3, lr}
  319              		.cfi_def_cfa_offset 8
  320              		.cfi_offset 3, -8
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 11
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 11
 
 
  321              		.cfi_offset 14, -4
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  292:Core/Src/stm32f1xx_it.c **** }
  356              		.loc 1 292 1 is_stmt 0 view .LVU43
  357 0008 08BD     		pop	{r3, pc}
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 12
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 12
 
 
  358              	.L35:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  405              		.section	.data.debugMode,"aw"
  406              		.align	1
  409              	debugMode:
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 13
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 13
 
 
  410 0000 0300     		.short	3
@@ -765,67 +765,67 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 1
  463              		.file 10 "Core/Inc/usart.h"
  464              		.file 11 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
  465              		.file 12 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 14
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f1xx_it.c
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:19     .text.NMI_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:25     .text.NMI_Handler:00000000 NMI_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:42     .text.HardFault_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:65     .text.MemManage_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:71     .text.MemManage_Handler:00000000 MemManage_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:88     .text.BusFault_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:94     .text.BusFault_Handler:00000000 BusFault_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:111    .text.UsageFault_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:117    .text.UsageFault_Handler:00000000 UsageFault_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:134    .text.SVC_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:140    .text.SVC_Handler:00000000 SVC_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:153    .text.DebugMon_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:159    .text.DebugMon_Handler:00000000 DebugMon_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:172    .text.PendSV_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:178    .text.PendSV_Handler:00000000 PendSV_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:191    .text.SysTick_Handler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:197    .text.SysTick_Handler:00000000 SysTick_Handler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:216    .text.DMA1_Channel1_IRQHandler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:222    .text.DMA1_Channel1_IRQHandler:00000000 DMA1_Channel1_IRQHandler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:241    .text.DMA1_Channel1_IRQHandler:0000000c $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:246    .text.DMA1_Channel2_IRQHandler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:252    .text.DMA1_Channel2_IRQHandler:00000000 DMA1_Channel2_IRQHandler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:271    .text.DMA1_Channel2_IRQHandler:0000000c $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:276    .text.DMA1_Channel3_IRQHandler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:282    .text.DMA1_Channel3_IRQHandler:00000000 DMA1_Channel3_IRQHandler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:301    .text.DMA1_Channel3_IRQHandler:0000000c $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:306    .text.TIM3_IRQHandler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:312    .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:331    .text.TIM3_IRQHandler:0000000c $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:336    .text.USART3_IRQHandler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:342    .text.USART3_IRQHandler:00000000 USART3_IRQHandler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:361    .text.USART3_IRQHandler:0000000c $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:366    .text.EXTI15_10_IRQHandler:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:372    .text.EXTI15_10_IRQHandler:00000000 EXTI15_10_IRQHandler
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:395    .data.mode:00000000 mode
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:402    .bss.bandwidth_flag:00000000 bandwidth_flag
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:399    .bss.bandwidth_flag:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:409    .data.debugMode:00000000 debugMode
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:406    .data.debugMode:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:416    .bss.setpwm:00000000 setpwm
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:413    .bss.setpwm:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:423    .bss.setCurrent:00000000 setCurrent
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:420    .bss.setCurrent:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:430    .bss.setSpeed:00000000 setSpeed
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:427    .bss.setSpeed:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:437    .bss.setAngle:00000000 setAngle
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:434    .bss.setAngle:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:444    .bss.freq500Hz:00000000 freq500Hz
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:441    .bss.freq500Hz:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:451    .bss.freq9khz:00000000 freq9khz
-C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s:448    .bss.freq9khz:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:19     .text.NMI_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:25     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:42     .text.HardFault_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:65     .text.MemManage_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:71     .text.MemManage_Handler:00000000 MemManage_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:88     .text.BusFault_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:94     .text.BusFault_Handler:00000000 BusFault_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:111    .text.UsageFault_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:117    .text.UsageFault_Handler:00000000 UsageFault_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:134    .text.SVC_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:140    .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:153    .text.DebugMon_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:159    .text.DebugMon_Handler:00000000 DebugMon_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:172    .text.PendSV_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:178    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:191    .text.SysTick_Handler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:197    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:216    .text.DMA1_Channel1_IRQHandler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:222    .text.DMA1_Channel1_IRQHandler:00000000 DMA1_Channel1_IRQHandler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:241    .text.DMA1_Channel1_IRQHandler:0000000c $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:246    .text.DMA1_Channel2_IRQHandler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:252    .text.DMA1_Channel2_IRQHandler:00000000 DMA1_Channel2_IRQHandler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:271    .text.DMA1_Channel2_IRQHandler:0000000c $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:276    .text.DMA1_Channel3_IRQHandler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:282    .text.DMA1_Channel3_IRQHandler:00000000 DMA1_Channel3_IRQHandler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:301    .text.DMA1_Channel3_IRQHandler:0000000c $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:306    .text.TIM3_IRQHandler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:312    .text.TIM3_IRQHandler:00000000 TIM3_IRQHandler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:331    .text.TIM3_IRQHandler:0000000c $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:336    .text.USART3_IRQHandler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:342    .text.USART3_IRQHandler:00000000 USART3_IRQHandler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:361    .text.USART3_IRQHandler:0000000c $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:366    .text.EXTI15_10_IRQHandler:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:372    .text.EXTI15_10_IRQHandler:00000000 EXTI15_10_IRQHandler
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:395    .data.mode:00000000 mode
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:402    .bss.bandwidth_flag:00000000 bandwidth_flag
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:399    .bss.bandwidth_flag:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:409    .data.debugMode:00000000 debugMode
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:406    .data.debugMode:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:416    .bss.setpwm:00000000 setpwm
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:413    .bss.setpwm:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:423    .bss.setCurrent:00000000 setCurrent
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:420    .bss.setCurrent:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:430    .bss.setSpeed:00000000 setSpeed
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:427    .bss.setSpeed:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:437    .bss.setAngle:00000000 setAngle
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:434    .bss.setAngle:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:444    .bss.freq500Hz:00000000 freq500Hz
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:441    .bss.freq500Hz:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:451    .bss.freq9khz:00000000 freq9khz
+C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s:448    .bss.freq9khz:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc6BSkHj.s 			page 15
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccvg9OJV.s 			page 15
 
 
 HAL_DMA_IRQHandler

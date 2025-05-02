@@ -19,6 +19,8 @@ pack_data_current_t data_current;
 next_packet_t expected_packet; // Packet that is expected next
 uint8_t chunk_counter;         // Counter of skipped chunks
 
+uint16_t crc_check_debug;
+
 // Counters for packets that failed crc check
 uint32_t failed_sync_packets_count, failed_data_packets_count;
 
@@ -171,11 +173,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         if (packet_sync.crc8 == crc8_ccitt((uint8_t *)&packet_sync, 1))
         {
             sync_packet_handler(&packet_sync);
-            LED_OFF;
+            // LED_OFF;
         }
         else
         {
-            LED_ON;
+            // LED_ON;
             failed_sync_packets_count++;
             system_enabled = 0;
             data_ctrl.velocity_1 = 0;
@@ -187,14 +189,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     case DATA_CTRL_S1:
         if (S_NUM == 1)
         {
+            crc_check_debug = crc16_ccitt((uint8_t *)&data_ctrl_unchecked, S_DATA_CTRL_S1 - 2);
             if (data_ctrl_unchecked.crc16 == crc16_ccitt((uint8_t *)&data_ctrl_unchecked, S_DATA_CTRL_S1 - 2))
             {
                 memcpy(&data_ctrl, &data_ctrl_unchecked, S_DATA_CTRL_S1);
-                LED_OFF;
+                // LED_OFF;
             }
             else
             {
-                LED_ON;
+                // LED_ON;
                 system_enabled = 0;
                 data_ctrl.velocity_1 = 0;
                 data_ctrl.velocity_2 = 0;
@@ -215,7 +218,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             }
             else
             {
-                LED_ON;
+                // LED_ON;
                 system_enabled = 0;
                 failed_data_packets_count++;
             }
@@ -227,13 +230,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         if (data_traj_n_unchecked.crc16 == crc16_ccitt((uint8_t *)&data_traj_n_unchecked, S_DATA_TRAJ_N - 2))
         {
             memcpy(&data_traj_n, &data_traj_n_unchecked, S_DATA_TRAJ_N);
-            LED_OFF;
+            // LED_OFF;
             expected_packet = DATA_TRAJ_CHUNK;
             HAL_UART_Receive_DMA(&huart3, uart_rx_dump_buffer, S_DATA_TRAJ_CHUNK);
         }
         else
         {
-            LED_ON;
+            // LED_ON;
             system_enabled = 0;
             data_ctrl.velocity_1 = 0;
             data_ctrl.velocity_2 = 0;

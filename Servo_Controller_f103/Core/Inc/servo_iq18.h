@@ -29,10 +29,13 @@ enum servoMode {
  */
 typedef struct {
 	encoder_iq18_t encoder;
+
 	pid_iq18_t pid_position;
 	pid_iq18_t pid_velocity;
 	pid_iq18_t pid_current;
+
 	pwmControl_t driver;
+
 	int8_t reverseFlag;
 
 	int8_t encoder_reverse;
@@ -43,10 +46,13 @@ typedef struct {
 	_iq18 currentSetpoint;
 
 	int8_t positionState;
+
 	enum loops controllerLoops;
 	enum servoMode currentMode;
+
 	_iq18 maxShaftSpeed;
 	_iq18 maxCurrent;
+	
 } servo_iq18_t;
 
 void servo_iq18_base_init(servo_iq18_t *servo, enum loops servoLoops,

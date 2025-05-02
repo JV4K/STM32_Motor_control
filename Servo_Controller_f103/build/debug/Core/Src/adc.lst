@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
   30:Core/Src/adc.c **** /* ADC1 init function */
   31:Core/Src/adc.c **** void MX_ADC1_Init(void)
   32:Core/Src/adc.c **** {
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 2
 
 
   27              		.loc 1 32 1 view -0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
   62              		.loc 1 51 24 is_stmt 0 view .LVU14
   63 0022 4360     		str	r3, [r0, #4]
   52:Core/Src/adc.c ****   hadc1.Init.NbrOfConversion = 2;
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 3
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 3
 
 
   64              		.loc 1 52 3 is_stmt 1 view .LVU15
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
   71:Core/Src/adc.c ****   sConfig.Rank = ADC_REGULAR_RANK_2;
  100              		.loc 1 71 3 is_stmt 1 view .LVU31
  101              		.loc 1 71 16 is_stmt 0 view .LVU32
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 4
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 4
 
 
  102 0048 0223     		movs	r3, #2
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  145              		.align	1
  146              		.global	HAL_ADC_MspInit
  147              		.syntax unified
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 5
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 5
 
 
  148              		.thumb
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  103:Core/Src/adc.c ****     /* ADC1 DMA Init */
  104:Core/Src/adc.c ****     /* ADC1 Init */
  105:Core/Src/adc.c ****     hdma_adc1.Instance = DMA1_Channel1;
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 6
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 6
 
 
  106:Core/Src/adc.c ****     hdma_adc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  209              	.LBB3:
   94:Core/Src/adc.c ****     /**ADC1 GPIO Configuration
  210              		.loc 1 94 5 view .LVU57
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 7
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 7
 
 
   94:Core/Src/adc.c ****     /**ADC1 GPIO Configuration
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  249 005e 8360     		str	r3, [r0, #8]
  108:Core/Src/adc.c ****     hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
  250              		.loc 1 108 5 is_stmt 1 view .LVU74
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 8
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 8
 
 
  108:Core/Src/adc.c ****     hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  288 0088 FFF7FEFF 		bl	Error_Handler
  289              	.LVL12:
  290 008c F8E7     		b	.L13
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 9
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 9
 
 
  291              	.L18:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  136:Core/Src/adc.c **** 
  137:Core/Src/adc.c ****     /**ADC1 GPIO Configuration
  138:Core/Src/adc.c ****     PA2     ------> ADC1_IN2
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 10
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 10
 
 
  139:Core/Src/adc.c ****     PA3     ------> ADC1_IN3
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  375              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
  376              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
  377              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 11
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 11
 
 
  378              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
@@ -608,24 +608,24 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 1
  382              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h"
  383              		.file 10 "Core/Inc/adc.h"
  384              		.file 11 "Core/Inc/main.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s 			page 12
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 adc.c
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:19     .text.MX_ADC1_Init:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:25     .text.MX_ADC1_Init:00000000 MX_ADC1_Init
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:139    .text.MX_ADC1_Init:00000070 $d
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:371    .bss.hadc1:00000000 hadc1
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:145    .text.HAL_ADC_MspInit:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:151    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:294    .text.HAL_ADC_MspInit:00000090 $d
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:364    .bss.hdma_adc1:00000000 hdma_adc1
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:302    .text.HAL_ADC_MspDeInit:00000000 $t
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:308    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:353    .text.HAL_ADC_MspDeInit:00000028 $d
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:361    .bss.hdma_adc1:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\ccTRkT4M.s:368    .bss.hadc1:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:19     .text.MX_ADC1_Init:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:25     .text.MX_ADC1_Init:00000000 MX_ADC1_Init
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:139    .text.MX_ADC1_Init:00000070 $d
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:371    .bss.hadc1:00000000 hadc1
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:145    .text.HAL_ADC_MspInit:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:151    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:294    .text.HAL_ADC_MspInit:00000090 $d
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:364    .bss.hdma_adc1:00000000 hdma_adc1
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:302    .text.HAL_ADC_MspDeInit:00000000 $t
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:308    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:353    .text.HAL_ADC_MspDeInit:00000028 $d
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:361    .bss.hdma_adc1:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccAtVcm8.s:368    .bss.hadc1:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_ADC_Init

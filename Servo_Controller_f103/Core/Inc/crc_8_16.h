@@ -9,7 +9,7 @@
 #define CRC8_INIT 0x00 // Initial value
 
 // CRC-16-CCITT-FALSE parameters
-#define CRC16_POLY 0x11021  // Polynomial: x^16 + x^12 + x^5 + 1
+#define CRC16_POLY 0x1021  // Polynomial: x^16 + x^12 + x^5 + 1
 #define CRC16_INIT 0xFFFF  // Initial value
 
 // CRC-8-CCITT-FALSE function

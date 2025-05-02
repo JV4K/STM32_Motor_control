@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s 			page 1
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccB9VWhj.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -31,14 +31,14 @@ ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s 			page 1
   32              		.file 2 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
   33              		.file 3 "C:/Users/zhmis/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
   34              		.file 4 "Core/Inc/global_flags.h"
-ARM GAS  C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s 			page 2
+ARM GAS  C:\Users\zhmis\AppData\Local\Temp\ccB9VWhj.s 			page 2
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 global_flags.c
-C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s:22     .bss.reset_flag:00000000 reset_flag
-C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s:23     .bss.reset_flag:00000000 $d
-C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s:28     .bss.system_enabled:00000000 system_enabled
-C:\Users\zhmis\AppData\Local\Temp\cc5bk3cZ.s:29     .bss.system_enabled:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccB9VWhj.s:22     .bss.reset_flag:00000000 reset_flag
+C:\Users\zhmis\AppData\Local\Temp\ccB9VWhj.s:23     .bss.reset_flag:00000000 $d
+C:\Users\zhmis\AppData\Local\Temp\ccB9VWhj.s:28     .bss.system_enabled:00000000 system_enabled
+C:\Users\zhmis\AppData\Local\Temp\ccB9VWhj.s:29     .bss.system_enabled:00000000 $d
 
 NO UNDEFINED SYMBOLS

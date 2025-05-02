@@ -55,6 +55,9 @@ uint8_t servo2_debug_mode;
 float s1_set_cur, s1_set_vel;
 float s2_set_cur, s2_set_vel;
 
+servo_iq18_t servo1_g, servo2_g;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

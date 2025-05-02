@@ -1,6 +1,6 @@
 #include "servo_init.h"
 
-servo_iq18_t servo1_g, servo2_g;
+// servo_iq18_t servo1_g, servo2_g;
 
 void servo_periph_init()
 {
@@ -29,7 +29,7 @@ void servo_periph_init()
     // Start TIM3 in PWM mode and also turn on interrupts
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-    HAL_TIM_Base_Start_IT(&htim3);
+    // HAL_TIM_Base_Start_IT(&htim3);
 }
 
 void servo_init()

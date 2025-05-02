@@ -9,7 +9,7 @@ int ch_order = 1;
 void adc_cur_init()
 {
     // Starting DMA for capturing current measures from ADC
-    HAL_ADC_Start_DMA(&hadc1, (uint32_t *)&adc, 2);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adc, 2);
 
     // Initia;lization of filters
     filter1 = initEMA_iq18(0.005, _IQ18(2048));
